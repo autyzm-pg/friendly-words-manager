@@ -1,6 +1,5 @@
 import React from "react"
-import {NativeRouter} from "react-router-native"
-import {Switch} from "react-native"
+import {NativeRouter, Route, Switch} from "react-router-native"
 import MainPage from "../containers/MainPage"
 
 
