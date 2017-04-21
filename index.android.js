@@ -2,10 +2,10 @@ import React from 'react';
 import {
     AppRegistry,
 } from 'react-native';
-import Main from "./app/index";
+import App from "./app/index";
 
 const confy = () => (
-    <Main/>
+    <App/>
 )
 
 export default confy
