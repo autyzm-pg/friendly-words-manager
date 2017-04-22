@@ -1,6 +1,25 @@
 import React from "react"
 
-import {Container, Fab, Content, Header, Body, Title, Button, Text, Tab, Tabs, TabHeading, Icon, Left, Right, List, ListItem} from 'native-base'
+import {
+    Container,
+    Fab,
+    Content,
+    Header,
+    Body,
+    Title,
+    Button,
+    Text,
+    Tab,
+    Tabs,
+    TabHeading,
+    Icon,
+    Left,
+    Right,
+    List,
+    ListItem
+} from 'native-base'
+import {ConfigElem} from "../components/configurations/ConfigList"
+import ConfigList from "../components/configurations/ConfigList"
 
 
 const testList = [
@@ -26,20 +45,17 @@ export default ConfigurationsPage = ({history, configurations = testList}) =>
             </Body>
             <Right/>
         </Header>
+
         <Content>
-            <List>
+            <ConfigList>
                 {configurations.map(config => (
-                    <ListItem key={config}>
-                        <Text>{config}</Text>
-                        <Right>
-                            <Icon name="more"/>
-                        </Right>
-                    </ListItem>
+                    <ConfigElem key= {config} item={config}/>
                 ))}
-            </List>
+            </ConfigList>
 
         </Content>
-        <Fab onPress={() => console.log("ADD CONFIG")} containerStyle={{marginRight:200}} style={{backgroundColor: '#e02161', marginRight:100}}>
+
+        <Fab onPress={() => console.log("ADD CONFIG")} style={{backgroundColor: '#e02161'}}>
             <Icon name="add"/>
         </Fab>
     </Container>

@@ -27,10 +27,10 @@ export default MainPage = ({history, location}) => (
             </Body>
         </Header>
         <Content>
-            <Button block light onPress={() =>{ console.log(location); history.push("/configurations")}}>
+            <Button block light onPress={() =>{history.push("/configurations")}}>
                 <Text>Konfiguracje</Text>
             </Button>
-            <Button block light>
+            <Button block light disabled>
                 <Text>Zasoby</Text>
             </Button>
 
