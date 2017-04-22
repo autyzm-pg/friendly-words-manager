@@ -20,6 +20,7 @@ import {
 } from 'native-base'
 import {ConfigElem} from "../components/configurations/ConfigList"
 import ConfigList from "../components/configurations/ConfigList"
+import {connect} from "react-redux"
 
 
 const testList = [
@@ -32,7 +33,7 @@ const testList = [
     "Jasiu Stasiu"
 ]
 
-export default ConfigurationsPage = ({history, configurations = testList}) =>
+const ConfigurationsPage = ({history, configurations}) =>
     <Container>
         <Header>
             <Left>
@@ -59,3 +60,9 @@ export default ConfigurationsPage = ({history, configurations = testList}) =>
             <Icon name="add"/>
         </Fab>
     </Container>
+
+const stateToProps = ({configurations}) => ({
+    configurations: configurations.all
+})
+
+export default connect(stateToProps)(ConfigurationsPage)

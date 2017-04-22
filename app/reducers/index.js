@@ -1,5 +1,5 @@
-
+import configurationsReducer from "./configurationsReducer"
 
 export default {
-    initial: (state={}) => state
+    configurations: configurationsReducer
 }
