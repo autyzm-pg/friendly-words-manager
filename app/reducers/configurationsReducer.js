@@ -11,11 +11,11 @@ const defaultState = {
         "Jasiu Stasiu",
         "Zdzisiu Misiu"
     ],
-    searchQuery: undefined
+    searchQuery: ""
 }
 
 const handlers = {
-    "CONFIGURATIONS_LIST_QUERY_CHANGE": (state, action) => R.assoc('searchQuery', action.payload, state)
+    "CONFIGURATIONS_LIST_QUERY_CHANGE": (state, action) => R.assoc('searchQuery', action.payload.toLowerCase(), state)
 }
 
 export default createReducer(defaultState,handlers)
