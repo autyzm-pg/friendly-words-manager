@@ -22,20 +22,9 @@ import {ConfigElem} from "../components/configurations/ConfigList"
 import ConfigList from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
 import * as R from "ramda"
-import {changeConfigsSearchQuery} from "../actions/configurationsActions"
+import {changeConfigsSearchQuery, changeActiveConfig} from "../actions/configurationsActions"
 
-
-const testList = [
-    "Konfiguracja 1",
-    "Konfiguracja 3",
-    "Konfiguracja 20",
-    "Janek",
-    "Maciej Paciej",
-
-    "Jasiu Stasiu"
-]
-
-const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChange}) =>
+const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChange, changeActiveConfig}) =>
     <Container>
         <Header>
             <Left>
@@ -55,7 +44,7 @@ const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChang
                     <ConfigElem key={config} item={config}/>
                 ))}
             </ConfigList>
-
+            <Button onPress={() => changeActiveConfig("Maciej Paciej")}><Text>Zmień aktywną konfigurację</Text></Button>
         </Content>
 
         <Fab onPress={() => console.log("ADD CONFIG")} style={{backgroundColor: '#e02161'}}>
@@ -69,7 +58,8 @@ const stateToProps = ({configurations}) => ({
 })
 
 const dispatchToProps = dispatch => ({
-    onSearchChange: R.compose(dispatch, changeConfigsSearchQuery)
+    onSearchChange: R.compose(dispatch, changeConfigsSearchQuery),
+    changeActiveConfig: R.compose(dispatch, changeActiveConfig)
 })
 
 export default connect(stateToProps, dispatchToProps)(ConfigurationsPage)
