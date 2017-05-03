@@ -21,6 +21,8 @@ import {
 import {ConfigElem} from "../components/configurations/ConfigList"
 import ConfigList from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
+import * as R from "ramda"
+import {changeConfigsSearchQuery} from "../actions/configurationsActions"
 
 
 const testList = [
@@ -33,7 +35,7 @@ const testList = [
     "Jasiu Stasiu"
 ]
 
-const ConfigurationsPage = ({history, configurations}) =>
+const ConfigurationsPage = ({history, configurations, onSearchChange}) =>
     <Container>
         <Header>
             <Left>
@@ -48,7 +50,7 @@ const ConfigurationsPage = ({history, configurations}) =>
         </Header>
 
         <Content>
-            <ConfigList>
+            <ConfigList onSearchChange={onSearchChange}>
                 {configurations.map(config => (
                     <ConfigElem key= {config} item={config}/>
                 ))}
@@ -62,7 +64,11 @@ const ConfigurationsPage = ({history, configurations}) =>
     </Container>
 
 const stateToProps = ({configurations}) => ({
-    configurations: configurations.all
+    configurations: configurations.all.filter(name => name.toLowerCase().includes(configurations.searchQuery))
 })
 
-export default connect(stateToProps)(ConfigurationsPage)
+const dispatchToProps = dispatch => ({
+    onSearchChange: R.compose(dispatch, changeConfigsSearchQuery)
+})
+
+export default connect(stateToProps, dispatchToProps)(ConfigurationsPage)
