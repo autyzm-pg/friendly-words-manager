@@ -20,11 +20,13 @@ export default SearchBar = ({onSearchChange = emptyFunc, searchQuery}) => {
                        ref={input => {
                            textInput = input
                        }}/>
-                <Button transparent
-                        onPress={clear}
-                        style={{marginTop: 10}}>
-                    <Icon name="close" style={{color: "#C0C0C0"}}/>
-                </Button>
+                {searchQuery !== "" ?
+                    <Button transparent
+                            onPress={clear}>
+                        <Icon name="close" style={{color: "#C0C0C0"}}/>
+                    </Button>
+                    : null
+                }
             </Item>
         </Form>
     )
