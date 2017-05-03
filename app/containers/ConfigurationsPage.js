@@ -47,7 +47,7 @@ const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChang
             <Button onPress={() => changeActiveConfig("Maciej Paciej")}><Text>Zmień aktywną konfigurację</Text></Button>
         </Content>
 
-        <Fab onPress={() => console.log("ADD CONFIG")} style={{backgroundColor: '#e02161'}}>
+        <Fab onPress={() => history.push("/creator")} style={{backgroundColor: '#e02161'}}>
             <Icon name="add"/>
         </Fab>
     </Container>
