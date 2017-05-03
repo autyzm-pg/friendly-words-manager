@@ -18,8 +18,10 @@ import {
     FooterTab
 } from 'native-base'
 
+import {connect} from "react-redux"
 
-export default MainPage = ({history, location}) => (
+
+const MainPage = ({history, location, activeConfig}) => (
     <Container>
         <Header>
             <Body>
@@ -27,23 +29,29 @@ export default MainPage = ({history, location}) => (
             </Body>
         </Header>
         <Content>
-            <Button block light onPress={() =>{history.push("/configurations")}}>
+            <Button block light onPress={() => {
+                history.push("/configurations")
+            }}>
                 <Text>Konfiguracje</Text>
             </Button>
             <Button block light disabled>
                 <Text>Zasoby</Text>
             </Button>
-
-
         </Content>
         <Footer>
+            <Text>Aktywna konfiguracja: {activeConfig}</Text>
             <Body>
-                <Button full light>
-                    <Left/>
-                    <Body><Text>Przejdz do aplikacji</Text></Body>
-                    <Right><Icon name="arrow-round-forward"/></Right>
-                </Button>
+            <Button full light>
+                <Body><Text>Przejdz do aplikacji</Text></Body>
+                <Right><Icon name="arrow-round-forward"/></Right>
+            </Button>
             </Body>
         </Footer>
     </Container>
 )
+
+const stateToProps = ({configurations}) => ({
+    activeConfig: configurations.active
+})
+
+export default connect(stateToProps)(MainPage)
