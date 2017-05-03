@@ -14,3 +14,5 @@ export const BoolField = Field("Bool", {def: false})
 export const ModelListField = Field("ModelList", {def: [], model: undefined})
 export const ChecklistField = Field("Checklist", {def: [], options: []})
 export const ImageChecklistField = Field("ImageCheckList", {def: [], options: []})
+
+export const getDefaultModel = R.map(field => field.def)
