@@ -18,9 +18,9 @@ export const ConfigElem = ({item}) => (
     </ListItem>
 )
 
-export default ConfigList = ({children, onSearchChange}) => (
+export default ConfigList = ({children, onSearchChange, searchQuery}) => (
     <View>
-        <SearchBar onSearchChange={onSearchChange}/>
+        <SearchBar onSearchChange={onSearchChange} searchQuery={searchQuery}/>
         <List>
             {children}
         </List>

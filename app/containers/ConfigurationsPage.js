@@ -35,7 +35,7 @@ const testList = [
     "Jasiu Stasiu"
 ]
 
-const ConfigurationsPage = ({history, configurations, onSearchChange}) =>
+const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChange}) =>
     <Container>
         <Header>
             <Left>
@@ -49,10 +49,10 @@ const ConfigurationsPage = ({history, configurations, onSearchChange}) =>
             <Right/>
         </Header>
 
-        <Content>
-            <ConfigList onSearchChange={onSearchChange}>
+        <Content keyboardShouldPersistTaps="handled">
+            <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
                 {configurations.map(config => (
-                    <ConfigElem key= {config} item={config}/>
+                    <ConfigElem key={config} item={config}/>
                 ))}
             </ConfigList>
 
@@ -64,7 +64,8 @@ const ConfigurationsPage = ({history, configurations, onSearchChange}) =>
     </Container>
 
 const stateToProps = ({configurations}) => ({
-    configurations: configurations.all.filter(name => name.toLowerCase().includes(configurations.searchQuery))
+    configurations: configurations.all.filter(name => name.toLowerCase().includes(configurations.searchQuery)),
+    searchQuery: configurations.searchQuery
 })
 
 const dispatchToProps = dispatch => ({
