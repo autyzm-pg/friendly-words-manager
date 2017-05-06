@@ -3,6 +3,7 @@ import {
     TextField
 } from "../libs/confy/libs/fields"
 import {FullStep, Step} from "../libs/confy/libs/steps"
+
 const timeLimitOptions = ["1s", "2s", "3s", "4s"]
 const colors = ['Niebieski', "Czerwony"]
 const shapes = ['Linia pozioma', 'Linia pionowa']
