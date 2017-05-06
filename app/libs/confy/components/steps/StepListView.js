@@ -1,8 +1,7 @@
 import React from "react"
-import {Content, List, ListItem, Right, TabHeading, Text, View} from "native-base"
-import Tab from "native-base/src/theme/components/Tab"
+import { List, ListItem, Right, Text, View} from "native-base"
 
-export default StepView = ({step, model, activeConfig}) => (
+export default StepListView = ({step, model, activeConfig}) => (
     <View>
         <List>
             {

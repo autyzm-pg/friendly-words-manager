@@ -1,4 +1,4 @@
-import {getDefaultModel} from "../fields"
+import {getDefaultModel} from "../libs/fields"
 
 
 export const wizardReducer = model => {
