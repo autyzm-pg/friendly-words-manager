@@ -2,15 +2,15 @@ import React from "react"
 import {
 	CheckBox
 } from 'native-base'
-import {View, Text} from "react-native"
+import {View, Text, Image} from "react-native"
 import R from "ramda"
 
 export const MultiChooser = ({value, onChange, children}) => {
 
-	const onChangeHandler = (val) => {
-		const newValue = value.includes(val)
-			? R.without(val, value)
-			: R.append(val, value);
+	const onChangeHandler = (changedVal) => {
+		const newValue = value.includes(changedVal)
+			? R.without(changedVal, value)
+			: R.append(changedVal, value);
 		onChange(newValue);
 	};
 
@@ -26,9 +26,21 @@ export const MultiChooser = ({value, onChange, children}) => {
 	);
 };
 
-export const Option = ({label, isChecked, onPress }) => (
-	<View>
-		<CheckBox checked={isChecked} onPress={onPress} />
-		<Text>{label}</Text>
+export const Option = ({isChecked, onPress, label }) => {
+	label = R.is(String, label) ? <Text>{label}</Text> : label;
+	return <View>
+		<CheckBox checked={isChecked} onPress={onPress}/>
+		{label}
 	</View>
-);
+};
+
+export const ImageOption = ({src, ...rest}) => {
+	const label = <Image source={{uri: src}} style={{width: 50, height: 50}}/>;
+	return <Option {...rest} label={label} />
+};
+
+
+export const ColorOption = ({hex, ...rest}) => {
+	const label = <View style={{backgroundColor: hex, height: 50, width: 50, borderRadius: 100}} />;
+	return <Option {...rest} label={label} />
+};
