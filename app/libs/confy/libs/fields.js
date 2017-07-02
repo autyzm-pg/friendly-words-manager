@@ -1,6 +1,7 @@
 import * as R from "ramda"
 import FieldPickerView from "../components/fields/FieldPickerView"
 import FieldSimpleView from "../components/fields/FieldSimpleView"
+import {notImplementedFunc} from "../../funcs"
 
 export const Field = (type, defaultSettings = {}) => (settings) => ({
     type,
@@ -17,5 +18,15 @@ export const BoolField = Field("Bool", {def: false})
 export const ModelListField = Field("ModelList", {def: [], model: undefined})
 export const ChecklistField = Field("Checklist", {def: [], options: []})
 export const ImageChecklistField = Field("ImageCheckList", {def: [], options: []})
+export const ArrayField = notImplementedFunc
+export const ObjectField = notImplementedFunc
+export const ForeignField = notImplementedFunc
+export const Select = notImplementedFunc
+export const MultiOptionField = notImplementedFunc
+export const UriField = notImplementedFunc
+export const IntegerField = notImplementedFunc
+export const MultiImageOptionField = notImplementedFunc
+export const MultiColorField = notImplementedFunc
+export const MultiSizeField = notImplementedFunc
 
 export const getDefaultModel = R.map(field => field.def)
