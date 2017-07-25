@@ -4,10 +4,10 @@ import WizardPage from "../libs/confy/containers/WizardPage"
 
 import {connect} from "react-redux"
 import {Steps} from "../config/model"
+import {ConfigurationWizardView} from "../config/view"
 
-const mapStateToProps = ({wizard}) => ({
-    wizard,
-    steps: Steps
-})
+const CreatorPage = ({}) => (
+    <WizardPage view={ConfigurationWizardView}/>
+)
 
-export default CreatorPage = connect(mapStateToProps)(WizardPage)
+export default CreatorPage

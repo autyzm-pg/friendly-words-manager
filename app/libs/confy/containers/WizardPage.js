@@ -4,8 +4,13 @@ import * as R from "ramda"
 import Page, {PageHeader} from "../components/layout/Page"
 import {WizardStep, WizardStepsContainer} from "../components/steps/WizardSteps"
 
+const mapStateToProps = ({wizard}) => ({
+    fromStore: {
+        //TODO : implement this
+    }
+})
 
-export default WizardPage = ({steps, wizard, history}) => (
+const WizardPage = ({steps, wizard, history, view}) => (
     <Page>
         <PageHeader onBack={() => history.goBack()}>
             Nowa konfiguracja
@@ -17,3 +22,6 @@ export default WizardPage = ({steps, wizard, history}) => (
         </WizardStepsContainer>
     </Page>
 )
+
+
+export default connect(mapStateToProps)(WizardPage)
