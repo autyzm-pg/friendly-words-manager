@@ -28,7 +28,7 @@ export const SectionView = notImplementedFunc
 export const Section = notImplementedFunc
 
 
-type ColumnType = Array<BaseFieldType>;
+export type ColumnType = Array<BaseFieldType>;
 
 export const ColumnView = (columns: Array<ColumnType>) => ({
     component: StepColumnView,
@@ -37,4 +37,4 @@ export const ColumnView = (columns: Array<ColumnType>) => ({
     }
 })
 
-export const Column = (fields: ColumnType) => fields
+export const Column = (fields: Array<BaseFieldType>) => fields
