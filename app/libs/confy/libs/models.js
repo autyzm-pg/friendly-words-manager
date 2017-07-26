@@ -1,9 +1,10 @@
 // @flow
 
 import * as R from "ramda"
+import type {BaseFieldType} from "./fields"
 
-type ModelType = <T>(configDefinition: T) => {
-    fields: *
+type ModelType = (configDefinition: {[string]: (name:string) => BaseFieldType}) => {
+    fields: { [string]: BaseFieldType }
 }
 
 export const Model: ModelType = configDefinition => ({
