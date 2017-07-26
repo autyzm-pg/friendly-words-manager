@@ -6,10 +6,10 @@ import {Column, ColumnView, Section, SectionView, WizardStep, WizardView} from "
 
 export const ConfiguratioNWizardView = WizardView(fields => [
     WizardStep("Step 1", ColumnView([
-        fields.someText
+        Column([fields.someText])
     ])),
     WizardStep("Step 2", ColumnView([
-        fields.someOptionField
+        Column([fields.someOptionField])
     ]))
 ], ConfigurationModel)
 
