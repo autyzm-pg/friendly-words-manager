@@ -12,7 +12,7 @@ export type BaseFieldType = {
     }
 }
 
-type FieldConstructor = (component?: any, defaultSettings?: any) => (settings: any) => (name: string) => BaseFieldType;
+type FieldConstructor = (component: ?any, defaultSettings: ?any) => (settings: any) => (name: string) => BaseFieldType;
 
 
 export const Field: FieldConstructor = (component=FieldSimpleView, defaultSettings = {}) => settings => name => ({
