@@ -10,12 +10,9 @@ export const WizardStepsContainer = ({children, configurationModel, activeConfig
     </Tabs>
 )
 
-export const WizardStep = ({configurationModel, activeConfig, step, key}) => {
-    const StepComponent = step.component
-    return (
-        <Tab key={key} heading={ <TabHeading><Text>{step.name}</Text></TabHeading>}>
-            <StepComponent step={R.dissoc('component', step)} model={configurationModel} activeConfig={activeConfig}/>
-        </Tab>
-    )
-}
+export const WizardStep = ({name, key, children}) => (
+    <Tab key={key} heading={ <TabHeading><Text>{name}</Text></TabHeading>}>
+        {children}
+    </Tab>
+)
 

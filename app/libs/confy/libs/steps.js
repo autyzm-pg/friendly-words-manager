@@ -5,9 +5,14 @@ import StepColumnView from "../components/steps/StepColumnView"
 import type {BaseFieldType} from "./fields"
 import type {ModelType} from "./models"
 
-type Step = {
+type StepView = {
     component: any,
     props: any
+}
+
+type Step = {
+    name: string,
+    view: StepView
 }
 
 type WizardViewType = {
@@ -22,7 +27,7 @@ export const WizardView: WizardViewFactoryType = (defineView, model) => ({
 })
 
 
-export const WizardStep = <T: Step>(name: string, view: T) => ({name, view})
+export const WizardStep: Step = <T: StepView>(name: string, view: T) => ({name, view})
 
 export const SectionView = notImplementedFunc
 export const Section = notImplementedFunc

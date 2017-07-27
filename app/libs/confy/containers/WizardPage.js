@@ -18,7 +18,11 @@ const WizardPage = ({wizardView, config, onChange, ...props}) => (
         </PageHeader>
         <WizardStepsContainer configurationModel={wizardView.model} activeConfig={config}>
             {
-                wizardView.steps.map(step => <WizardStep key={step.name} step={step}/>)
+                wizardView.steps.map(Step => (
+                    <WizardStep key={Step.name} name={Step.name}>
+                        <Step.view.component onChange={onChange}/>
+                    </WizardStep>
+                ))
             }
         </WizardStepsContainer>
     </Page>
