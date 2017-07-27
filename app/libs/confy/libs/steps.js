@@ -14,7 +14,7 @@ type WizardViewType = {
     model: ModelType,
     steps: Array<Step>
 }
-type WizardViewFactoryType = (({[string]: BaseFieldType} => Array<Step>), ModelType) => WizardViewType
+type WizardViewFactoryType = ((({[string]: BaseFieldType}) => Array<Step>), ModelType) => WizardViewType
 
 export const WizardView: WizardViewFactoryType = (defineView, model) => ({
     model,

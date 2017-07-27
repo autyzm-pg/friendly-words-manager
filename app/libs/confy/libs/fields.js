@@ -6,19 +6,17 @@ import FieldSimpleView from "../components/fields/FieldSimpleView"
 export type BaseFieldType = {
     name: string,
     component: any,
-    props: {
-        def: any,
-        verbose: string
-    }
+    verbose: string,
+    props: any
 }
 
-type FieldConstructor = (component: ?any, defaultSettings: ?any) => (settings: any) => (name: string) => BaseFieldType;
+type FieldConstructor = (component: ?any, defaultSettings: ?any) => (string, any) => (string) => BaseFieldType;
 
 
-export const Field: FieldConstructor = (component=FieldSimpleView, defaultSettings = {}) => settings => name => ({
+export const Field: FieldConstructor = (component=FieldSimpleView, defaultSettings = {}) => (verbose, settings) => name => ({
     name,
     component,
-    verbose: "",
+    verbose,
     props: {
         ...defaultSettings,
         ...settings

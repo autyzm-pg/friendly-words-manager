@@ -17,8 +17,8 @@ export const WordModel = Model({
 })
 
 export const ConfigurationModel = Model({
-    someText: TextField(),
-    someOptionField: OptionField({
+    someText: TextField("Some text"),
+    someOptionField: OptionField("Some option", {
         options: [
             "option1",
             "option2"

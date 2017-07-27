@@ -3,6 +3,7 @@ import {Button, Container, Header, Icon, Tab, TabHeading, Tabs, Text, Left, Titl
 import * as R from "ramda"
 import Page, {PageHeader} from "../components/layout/Page"
 import {WizardStep, WizardStepsContainer} from "../components/steps/WizardSteps"
+import {connect} from "react-redux";
 
 const mapStateToProps = ({wizard}) => ({
     fromStore: {
@@ -10,18 +11,19 @@ const mapStateToProps = ({wizard}) => ({
     }
 })
 
-const WizardPage = ({steps, wizard, history, view}) => (
+const WizardPage = ({wizardView, config, onChange, ...props}) => (
     <Page>
-        <PageHeader onBack={() => history.goBack()}>
+        <PageHeader onBack={() => props.history.goBack()}>
             Nowa konfiguracja
         </PageHeader>
-        <WizardStepsContainer configurationModel={wizard.model} activeConfig={wizard.activeConfig}>
+        <WizardStepsContainer configurationModel={wizardView.model} activeConfig={config}>
             {
-                steps.map(step => <WizardStep key={step.name} step={step}/>)
+                wizardView.steps.map(step => <WizardStep key={step.name} step={step}/>)
             }
         </WizardStepsContainer>
     </Page>
 )
 
+export const _WizardPage = WizardPage;
 
 export default connect(mapStateToProps)(WizardPage)
