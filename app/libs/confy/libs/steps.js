@@ -19,27 +19,30 @@ type WizardViewType = {
     model: ModelType,
     steps: Array<Step>
 }
-type WizardViewFactoryType = ((({[string]: BaseFieldType}) => Array<Step>), ModelType) => WizardViewType
+
+type ViewDefiner = (fields: {[string]: BaseFieldType}) => Array<Step>
+
+type WizardViewFactoryType = (ViewDefiner, ModelType) => WizardViewType
 
 export const WizardView: WizardViewFactoryType = (defineView, model) => ({
     model,
     steps: defineView(model.fields)
 })
 
-
-export const WizardStep: Step = <T: StepView>(name: string, view: T) => ({name, view})
+type WizardStepFactory = (string, StepView) => Step
+export const WizardStep: WizardStepFactory = (name, view) => ({name, view})
 
 export const SectionView = notImplementedFunc
 export const Section = notImplementedFunc
 
 
-export type ColumnType = Array<BaseFieldType>;
+export type ColumnType = Array<BaseFieldType>
+export const Column = (fields: Array<BaseFieldType>) => fields
 
-export const ColumnView = (columns: Array<ColumnType>) => ({
+type ColumnViewFactory = (columns: Array<ColumnType>) => StepView
+export const ColumnView: ColumnViewFactory = columns => ({
     component: StepColumnView,
     props: {
         columns,
     }
 })
-
-export const Column = (fields: Array<BaseFieldType>) => fields
