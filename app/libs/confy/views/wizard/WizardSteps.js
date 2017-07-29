@@ -10,7 +10,7 @@ export const WizardStepsContainer = ({children, configurationModel, activeConfig
     </Tabs>
 )
 
-export const WizardStep = ({name, key, children}) => (
+export const WizardStepView = ({name, key, children}) => (
     <Tab key={key} heading={ <TabHeading><Text>{name}</Text></TabHeading>}>
         {children}
     </Tab>
