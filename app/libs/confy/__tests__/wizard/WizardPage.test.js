@@ -1,8 +1,7 @@
 import * as React from "react"
 import renderer from "react-test-renderer"
-import StepColumnView from "../../components/steps/StepColumnView"
 import {shallow} from "enzyme"
-import {_WizardPage as WizardPage} from "../../containers/WizardPage";
+import {_WizardPage as WizardPage} from "../../views/wizard/WizardPage";
 
 
 describe('Wizard component', () => {

@@ -2,7 +2,7 @@ import React from "react"
 import {Item, List, ListItem, Picker, Right, Text, View} from "native-base"
 import * as R from "ramda"
 
-export default StepListView = ({step, model, activeConfig}) => (
+export default ListPage = ({step, model, activeConfig}) => (
     <View>
         <List>
             {

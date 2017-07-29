@@ -1,7 +1,7 @@
 // @flow
 
 import * as R from "ramda"
-import type {BaseFieldType} from "./fields"
+import type {BaseFieldType} from "./fields/fields"
 
 export type ModelType = {
     fields: { [string]: BaseFieldType }

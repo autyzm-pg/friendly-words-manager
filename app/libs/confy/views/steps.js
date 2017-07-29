@@ -1,3 +1,4 @@
+// @flow
 export type StepView = {
     component: any,
     props: any

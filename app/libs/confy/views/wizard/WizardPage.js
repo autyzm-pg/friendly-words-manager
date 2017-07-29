@@ -1,9 +1,10 @@
 import React from "react"
 import {Button, Container, Header, Icon, Tab, TabHeading, Tabs, Text, Left, Title, Body, Right} from "native-base"
 import * as R from "ramda"
-import Page, {PageHeader} from "../components/layout/Page"
-import {WizardStep, WizardStepsContainer} from "../components/steps/WizardSteps"
+import Page, {PageHeader} from "../../components/layout/Page"
 import {connect} from "react-redux";
+import {WizardStepsContainer} from "./WizardSteps"
+import {WizardStep} from "./wizardView"
 
 const mapStateToProps = ({wizard}) => ({
     fromStore: {

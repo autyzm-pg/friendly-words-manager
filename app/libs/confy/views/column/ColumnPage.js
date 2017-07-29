@@ -1,10 +1,9 @@
 // @flow
 import React from "react"
 import {View} from "native-base"
-import type {ColumnType} from "../../libs/steps"
+import type {ColumnType} from "./columnView"
 
-
-const ColumnView = ({children}) => (
+const Column = ({children}) => (
     <View>
         {children}
     </View>
@@ -15,15 +14,15 @@ type StepColumnViewProps = {
     onChange: () => void
 }
 
-const StepColumnView = ({columns, onChange}: StepColumnViewProps) => (
+const ColumnPage = ({columns, onChange}: StepColumnViewProps) => (
     <View>
         {columns.map((fields, i) => (
-                <ColumnView key={i}>
+                <Column key={i}>
                     {fields.map(Field => <Field.component key={Field.name} onChange={onChange} {...Field.props}/>)}
-                </ColumnView>
+                </Column>
             )
         )}
     </View>
 )
 
-export default StepColumnView
+export default ColumnPage

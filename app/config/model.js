@@ -1,20 +1,12 @@
-import {
-    ArrayField,
-    BoolField, ForeignField, getDefaultModel, ImageChecklistField, IntegerField, ModelListField, MultiColorField,
-    MultiImageOptionField,
-    MultiOptionField, MultiSizeField,
-    ObjectField,
-    OptionField, Select,
-    TextField, UriField
-} from "../libs/confy/libs/fields"
-import {FullStep, Step} from "../libs/confy/libs/steps"
-import {Model} from "../libs/confy/libs/models"
+import {Model} from "../libs/confy/models"
+import {OptionField} from "../libs/confy/fields/options/optionField"
+import {TextField} from "../libs/confy/fields/text/textField"
 
-export const WordModel = Model({
-    name: TextField(),
-    images: ArrayField(UriField()),
-    tags: ArrayField(TextField())
-})
+// export const WordModel = Model({
+//     name: TextField(),
+//     images: ArrayField(UriField()),
+//     tags: ArrayField(TextField())
+// })
 
 export const ConfigurationModel = Model({
     someText: TextField("Some text"),

@@ -5,7 +5,7 @@ const styles = {
     "wrapper": {flex: 1, flexDirection: "row", justifyContent: "space-between"}
 }
 
-export default FieldPickerView = ({verbose, options, value, onChange}) => (
+export default PickerInput = ({verbose, options, value, onChange}) => (
     <View>
         <Text>{verbose}</Text>
         <View>

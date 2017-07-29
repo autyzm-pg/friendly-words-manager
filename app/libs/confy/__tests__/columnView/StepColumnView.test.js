@@ -1,9 +1,9 @@
 import * as React from "react"
 import renderer from "react-test-renderer"
-import StepColumnView from "../../components/steps/StepColumnView"
 import {shallow} from "enzyme"
+import StepColumnView from "../../views/column/ColumnPage"
 
-describe('StepColumnView component', () => {
+describe('ColumnPage component', () => {
     const dummyOnChange = () => undefined
 
     it("renders at all", () => {

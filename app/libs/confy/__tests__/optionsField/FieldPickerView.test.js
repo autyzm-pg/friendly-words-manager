@@ -2,9 +2,9 @@ import 'react-native'
 import React from 'react'
 
 import renderer from "react-test-renderer"
-import FieldPickerView from "../../components/fields/FieldPickerView";
+import FieldPickerView from "../../fields/options/PickerInput";
 
-describe('FieldPickerView component', () => (
+describe('PickerInput component', () => (
     it("renders at all", () => {
         const tree = renderer.create(
             <FieldPickerView value="" onChange={() => undefined} verbose="" options={[]}/>
