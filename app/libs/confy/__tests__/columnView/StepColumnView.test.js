@@ -3,7 +3,7 @@ import renderer from "react-test-renderer"
 import {shallow} from "enzyme"
 import ColumnPage from "../../views/column/ColumnPage"
 
-describe(' component', () => {
+describe('ColumnPage component', () => {
     const dummyOnChange = () => undefined
     const dummyConfig = {}
 
