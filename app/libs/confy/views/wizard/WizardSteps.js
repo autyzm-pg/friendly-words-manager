@@ -2,10 +2,10 @@ import React from "react"
 import {Content, List, ListItem, Right, TabHeading, Tabs, Tab, Text, View} from "native-base"
 import * as R from "ramda"
 
-export const WizardStepsContainer = ({children, configurationModel, activeConfig}) => (
+export const WizardStepsContainer = ({children}) => (
     <Tabs>
         {
-            React.Children.map(children, child => child.type({configurationModel, activeConfig, ...child.props}))
+            React.Children.map(children, child => child.type({...child.props}))
         }
     </Tabs>
 )

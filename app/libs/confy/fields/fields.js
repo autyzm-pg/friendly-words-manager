@@ -1,6 +1,7 @@
 // @flow
 import FieldSimpleView from "./text/TextInput"
 import * as R from "ramda"
+import * as React from "react"
 
 export type BaseFieldType = {
     name: string,
@@ -20,6 +21,9 @@ export const Field: FieldConstructor = (component = FieldSimpleView, defaultSett
     }
 })
 
+export const renderField = (config: *, onChange: (string) => () => void) => (Field: BaseFieldType) =>(
+    <Field.component value={config[Field.name]} key={Field.name} onChange={onChange(Field.name)} {...Field.props}/>
+)
 
 
 

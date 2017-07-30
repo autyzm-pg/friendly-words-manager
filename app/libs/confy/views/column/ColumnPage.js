@@ -2,6 +2,8 @@
 import React from "react"
 import {View} from "native-base"
 import type {ColumnType} from "./columnView"
+import type {StepPageProps} from "../steps"
+import {renderField} from "../../fields/fields"
 
 const Column = ({children}) => (
     <View>
@@ -10,15 +12,14 @@ const Column = ({children}) => (
 )
 
 type StepColumnViewProps = {
-    columns: Array<ColumnType>,
-    onChange: () => void
-}
+    columns: Array<ColumnType>
+} & StepPageProps
 
-const ColumnPage = ({columns, onChange}: StepColumnViewProps) => (
+const ColumnPage = ({columns, onChange, config}: StepColumnViewProps) => (
     <View>
         {columns.map((fields, i) => (
                 <Column key={i}>
-                    {fields.map(Field => <Field.component key={Field.name} onChange={onChange} {...Field.props}/>)}
+                    {fields.map(renderField(config, onChange))}
                 </Column>
             )
         )}
