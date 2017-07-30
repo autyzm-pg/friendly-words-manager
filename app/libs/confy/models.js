@@ -1,15 +1,16 @@
 // @flow
-
 import * as R from "ramda"
-import type {BaseFieldType} from "./fields/fields"
 
-export type ModelType = {
-    fields: { [string]: BaseFieldType }
+type ExtractTypeFunc = <V>((string) => V) => V
+export type ModelType<M> = {
+    fields: $ObjMap<M, ExtractTypeFunc>
 }
 
-type ModelFactoryType = (configDefinition: {[string]: (name:string) => BaseFieldType}) => ModelType
+// type ModelFactoryType<M> = (M) => ({
+//     fields: ModelType<M>
+// })
 
-export const Model: ModelFactoryType = configDefinition => ({
+export const Model = <M>(configDefinition: M): ModelType<M> => ({
     fields: R.compose(
         R.fromPairs,
         R.map(([fieldName, fieldFunc]) => [fieldName, fieldFunc(fieldName)]),

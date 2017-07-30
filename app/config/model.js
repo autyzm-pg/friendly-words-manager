@@ -1,3 +1,4 @@
+// @flow
 import {Model} from "../libs/confy/models"
 import {OptionField} from "../libs/confy/fields/options/optionField"
 import {TextField} from "../libs/confy/fields/text/textField"

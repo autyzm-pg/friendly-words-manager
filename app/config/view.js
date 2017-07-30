@@ -1,3 +1,4 @@
+// @flow
 import {ConfigurationModel} from "./model"
 import {WizardStep, WizardView} from "../libs/confy/views/wizard/wizardView"
 import {Column, ColumnView} from "../libs/confy/views/column/columnView"
