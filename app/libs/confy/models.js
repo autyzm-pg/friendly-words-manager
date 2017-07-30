@@ -15,5 +15,12 @@ export const Model = <M>(configDefinition: M): ModelType<M> => ({
         R.fromPairs,
         R.map(([fieldName, fieldFunc]) => [fieldName, fieldFunc(fieldName)]),
         R.toPairs
-    )(configDefinition)
+    )(configDefinition),
+    getDefaultConfig: function () {
+        return R.compose(
+            R.fromPairs,
+            R.map(([fieldName, field]) => [fieldName, field.getDefaultValue()]),
+            R.toPairs
+        )(this.fields)
+    }
 })

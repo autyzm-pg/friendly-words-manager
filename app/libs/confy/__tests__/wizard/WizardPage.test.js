@@ -9,7 +9,7 @@ describe('Wizard component', () => {
 
     it("renders at all", () => {
         const tree = renderer.create(
-            <WizardPage wizardView={{steps: []}} onChange={dummyOnChange} config={{}}/>
+            <WizardPage steps={[]} onChange={dummyOnChange} config={{}}/>
         ).toJSON()
         expect(tree).toBeTruthy()
     })
@@ -20,9 +20,9 @@ describe('Wizard component', () => {
                 component: () => undefined
             }
         }
-        const wizardViewMock = {steps: [step]}
+        const wizardViewMock = [step]
 
-        const wrapper = shallow(<WizardPage wizardView={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
+        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
         expect(wrapper.find(step.view.component)).toHaveLength(1)
     })
 
@@ -36,9 +36,9 @@ describe('Wizard component', () => {
                 }
             }
         }
-        const wizardViewMock = {steps: [step]}
+        const wizardViewMock = [step]
 
-        const wrapper = shallow(<WizardPage wizardView={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
+        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
 
         expect(wrapper.find(step.view.component).props()).toHaveProperty('prop1', step.view.props.prop1)
         expect(wrapper.find(step.view.component).props()).toHaveProperty('prop2', step.view.props.prop2)
@@ -50,9 +50,9 @@ describe('Wizard component', () => {
                 component: () => undefined
             }
         }
-        const wizardViewMock = {steps: [step]}
+        const wizardViewMock = [step]
 
-        const wrapper = shallow(<WizardPage wizardView={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
+        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
 
         expect(wrapper.find(step.view.component).props()).toHaveProperty('onChange', dummyOnChange)
     })
@@ -63,10 +63,10 @@ describe('Wizard component', () => {
                 component: () => undefined
             }
         }
-        const wizardViewMock = {steps: [step]}
+        const wizardViewMock = [step]
         const someConfig = {}
 
-        const wrapper = shallow(<WizardPage wizardView={wizardViewMock} config={someConfig} onChange={dummyOnChange}/>)
+        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={someConfig} onChange={dummyOnChange}/>)
 
         expect(wrapper.find(step.view.component).props()).toHaveProperty('config', someConfig)
     })

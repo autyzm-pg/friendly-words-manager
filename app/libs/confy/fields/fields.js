@@ -18,11 +18,14 @@ export const Field: FieldConstructor = (component = FieldSimpleView, defaultSett
     props: {
         ...defaultSettings,
         ...settings
+    },
+    getDefaultValue: function() {
+        return this.props.def
     }
 })
 
 export const renderField = (config: *, onChange: (string) => () => void) => (Field: BaseFieldType) =>(
-    <Field.component value={config[Field.name]} key={Field.name} onChange={onChange(Field.name)} {...Field.props}/>
+    <Field.component value={config[Field.name]} key={Field.name} onChange={onChange([Field.name])} {...Field.props}/>
 )
 
 

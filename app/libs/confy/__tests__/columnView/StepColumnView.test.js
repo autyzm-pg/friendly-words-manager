@@ -96,7 +96,7 @@ describe('ColumnPage component', () => {
 
         shallow(<ColumnPage columns={columns} onChange={onChangeHandler} config={dummyConfig}/>)
 
-        expect(onChangeHandler).toBeCalledWith(field.name)
+        expect(onChangeHandler).toBeCalledWith([field.name])
     })
 
     it("Gives current value from a config to a corresponding field component", () => {
