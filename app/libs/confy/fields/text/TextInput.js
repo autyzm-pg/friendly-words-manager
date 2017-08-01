@@ -1,11 +1,21 @@
+// @flow
 import React from "react"
-import {Right, Text, View} from "native-base"
+import {Form, Input, Item, Left, Right, Text, View} from "native-base"
+import type {FieldProps} from "../fields"
 
-export default TextInput = ({field, value, verbose}) => (
-    <View>
-        <Text>{verbose}</Text>
+type TextInputProps = {placeholder: ?string} & FieldProps<string>
+
+const TextInput = ({value, verbose, onChange, placeholder}: TextInputProps) => (
+    <Form>
+        <Left>
+            <Text>{verbose}</Text>
+        </Left>
         <Right>
-            <Text>{value.toString()}</Text>
+            <Item regular>
+                <Input placeholder={placeholder} value={value} onChange={onChange}/>
+            </Item>
         </Right>
-    </View>
+    </Form>
 )
+
+export default TextInput
