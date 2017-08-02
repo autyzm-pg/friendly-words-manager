@@ -9,7 +9,7 @@ describe('Wizard component', () => {
 
     it("renders at all", () => {
         const tree = renderer.create(
-            <WizardPage steps={[]} onChange={dummyOnChange} config={{}}/>
+            <WizardPage steps={[]} onFieldChange={dummyOnChange} config={{}}/>
         ).toJSON()
         expect(tree).toBeTruthy()
     })
@@ -22,7 +22,7 @@ describe('Wizard component', () => {
         }
         const wizardViewMock = [step]
 
-        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
+        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onFieldChange={dummyOnChange}/>)
         expect(wrapper.find(step.view.component)).toHaveLength(1)
     })
 
@@ -38,7 +38,7 @@ describe('Wizard component', () => {
         }
         const wizardViewMock = [step]
 
-        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
+        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onFieldChange={dummyOnChange}/>)
 
         expect(wrapper.find(step.view.component).props()).toHaveProperty('prop1', step.view.props.prop1)
         expect(wrapper.find(step.view.component).props()).toHaveProperty('prop2', step.view.props.prop2)
@@ -52,7 +52,7 @@ describe('Wizard component', () => {
         }
         const wizardViewMock = [step]
 
-        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onChange={dummyOnChange}/>)
+        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={{}} onFieldChange={dummyOnChange}/>)
 
         expect(wrapper.find(step.view.component).props()).toHaveProperty('onChange', dummyOnChange)
     })
@@ -66,7 +66,7 @@ describe('Wizard component', () => {
         const wizardViewMock = [step]
         const someConfig = {}
 
-        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={someConfig} onChange={dummyOnChange}/>)
+        const wrapper = shallow(<WizardPage steps={wizardViewMock} config={someConfig} onFieldChange={dummyOnChange}/>)
 
         expect(wrapper.find(step.view.component).props()).toHaveProperty('config', someConfig)
     })

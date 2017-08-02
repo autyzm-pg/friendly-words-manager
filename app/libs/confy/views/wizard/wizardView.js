@@ -3,7 +3,7 @@ import type {ModelType} from "../../models"
 import type {Step, StepView} from "../steps"
 
 
-type WizardViewType<M> = {
+export type WizardViewType<M> = {
     model: M,
     steps: Array<Step>
 }

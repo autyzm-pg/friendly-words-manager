@@ -19,5 +19,5 @@ export const changeField = (fieldPath, value) => ({
 })
 
 export const mapDispatchToProps = dispatch => ({
-    onChange: fieldPath => value => dispatch(changeField(fieldPath, value))
+    onFieldChange: fieldPath => value => dispatch(changeField(fieldPath, value))
 })

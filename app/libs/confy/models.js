@@ -3,7 +3,8 @@ import * as R from "ramda"
 
 type ExtractTypeFunc = <V>((string) => V) => V
 export type ModelType<M> = {
-    fields: $ObjMap<M, ExtractTypeFunc>
+    fields: $ObjMap<M, ExtractTypeFunc>,
+    getDefaultConfig: () => any
 }
 
 // type ModelFactoryType<M> = (M) => ({
