@@ -100,4 +100,33 @@ describe("withRedux HOC", () => {
 
         expect(mapStateToProps.mock.calls[1]).toEqual([expectedStoreValue, {}])
     })
+
+    it("dispatch invokes reducer with valid action and previous state", () => {
+        const someAction = "some action"
+        const initialState = "initial state"
+        const reducer = jest.fn().mockReturnValue(initialState)
+
+        const Component = withRedux(reducer, undefined, undefined, initialState)(dummyComponent)
+
+        const wrapper = shallow(<Component/>)
+        wrapper.instance().dispatch(someAction)
+
+        expect(reducer.mock.calls[1]).toEqual([initialState, someAction])
+    })
+
+    it("dispatch invokes setState with valid value received from reducer", () => {
+        const newState = "some new state"
+        const reducer = jest.fn().mockReturnValue(undefined).mockReturnValue(newState)
+        const setState = jest.fn()
+
+        const Component = withRedux(reducer)(dummyComponent)
+
+        const wrapper = shallow(<Component/>)
+        wrapper.instance().setState = setState
+        wrapper.instance().dispatch(undefined)
+
+        const [stateChangeFunction] = setState.mock.calls[0]
+
+        expect(stateChangeFunction({field1: "Some previousValue of the state"})).toEqual({store: newState})
+    })
 })

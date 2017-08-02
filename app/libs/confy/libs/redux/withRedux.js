@@ -11,13 +11,12 @@ export const withRedux = (reducer=()=>undefined, mapStateToProps=()=>({}), mapDi
         }
 
         dispatch(action) {
-            this.setState((prevState) => {store: reducer(prevState.store, action)})
+            this.setState((prevState) => ({store: reducer(prevState.store, action)}))
         }
 
         render() {
             const newProps = mapStateToProps(this.state.store, this.props)
             const dispatchProps = mapDispatchToProps(this.dispatch, {...this.props, ...newProps})
-
             return (
                 <Component {...newProps} {...dispatchProps} {...this.props}/>
             )

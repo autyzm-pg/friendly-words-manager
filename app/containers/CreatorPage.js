@@ -1,13 +1,15 @@
 import React from "react"
 import {Container, Content, Header, Body, Title, Button, Text, Tab, Tabs, TabHeading, Icon, Left} from 'native-base'
-import WizardPage from "../libs/confy/views/wizard/WizardPage"
+import {createWizardPage} from "../libs/confy/views/wizard/WizardPage"
 
-import {connect} from "react-redux"
-import {Steps} from "../config/model"
 import {ConfigurationWizardView} from "../config/view"
 
-const CreatorPage = ({}) => (
-    <WizardPage view={ConfigurationWizardView}/>
+
+const WizardPage = createWizardPage(ConfigurationWizardView)
+
+let wizard;
+const CreatorPage = ({history}) => (
+    <WizardPage ref={ref => wizard = ref} history={history}/>
 )
 
 export default CreatorPage

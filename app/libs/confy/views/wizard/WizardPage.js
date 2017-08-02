@@ -27,6 +27,6 @@ const WizardPage = ({steps, config, onChange, ...props}) => (
 export const _WizardPage = WizardPage
 
 export const createWizardPage = wizardView => R.compose(
+    withRedux(reducer(wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps),
     withProps({steps: wizardView.steps}),
-    withRedux(reducer(wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps)
 )(WizardPage)
