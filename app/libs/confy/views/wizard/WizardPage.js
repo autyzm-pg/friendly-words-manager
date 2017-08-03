@@ -10,10 +10,14 @@ import withProps from "../../libs/withProps"
 import type {Step} from "../steps"
 import type {WizardViewType} from "./wizardView"
 import type {ModelType} from "../../models"
+import {Modal} from "react-native"
+import withModal from "../../libs/withModal"
+import {withLog} from "../../libs/debug"
 
 type WizardPagePropsFromUser = {
     onSave: <T>(string, T) => void,
-    history: any
+    history: any,
+    name: string,
 }
 
 type WizardPageProps<T> = {
@@ -22,10 +26,12 @@ type WizardPageProps<T> = {
     steps: Array<Step>
 } & WizardPagePropsFromUser
 
-const WizardPage = ({steps, config, onFieldChange, onSave, ...props}: WizardPageProps<*>) => (
+const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props, modal}: WizardPageProps<*>) => (
     <Page>
-        <PageHeader onBack={() => props.history.goBack()}>
-            Nowa konfiguracja
+        <PageHeader onBack={() => props.history.goBack()} header={name}>
+            <Button transparent onPress={() => modal.show()}>
+                <Icon name="checkmark"/>
+            </Button>
         </PageHeader>
         <WizardStepsContainer>
             {
@@ -45,4 +51,6 @@ export const _WizardPage = WizardPage
 export const createWizardPage = <T: {}, M: ModelType<T>>(wizardView: WizardViewType<M>)=> R.compose(
     withRedux(reducer(wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps),
     withProps({steps: wizardView.steps}),
+    withModal(),
+    withLog,
 )(WizardPage)
