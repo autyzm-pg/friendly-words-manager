@@ -2,7 +2,7 @@ import React from "react"
 import {Body, Button, Container, Header, Icon, Left, Right, Title} from "native-base"
 
 export default Page = ({children}) => (
-    <Container style={{paddingTop: 22}}>
+    <Container>
         {children}
     </Container>
 )

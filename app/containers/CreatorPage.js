@@ -9,7 +9,7 @@ const WizardPage = createWizardPage(ConfigurationWizardView)
 
 let wizard;
 const CreatorPage = ({history}) => (
-    <WizardPage ref={ref => wizard = ref} history={history}/>
+    <WizardPage ref={ref => wizard = ref} name="Nowa konfiguracja" history={history}/>
 )
 
 export default CreatorPage
