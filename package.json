@@ -1,7 +1,13 @@
 {
   "name": "FriendlyLinesManager",
   "version": "0.1.0",
+  "description": "Hello Expo!",
+  "author": null,
   "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "test": "node node_modules/jest/bin/jest.js --watch"
+  },
   "devDependencies": {
     "babel-jest": "^20.0.3",
     "enzyme": "^2.9.1",
@@ -11,13 +17,15 @@
     "react-native-scripts": "0.0.31",
     "react-test-renderer": "16.0.0-alpha.6"
   },
-  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
-  "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
-    "test": "node node_modules/jest/bin/jest.js --watch"
+  "dependencies": {
+    "expo": "^19.0.0",
+    "native-base": "^2.1.5",
+    "ramda": "^0.24.1",
+    "react": "16.0.0-alpha.12",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
+    "react-redux": "^5.0.5",
+    "react-router-native": "^4.1.1",
+    "redux": "^3.6.0"
   },
   "jest": {
     "preset": "jest-expo",
@@ -27,15 +35,5 @@
     "transformIgnorePatterns": [
       "node_modules/(?!react|@expo|expo|native-base|@shoutem)"
     ]
-  },
-  "dependencies": {
-    "expo": "^19.0.0",
-    "native-base": "^2.1.5",
-    "ramda": "^0.24.1",
-    "react": "^16.0.0-alpha.6",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
-    "react-redux": "^5.0.5",
-    "react-router-native": "^4.1.1",
-    "redux": "^3.6.0"
   }
 }
