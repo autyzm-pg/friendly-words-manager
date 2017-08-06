@@ -10,7 +10,7 @@ export default withState = (initialState = {}, stateToProps = () => ({}), setSta
         render() {
             const stateProps = stateToProps(this.state, this.props)
             const handlersProps = setStateToProps(this.setState.bind(this), {...stateProps,  ...this.props})
-            return <Component {...stateProps} {handlersProps} {...this.props}/>
+            return <Component {...stateProps} {...handlersProps} {...this.props}/>
         }
 
     }

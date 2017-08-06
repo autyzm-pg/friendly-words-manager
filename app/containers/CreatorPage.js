@@ -3,13 +3,17 @@ import {Container, Content, Header, Body, Title, Button, Text, Tab, Tabs, TabHea
 import {createWizardPage} from "../libs/confy/views/wizard/WizardPage"
 
 import {ConfigurationWizardView} from "../config/view"
+import * as R from "ramda"
 
+const onSave = R.curry((history, config, name) => {
+    console.log("ZAPISANO!!!", config, name)
+    history.push("/configurations")
+})
 
 const WizardPage = createWizardPage(ConfigurationWizardView)
 
-let wizard;
 const CreatorPage = ({history}) => (
-    <WizardPage ref={ref => wizard = ref} name="Nowa konfiguracja" history={history}/>
+    <WizardPage name="Nowa konfiguracja" onBack={() => history.back()} onSave={onSave(history)}/>
 )
 
 export default CreatorPage
