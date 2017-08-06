@@ -15,15 +15,15 @@ import type {WizardViewType} from "./wizardView"
 import type {ModelType} from "../../models"
 import withModal from "../../libs/withModal"
 import {renderField} from "../../fields/fields"
-import withState from "../../libs/withState"
+import {withLink} from "../../libs/withState"
 
 
-const enhance = component => currentName => withState({name: currentName}, state => ({name: state.name}), setState => ({onChange: val => setState({name: val})}))(component)
-const WizardSaveModal = enhance(({name, onChange, onSave}) => (
+const enhance = component => currentName => withLink("name", currentName)(component)
+const WizardSaveModal = enhance(({name, nameChange, onSave}) => (
     <Form>
         <Text>Podaj nazwę</Text>
         <Item regular>
-            <Input value={name} onChangeText={onChange}/>
+            <Input value={name} onChangeText={nameChange}/>
         </Item>
         <Button transparent onPress={() => onSave(name)}>
             <Icon name="checkmark"/>
