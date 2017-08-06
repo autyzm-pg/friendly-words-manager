@@ -13,6 +13,7 @@ import type {ModelType} from "../../models"
 import {Modal} from "react-native"
 import withModal from "../../libs/withModal"
 import {withLog} from "../../libs/debug"
+import {renderField} from "../../fields/fields"
 
 type WizardPagePropsFromUser = {
     onSave: <T>(string, T) => void,
@@ -37,7 +38,7 @@ const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props, modal
             {
                 steps.map(Step => (
                     <WizardStepView key={Step.name} name={Step.name}>
-                        <Step.view.component onChange={onFieldChange} {...Step.view.props} config={config}/>
+                        <Step.view.component renderField={renderField(config, onFieldChange)} {...Step.view.props} config={config}/>
                     </WizardStepView>
                 ))
             }

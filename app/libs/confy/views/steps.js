@@ -1,5 +1,6 @@
 // @flow
 import * as React from "react"
+import type {BaseFieldType} from "../fields/fields"
 
 export type StepView = {
     component: any,
@@ -14,6 +15,6 @@ export type Step = {
 export type ChangeHandler = (string) => () => void
 
 export type StepPageProps = {
-    onChange: ChangeHandler,
-    config: *
+    config: *,
+    renderField: (BaseFieldType) => any
 }
