@@ -1,10 +1,7 @@
 import {createReducer} from "../../../reducers"
 import * as R from "ramda"
-import {withLog} from "../../libs/debug"
 
 const fieldChangeActionType = "_WIZARD_CHANGE_FIELD"
-
-
 
 export const reducer = (defaultConfig) => createReducer(defaultConfig, {
     [fieldChangeActionType]: (config, {payload, fieldPath}) => R.set(R.lensPath(fieldPath), payload, config)

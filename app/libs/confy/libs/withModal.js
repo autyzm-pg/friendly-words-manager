@@ -1,18 +1,5 @@
 import {Modal, StatusBar, Text, View} from "react-native"
 import * as React from "react"
-import {withLog} from "./debug"
-import {Dimensions} from "react-native"
-
-// const Modal = ({children}) => {
-//     console.log(Dimensions.get('window'))
-//     return <View style={styles.wrapper}>
-//         <View style={styles.internal(Dimensions.get('window'))}>
-//             {children}
-//         </View>
-//     </View>
-// }
-//
-
 
 const CustomModal = ({children, visible, onRequestClose}) => (
     <Modal animationType={"slide"}

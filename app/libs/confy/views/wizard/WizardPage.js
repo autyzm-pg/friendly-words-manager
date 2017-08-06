@@ -14,7 +14,6 @@ import type {Step} from "../steps"
 import type {WizardViewType} from "./wizardView"
 import type {ModelType} from "../../models"
 import withModal from "../../libs/withModal"
-import {withLog} from "../../libs/debug"
 import {renderField} from "../../fields/fields"
 import withState from "../../libs/withState"
 
@@ -80,5 +79,4 @@ export const createWizardPage = <T: {}, M: ModelType<T>>(wizardView: WizardViewT
     withRedux(reducer(wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps),
     withProps({steps: wizardView.steps}),
     withModal(),
-    withLog,
 )(WizardPage)
