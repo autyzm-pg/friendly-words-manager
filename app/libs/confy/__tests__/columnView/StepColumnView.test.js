@@ -1,5 +1,5 @@
 import * as React from "react"
-import renderer from "react-test-renderer"
+
 import {shallow} from "enzyme"
 import ColumnPage from "../../views/column/ColumnPage"
 
@@ -10,9 +10,9 @@ describe('ColumnPage component', () => {
     it("renders at all", () => {
         const columns = []
 
-        const tree = renderer.create(
+        const tree = shallow(
             <ColumnPage columns={columns} onChange={dummyOnChange} config={dummyConfig}/>
-        ).toJSON()
+        )
         expect(tree).toBeTruthy()
     })
 

@@ -1,5 +1,5 @@
 import * as React from "react"
-import renderer from "react-test-renderer"
+
 import {shallow} from "enzyme"
 import {_WizardPage as WizardPage} from "../../views/wizard/WizardPage";
 
@@ -8,9 +8,9 @@ describe('Wizard component', () => {
     const dummyOnChange = () => undefined
 
     it("renders at all", () => {
-        const tree = renderer.create(
+        const tree = shallow(
             <WizardPage steps={[]} onFieldChange={dummyOnChange} config={{}}/>
-        ).toJSON()
+        )
         expect(tree).toBeTruthy()
     })
 

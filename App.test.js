@@ -1,9 +1,9 @@
 import React from 'react';
 import App from './App';
 
-import renderer from 'react-test-renderer';
+import {shallow} from "enzyme"
 
 it('renders without crashing', () => {
-  const rendered = renderer.create(<App />).toJSON();
+  const rendered = shallow(<App />);
   expect(rendered).toBeTruthy();
 });
