@@ -22,7 +22,7 @@ import {ConfigElem} from "../components/configurations/ConfigList"
 import ConfigList from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
 import * as R from "ramda"
-import {changeConfigsSearchQuery, changeActiveConfig} from "../actions/configurationsActions"
+import {changeConfigsSearchQuery, changeActiveConfig} from "../redux/configurations/actions"
 
 const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChange, changeActiveConfig}) =>
     <Container>
@@ -41,7 +41,7 @@ const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChang
         <Content keyboardShouldPersistTaps="handled">
             <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
                 {configurations.map(config => (
-                    <ConfigElem key={config} item={config}/>
+                    <ConfigElem key={config.name} item={config.name}/>
                 ))}
             </ConfigList>
             <Button onPress={() => changeActiveConfig("Maciej Paciej")}><Text>Zmień aktywną konfigurację</Text></Button>
@@ -53,7 +53,7 @@ const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChang
     </Container>
 
 const stateToProps = ({configurations}) => ({
-    configurations: configurations.all.filter(name => name.toLowerCase().includes(configurations.searchQuery)),
+    configurations: configurations.all.filter(({name}) => name.toLowerCase().includes(configurations.searchQuery)),
     searchQuery: configurations.searchQuery
 })
 

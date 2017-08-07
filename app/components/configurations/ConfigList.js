@@ -10,7 +10,7 @@ import {View} from "react-native"
 import SearchBar from "../lists/SearchBar"
 
 export const ConfigElem = ({item}) => (
-    <ListItem key={item}>
+    <ListItem>
         <Text>{item}</Text>
         <Right>
             <Icon name="more"/>
