@@ -3,7 +3,7 @@ import R from "ramda"
 import configActions from "./actionTypes"
 
 const defaultState = {
-    all: [ {
+    all: [{
         name: "testowa",
         config: {}
     }],
@@ -12,6 +12,7 @@ const defaultState = {
 }
 
 const changeAllList = R.over(R.lensProp('all'))
+const removeConfigFromList = name => R.filter(config => config.name !== name)
 const addConfigToList = (name, config) => R.append({
     name,
     config
@@ -20,8 +21,11 @@ const addConfigToList = (name, config) => R.append({
 const handlers = {
     [configActions.listQueryChange]: (state, action) => R.assoc('searchQuery', action.payload.toLowerCase(), state),
     [configActions.listActiveConfigChange]: (state, action) => R.assoc('active', action.payload, state),
-    [configActions.saveConfig]: (state, action) => changeAllList(addConfigToList(action.payload.name, action.payload.config), state)
+    [configActions.saveConfig]: (state, action) => R.compose(
+        changeAllList(addConfigToList(action.payload.name, action.payload.config)),
+        changeAllList(removeConfigFromList(action.payload.name))
+    )(state)
 }
 
-export const _handlers = handlers;
+export const _handlers = handlers
 export default createReducer(defaultState, handlers)

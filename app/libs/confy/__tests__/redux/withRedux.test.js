@@ -2,6 +2,7 @@ import * as React from "react"
 
 import {shallow} from "enzyme"
 import {withRedux} from "../../libs/redux/withRedux"
+import {View} from "react-native-mock"
 
 describe("withRedux HOC", () => {
     const dummyComponent = () => undefined
@@ -101,15 +102,28 @@ describe("withRedux HOC", () => {
         expect(mapStateToProps.mock.calls[1]).toEqual([expectedStoreValue, {}])
     })
 
+    class TestComponent extends React.Component {
+        render() {
+            return (<View/>)
+        }
+    }
+
+    it("is an instance", () => {
+        const wrapper = shallow(<TestComponent/>)
+        const inst = wrapper.instance();
+        expect(inst).toBeTruthy();
+    })
+
     it("dispatch invokes reducer with valid action and previous state", () => {
         const someAction = "some action"
         const initialState = "initial state"
         const reducer = jest.fn().mockReturnValue(initialState)
 
         const Component = withRedux(reducer, undefined, undefined, initialState)(dummyComponent)
-
         const wrapper = shallow(<Component/>)
         wrapper.instance().dispatch(someAction)
+
+
 
         expect(reducer.mock.calls[1]).toEqual([initialState, someAction])
     })
