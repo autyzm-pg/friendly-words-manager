@@ -1,5 +1,6 @@
 export default configActions = {
-    listQueryChange: "listQueryChange",
-    listActiveConfigChange: "listActiveConfigChange",
-    saveConfig: "saveConfig",
+    listQueryChange: "CHANGE_QUERY",
+    listActiveConfigChange: "CHANGE_ACTIVE_CONFIG",
+    saveConfig: "SAVE_CONFIG",
+    saveConfigFulfilled: "SAVE_CONFIG_FULFILLED"
 }

@@ -1,17 +1,18 @@
-
 import configActions from "./actionTypes"
 
 export const changeConfigsSearchQuery = (newQuery) => ({type: configActions.listQueryChange, payload: newQuery})
-export const changeActiveConfig = (activeConfig) => ({type: configActions.listActiveConfigChange, payload: activeConfig})
+export const changeActiveConfig = (activeConfig) => ({
+    type: configActions.listActiveConfigChange,
+    payload: activeConfig
+})
 
-export const saveConfig = (name, config) => {
 
-
-    return ({
-        type: configActions.saveConfig,
-        payload: {
-            name,
-            config
-        }
-    })
-}
+const saveConfigFactory = action => (name, config) => ({
+    type: action,
+    payload: {
+        name,
+        config
+    }
+})
+export const saveConfig = saveConfigFactory(configActions.saveConfig)
+export const saveConfigFinish = saveConfigFactory(configActions.saveConfigFulfilled)
