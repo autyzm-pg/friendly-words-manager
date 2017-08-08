@@ -4,6 +4,7 @@ import store from "./app/config/store"
 import Layout from "./app/components/containers/Layout"
 import Router from "./app/config/routes"
 import Expo from 'expo'
+import {Root} from "native-base"
 
 export default class App extends React.Component {
     state = {
@@ -22,15 +23,17 @@ export default class App extends React.Component {
 
     render() {
         if (!this.state.isReady) {
-            return <Expo.AppLoading />
+            return <Expo.AppLoading/>
         }
 
         return (
-            <Provider store={store}>
-                <Layout>
-                    <Router/>
-                </Layout>
-            </Provider>
+            <Root>
+                <Provider store={store}>
+                    <Layout>
+                        <Router/>
+                    </Layout>
+                </Provider>
+            </Root>
         )
     }
 }
