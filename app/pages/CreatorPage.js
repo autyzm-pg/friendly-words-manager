@@ -16,7 +16,7 @@ const onSave = R.curry((handler, history, config, name) => {
 const WizardPage = createWizardPage(ConfigurationWizardView)
 
 const CreatorPage = ({history, saveConfig}) => (
-    <WizardPage name="Nowa konfiguracja" onBack={() => history.back()} onSave={onSave(saveConfig, history)}/>
+    <WizardPage name="Nowa konfiguracja" onBack={() => history.push("/configurations")} onSave={onSave(saveConfig, history)}/>
 )
 
 const dispatchToProps = dispatch => ({

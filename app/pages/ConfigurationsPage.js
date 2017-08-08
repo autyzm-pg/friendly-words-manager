@@ -28,7 +28,7 @@ const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChang
     <Container>
         <Header>
             <Left>
-                <Button transparent onPress={() => history.goBack()}>
+                <Button transparent onPress={() => history.push("/")}>
                     <Icon name='arrow-back'/>
                 </Button>
             </Left>
