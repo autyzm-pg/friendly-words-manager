@@ -1,6 +1,6 @@
-export default configActions = {
-    listQueryChange: "CHANGE_QUERY",
-    listActiveConfigChange: "CHANGE_ACTIVE_CONFIG",
-    saveConfig: "SAVE_CONFIG",
-    saveConfigFulfilled: "SAVE_CONFIG_FULFILLED"
-}
+export const listQueryChange = "CHANGE_QUERY"
+export const listActiveConfigChange = "CHANGE_ACTIVE_CONFIG"
+export const saveConfig = "SAVE_CONFIG"
+export const saveConfigFulfilled = "SAVE_CONFIG_FULFILLED"
+export const loadingConfigs = "LOAD_CONFIGS"
+export const loadingConfigsFulfilled = "LOAD_CONFIGS_FULFILLED"

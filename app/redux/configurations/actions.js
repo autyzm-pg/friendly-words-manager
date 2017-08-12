@@ -1,8 +1,9 @@
-import configActions from "./actionTypes"
+import * as configActionsTypes from "./actionTypes"
+import {plainAction} from "../actions"
 
-export const changeConfigsSearchQuery = (newQuery) => ({type: configActions.listQueryChange, payload: newQuery})
+export const changeConfigsSearchQuery = (newQuery) => ({type: configActionsTypes.listQueryChange, payload: newQuery})
 export const changeActiveConfig = (activeConfig) => ({
-    type: configActions.listActiveConfigChange,
+    type: configActionsTypes.listActiveConfigChange,
     payload: activeConfig
 })
 
@@ -14,5 +15,8 @@ const saveConfigFactory = action => (name, config) => ({
         config
     }
 })
-export const saveConfig = saveConfigFactory(configActions.saveConfig)
-export const saveConfigFinish = saveConfigFactory(configActions.saveConfigFulfilled)
+export const saveConfig = saveConfigFactory(configActionsTypes.saveConfig)
+export const saveConfigFinish = saveConfigFactory(configActionsTypes.saveConfigFulfilled)
+
+export const loadConfigs = plainAction(configActionsTypes.loadingConfigs)
+export const loadConfigsFinish = configs => ({type: configActionsTypes.loadingConfigsFulfilled, payload: configs})

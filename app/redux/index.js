@@ -1,9 +1,15 @@
 import configurationsReducer from "./configurations/reducers"
-import {saveConfigEpic} from "./configurations/epics"
 import { combineEpics } from 'redux-observable'
+import configEpics from "./configurations/epics"
+import appEpics from "./app/epics"
+import appReducer from "./app/reducers"
 
 export const reducers = {
-    configurations: configurationsReducer
+    configurations: configurationsReducer,
+    app: appReducer
 }
 
-export const rootEpic = saveConfigEpic
+export const rootEpic = combineEpics(
+    ...appEpics,
+    ...configEpics,
+)

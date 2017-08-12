@@ -5,35 +5,66 @@ import Layout from "./app/components/containers/Layout"
 import Router from "./app/config/routes"
 import Expo from 'expo'
 import {Root} from "native-base"
+import * as R from "ramda"
+import {connect} from "react-redux"
+import {startApp} from "./app/redux/app/actions"
+import withCycle from "./app/libs/withCycle"
+import {withLog} from "./app/libs/confy/libs/debug"
 
-export default class App extends React.Component {
-    state = {
-        isReady: false,
-    }
+// class InternalApp extends React.Component {
+//     state = {
+//         isReady: false,
+//     }
+//
+//     async componentWillMount() {
+//         this.props.onEnter()
+//         await Expo.Font.loadAsync({
+//             'Roboto': require('native-base/Fonts/Roboto.ttf'),
+//             'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+//         })
+//
+//         this.setState({isReady: true})
+//     }
+//
+//     render() {
+//         if (!this.state.isReady) {
+//             return <Expo.AppLoading/>
+//         }
+//         return (
+//             <Layout>
+//                 <Router/>
+//             </Layout>
+//         )
+//     }
+// }
 
-    async componentWillMount() {
-        await Expo.Font.loadAsync({
-            'Roboto': require('native-base/Fonts/Roboto.ttf'),
-            'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-        })
+const InternalApp = ({isReady}) => (
+    !isReady ?
+        <Expo.AppLoading/> :
+        <Layout>
+            <Router/>
+        </Layout>
+)
+
+const mapDispatchToProp = dispatch => ({
+    onEnter: () => dispatch(startApp())
+})
+const mapStateToProps = ({app}) => ({isReady: app.ready})
+
+const EnhancedApp = R.compose(
+    connect(mapStateToProps, mapDispatchToProp),
+    withCycle({
+        componentWillMount: ({onEnter}) => onEnter()
+    })
+)(InternalApp)
+
+const App = () => (
+    <Root>
+        <Provider store={store}>
+            <EnhancedApp/>
+        </Provider>
+    </Root>
+)
 
 
-        this.setState({isReady: true})
-    }
-
-    render() {
-        if (!this.state.isReady) {
-            return <Expo.AppLoading/>
-        }
-
-        return (
-            <Root>
-                <Provider store={store}>
-                    <Layout>
-                        <Router/>
-                    </Layout>
-                </Provider>
-            </Root>
-        )
-    }
-}
+export default App

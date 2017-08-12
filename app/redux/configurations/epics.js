@@ -1,11 +1,10 @@
-import actionTypes from "./actionTypes"
 import 'rxjs'
-import * as R from "ramda"
-import {saveConfigFinish} from "./actions"
+import {loadConfigsFinish, saveConfigFinish} from "./actions"
 import {Toast} from "native-base"
+import * as configActionTypes from "./actionTypes"
 
 export const saveConfigEpic = action$ =>
-    action$.ofType(actionTypes.saveConfig)
+    action$.ofType(configActionTypes.saveConfig)
         .map(({payload}) => saveConfigFinish(payload.name, payload.config))
         .do(() => Toast.show({
             text: "Zapisano!",
@@ -14,3 +13,11 @@ export const saveConfigEpic = action$ =>
             type: "success",
             duration: 2000
         }))
+
+export const loadConfigsEpic = action$ =>
+    action$.ofType(configActionTypes.loadingConfigs)
+        .do(() => console.log("Loading configs"))
+        .map(() => [{name: "someName", config: {}}])
+        .map(loadConfigsFinish)
+
+export default [loadConfigsEpic, saveConfigEpic]
