@@ -1,5 +1,5 @@
 import * as configActionsTypes from "./actionTypes"
-import {plainAction} from "../actions"
+import {initAction, plainAction} from "../actions"
 
 export const changeConfigsSearchQuery = (newQuery) => ({type: configActionsTypes.listQueryChange, payload: newQuery})
 export const changeActiveConfig = (activeConfig) => ({
@@ -20,3 +20,14 @@ export const saveConfigFinish = saveConfigFactory(configActionsTypes.saveConfigF
 
 export const loadConfigs = plainAction(configActionsTypes.loadingConfigs)
 export const loadConfigsFinish = configs => ({type: configActionsTypes.loadingConfigsFulfilled, payload: configs})
+
+export const initLoadConfigs = initAction("LOAD_CONFIGS", () => new Promise(resolve => resolve([
+    {
+        name: "testowa",
+        config: {}
+    },
+    {
+        name: "testowa2",
+        config: {}
+    }
+])))

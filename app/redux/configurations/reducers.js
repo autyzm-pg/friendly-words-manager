@@ -1,12 +1,10 @@
 import {createReducer} from "../../libs/reducers"
 import R from "ramda"
 import * as configActionsTypes from "./actionTypes"
+import {initLoadConfigs} from "./actions"
 
 const defaultState = {
-    all: [{
-        name: "testowa",
-        config: {}
-    }],
+    all: [],
     searchQuery: "",
     active: undefined
 }
@@ -24,7 +22,11 @@ const handlers = {
     [configActionsTypes.saveConfig]: (state, action) => R.compose(
         changeAllList(addConfigToList(action.payload.name, action.payload.config)),
         changeAllList(removeConfigFromList(action.payload.name))
-    )(state)
+    )(state),
+    [initLoadConfigs.finishType]: (state, action) => ({
+        ...state,
+        all: action.payload
+    })
 }
 
 export const _handlers = handlers
