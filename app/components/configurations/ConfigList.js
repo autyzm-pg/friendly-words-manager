@@ -4,14 +4,24 @@ import {
     Icon,
     Right,
     List,
-    ListItem,
+    ListItem, Button,
 } from 'native-base'
-import {View} from "react-native"
+import {TouchableOpacity, View} from "react-native"
 import SearchBar from "../lists/SearchBar"
 
-export const ConfigElem = ({item}) => (
+
+const activeTextStyle = ({
+    color: "#11a42f",
+})
+
+export const ConfigElem = ({item, active, onSetActive}) => (
     <ListItem>
-        <Text>{item}</Text>
+        <TouchableOpacity  onPress={() => onSetActive(item)}>
+            <View style={{flex: 1}}>
+                <Text style={active ? activeTextStyle : {}}>{item}</Text>
+                {active && <Text style={{...activeTextStyle, fontStyle: 'italic'}}> {"(aktywny)"}</Text>}
+            </View>
+        </TouchableOpacity>
         <Right>
             <Icon name="more"/>
         </Right>

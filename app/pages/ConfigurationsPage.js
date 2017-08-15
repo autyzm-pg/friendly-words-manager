@@ -24,7 +24,7 @@ import {connect} from "react-redux"
 import * as R from "ramda"
 import {changeConfigsSearchQuery, changeActiveConfig} from "../redux/configurations/actions"
 
-const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChange, changeActiveConfig}) =>
+const ConfigurationsPage = ({history, configurations, isActive, searchQuery, onSearchChange, changeActiveConfig}) =>
     <Container>
         <Header>
             <Left>
@@ -41,10 +41,13 @@ const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChang
         <Content keyboardShouldPersistTaps="handled">
             <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
                 {configurations.map(config => (
-                    <ConfigElem key={config.name} item={config.name}/>
+                    <ConfigElem key={config.name}
+                                item={config.name}
+                                active={isActive(config)}
+                                onSetActive={changeActiveConfig}
+                    />
                 ))}
             </ConfigList>
-            <Button onPress={() => changeActiveConfig("Maciej Paciej")}><Text>Zmień aktywną konfigurację</Text></Button>
         </Content>
 
         <Fab onPress={() => history.push("/creator")} style={{backgroundColor: '#e02161'}}>
@@ -54,7 +57,8 @@ const ConfigurationsPage = ({history, configurations, searchQuery, onSearchChang
 
 const stateToProps = ({configurations}) => ({
     configurations: configurations.all.filter(({name}) => name.toLowerCase().includes(configurations.searchQuery)),
-    searchQuery: configurations.searchQuery
+    searchQuery: configurations.searchQuery,
+    isActive: config => config.name === configurations.active
 })
 
 const dispatchToProps = dispatch => ({
