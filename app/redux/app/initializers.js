@@ -1,4 +1,4 @@
-import {Initializer} from "../../libs/actions"
+import {Initializer} from "../../libs/initializers"
 
 export const NativeBaseFontsInitializer = Initializer("LOAD_EXPO_FONTS", () => Expo.Font.loadAsync({
     'Roboto': require('native-base/Fonts/Roboto.ttf'),

@@ -1,14 +1,20 @@
 import Rx from "rxjs/Rx"
 import 'rxjs'
-import {saveConfigFinish} from "./actions"
+import {loadConfigs, loadConfigsFinish, saveConfigFinish} from "./actions"
 import {Toast} from "native-base"
 import * as configActionTypes from "./actionTypes"
-import {addConfigDatabase} from "../../db"
+import {addConfigDatabase, readConfigsDatabase} from "../../db"
+import * as R from "ramda"
 
 export const saveConfigEpic = action$ =>
     action$.ofType(configActionTypes.saveConfig)
-        .do(({payload}) => addConfigDatabase(payload))
-        .map(({payload}) => saveConfigFinish(payload.name, payload.config))
+        .flatMap(({payload}) => Rx.Observable.fromPromise(
+            addConfigDatabase(payload).then(R.always(payload))
+        ))
+        .flatMap(({name, config}) => Rx.Observable.of(
+            saveConfigFinish(name, config),
+            loadConfigs()
+        ))
         .do(() => Toast.show({
             text: "Zapisano!",
             position: "bottom",
@@ -17,4 +23,11 @@ export const saveConfigEpic = action$ =>
             duration: 2000
         }))
 
-export default [saveConfigEpic]
+export const loadConfigsEpic = action$ =>
+    action$.ofType(configActionTypes.loadingConfigs)
+        .do(() => console.log("Loading configs..."))
+        .flatMap(() => Rx.Observable.fromPromise(readConfigsDatabase()))
+        .map(loadConfigsFinish)
+        .do(data => console.log("Loaded configs: ", data))
+
+export default [saveConfigEpic, loadConfigsEpic]

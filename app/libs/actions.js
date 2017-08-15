@@ -1,19 +1,17 @@
 import 'rxjs'
-import * as R from "ramda"
-import Rx from "rxjs/Rx"
+
+export const Action = (type, payload)  => ({type, payload})
+
+const startActionType = type => `${type}_STARTED`
+const finishActionType = type => `${type}_FINISHED`
 
 export const plainAction = (type) => () => ({type})
-
-const makeTypes = baseType => ({
-    start: `@INIT_${baseType}`,
-    finish: `@INIT_${baseType}_FINISHED`
+export const asyncAction = (type) => ({
+    start: () =>  ({type: startActionType(type)}),
+    finish: payload => ({type: finishActionType(type), payload}),
+    startType: startActionType(type),
+    finishType: finishActionType(type)
 })
 
-export const Initializer = (type, promiseFactory) => ((types => ({
-    startAction: () => ({type: types.start}),
-    finishType: types.finish,
-    epic: action$ =>
-        action$.ofType(types.start).take(1)
-            .flatMap(() => Rx.Observable.fromPromise(promiseFactory()))
-            .map(payload => ({type: types.finish, payload}))
-}))(makeTypes(type)))
+
+

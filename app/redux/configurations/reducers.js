@@ -19,10 +19,10 @@ const addConfigToList = (name, config) => R.append({
 const handlers = {
     [configActionsTypes.listQueryChange]: (state, action) => R.assoc('searchQuery', action.payload.toLowerCase(), state),
     [configActionsTypes.listActiveConfigChange]: (state, action) => R.assoc('active', action.payload, state),
-    [configActionsTypes.saveConfig]: (state, action) => R.compose(
-        changeAllList(addConfigToList(action.payload.name, action.payload.config)),
-        changeAllList(removeConfigFromList(action.payload.name))
-    )(state),
+    // [configActionsTypes.saveConfig]: (state, action) => R.compose(
+    //     changeAllList(addConfigToList(action.payload.name, action.payload.config)),
+    //     changeAllList(removeConfigFromList(action.payload.name))
+    // )(state),
     [ConfigsInitializer.finishType]: (state, action) => ({
         ...state,
         all: action.payload

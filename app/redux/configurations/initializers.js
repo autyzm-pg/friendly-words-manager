@@ -1,5 +1,5 @@
-import {Initializer} from "../../libs/actions"
-import {readConfigsDatabase} from "../../db"
+import {loadingConfigs, loadingConfigsFulfilled} from "./actionTypes"
+import {ActionInitializer} from "../../libs/initializers"
 
 
-export const ConfigsInitializer = Initializer("LOAD_CONFIGS", readConfigsDatabase)
+export const ConfigsInitializer = ActionInitializer(loadingConfigs, loadingConfigsFulfilled)
