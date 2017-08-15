@@ -1,16 +1,9 @@
 import Rx from "rxjs/Rx"
 import "rxjs"
 import {startedApp} from "./actionTypes"
-import {loadingConfigsFulfilled} from "../configurations/actionTypes"
-import {loadConfigs} from "../configurations/actions"
 import {finishStartingApp} from "./actions"
 import * as R from "ramda"
-import { combineEpics } from 'redux-observable'
-import initializers from "./initializers"
-
-const initializersEpic = combineEpics(
-    ...initializers.map(R.prop('epic'))
-)
+import initializers from "../initializersRegister"
 
 export const initialEpic = action$ =>
     action$.ofType(startedApp).take(1)
@@ -25,4 +18,4 @@ export const finishInitEpic = action$ =>
         ...initializers.map(R.prop('finishType')).filter(R.identity).map(actionType => action$.ofType(actionType).take(1))
     ).map(finishStartingApp).do(() => console.log("Finished loading app"))
 
-export default [initialEpic, finishInitEpic, initializersEpic]
+export default [initialEpic, finishInitEpic]

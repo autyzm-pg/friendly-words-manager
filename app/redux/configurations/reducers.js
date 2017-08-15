@@ -1,7 +1,7 @@
 import {createReducer} from "../../libs/reducers"
 import R from "ramda"
 import * as configActionsTypes from "./actionTypes"
-import {initLoadConfigs} from "./actions"
+import {ConfigsInitializer} from "./initializers"
 
 const defaultState = {
     all: [],
@@ -23,7 +23,7 @@ const handlers = {
         changeAllList(addConfigToList(action.payload.name, action.payload.config)),
         changeAllList(removeConfigFromList(action.payload.name))
     )(state),
-    [initLoadConfigs.finishType]: (state, action) => ({
+    [ConfigsInitializer.finishType]: (state, action) => ({
         ...state,
         all: action.payload
     })

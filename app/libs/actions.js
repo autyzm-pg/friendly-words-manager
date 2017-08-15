@@ -9,7 +9,7 @@ const makeTypes = baseType => ({
     finish: `@INIT_${baseType}_FINISHED`
 })
 
-export const initAction = (type, promiseFactory) => ((types => ({
+export const Initializer = (type, promiseFactory) => ((types => ({
     startAction: () => ({type: types.start}),
     finishType: types.finish,
     epic: action$ =>

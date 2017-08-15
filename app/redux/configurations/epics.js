@@ -1,10 +1,13 @@
+import Rx from "rxjs/Rx"
 import 'rxjs'
-import {loadConfigsFinish, saveConfigFinish} from "./actions"
+import {saveConfigFinish} from "./actions"
 import {Toast} from "native-base"
 import * as configActionTypes from "./actionTypes"
+import {addConfigDatabase} from "../../db"
 
 export const saveConfigEpic = action$ =>
     action$.ofType(configActionTypes.saveConfig)
+        .do(({payload}) => addConfigDatabase(payload))
         .map(({payload}) => saveConfigFinish(payload.name, payload.config))
         .do(() => Toast.show({
             text: "Zapisano!",
@@ -14,10 +17,4 @@ export const saveConfigEpic = action$ =>
             duration: 2000
         }))
 
-export const loadConfigsEpic = action$ =>
-    action$.ofType(configActionTypes.loadingConfigs)
-        .do(() => console.log("Loading configs"))
-        .map(() => [{name: "someName", config: {}}])
-        .map(loadConfigsFinish)
-
-export default [loadConfigsEpic, saveConfigEpic]
+export default [saveConfigEpic]
