@@ -20,14 +20,16 @@ const readDb = () => Expo.FileSystem.readAsStringAsync(configsDatabase)
     .then(configsStr => JSON.parse(configsStr))
 const writeDb = newDb => Expo.FileSystem.writeAsStringAsync(configsDatabase, JSON.stringify(newDb))
 
+const modifyDb = (path, f) => readDb()
+    .then(R.over(R.lensPath(path), f))
+    .then(writeDb)
+
 export const readConfigs = () => readDb().then(R.path(['tables', 'configs']))
 
-export const addConfig = (newConfig) => readDb()
-    .then(R.over(
-        R.lensPath(['tables', 'configs']),
-        R.compose(
-            addConfigToList(newConfig.name, newConfig.config),
-            removeConfigFromList(newConfig.name),
-        ))
+export const addConfig = (newConfig) => modifyDb(
+    ['tables', 'configs'],
+    R.compose(
+        addConfigToList(newConfig.name, newConfig.config),
+        removeConfigFromList(newConfig.name),
     )
-    .then(writeDb)
+)
