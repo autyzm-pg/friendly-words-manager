@@ -3,13 +3,13 @@ import 'rxjs'
 import {loadConfigs, loadConfigsFinish, saveConfigFinish} from "./actions"
 import {Toast} from "native-base"
 import * as configActionTypes from "./actionTypes"
-import {addConfigDatabase, readConfigsDatabase} from "../../db"
+import {addConfig, readConfigs} from "../../db"
 import * as R from "ramda"
 
 export const saveConfigEpic = action$ =>
     action$.ofType(configActionTypes.saveConfig)
         .flatMap(({payload}) => Rx.Observable.fromPromise(
-            addConfigDatabase(payload).then(R.always(payload))
+            addConfig(payload).then(R.always(payload))
         ))
         .flatMap(({name, config}) => Rx.Observable.of(
             saveConfigFinish(name, config),
@@ -26,7 +26,7 @@ export const saveConfigEpic = action$ =>
 export const loadConfigsEpic = action$ =>
     action$.ofType(configActionTypes.loadingConfigs)
         .do(() => console.log("Loading configs..."))
-        .flatMap(() => Rx.Observable.fromPromise(readConfigsDatabase()))
+        .flatMap(() => Rx.Observable.fromPromise(readConfigs()))
         .map(loadConfigsFinish)
         .do(data => console.log("Loaded configs: ", data))
 

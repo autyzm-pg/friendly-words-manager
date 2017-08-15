@@ -11,33 +11,6 @@ import {startApp} from "./app/redux/app/actions"
 import withCycle from "./app/libs/withCycle"
 import {withLog} from "./app/libs/confy/libs/debug"
 
-// class InternalApp extends React.Component {
-//     state = {
-//         isReady: false,
-//     }
-//
-//     async componentWillMount() {
-//         this.props.onEnter()
-//         await Expo.Font.loadAsync({
-//             'Roboto': require('native-base/Fonts/Roboto.ttf'),
-//             'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-//         })
-//
-//         this.setState({isReady: true})
-//     }
-//
-//     render() {
-//         if (!this.state.isReady) {
-//             return <Expo.AppLoading/>
-//         }
-//         return (
-//             <Layout>
-//                 <Router/>
-//             </Layout>
-//         )
-//     }
-// }
-
 const InternalApp = ({isReady}) => (
     !isReady ?
         <Expo.AppLoading/> :
