@@ -1,6 +1,6 @@
 import * as appActionTypes from "./actionTypes"
-import {plainAction} from "../../libs/actions"
+import {PlainAction} from "../../libs/actions"
 
-export const startApp = plainAction(appActionTypes.startedApp)
-export const finishStartingApp = plainAction(appActionTypes.finishedStartingApp)
+export const startApp = PlainAction(appActionTypes.startedApp)
+export const finishStartingApp = PlainAction(appActionTypes.finishedStartingApp)
 

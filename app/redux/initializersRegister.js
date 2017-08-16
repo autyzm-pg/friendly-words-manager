@@ -1,7 +1,8 @@
 import {NativeBaseFontsInitializer} from "./app/initializers"
-import {ConfigsInitializer} from "./configurations/initializers"
+import {ActiveConfigInitializer, ConfigsInitializer} from "./configurations/initializers"
 
 export default initializers = [
     NativeBaseFontsInitializer,
-    ConfigsInitializer
+    ConfigsInitializer,
+    ActiveConfigInitializer
 ]

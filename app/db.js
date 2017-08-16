@@ -26,6 +26,12 @@ const modifyDb = (path, f) => readDb()
 
 export const readConfigs = () => readDb().then(R.path(['tables', 'configs']))
 
+export const changeActiveConfig = newActiveConfig => modifyDb(
+    ['activeConfig'],
+    R.always(newActiveConfig)
+)
+export const readActiveConfig = () => readDb().then(R.prop('activeConfig'))
+
 export const addConfig = (newConfig) => modifyDb(
     ['tables', 'configs'],
     R.compose(

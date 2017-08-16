@@ -1,6 +1,6 @@
 import Rx from "rxjs"
 import * as R from "ramda"
-import {plainAction} from "./actions"
+import {PlainAction} from "./actions"
 
 const makeTypes = baseType => ({
     start: `@INIT_${baseType}`,
@@ -17,7 +17,7 @@ export const Initializer = (type, promiseFactory) => ((types => ({
 }))(makeTypes(type)))
 
 export const ActionInitializer = (startAction, finishType) => ({
-    startAction: plainAction(startAction),
+    startAction: PlainAction(startAction),
     finishType,
     epic: action$ =>
         action$.skipWhile(R.always(true))

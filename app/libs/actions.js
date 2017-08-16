@@ -1,16 +1,16 @@
-import 'rxjs'
+import * as R from "ramda"
 
-export const Action = (type, payload)  => ({type, payload})
+export const Action = R.curry((type, payload)  => ({type, payload}))
+export const PlainAction = type => () => ({type})
 
-const startActionType = type => `${type}_STARTED`
-const finishActionType = type => `${type}_FINISHED`
+export const AsyncActionType = type => ({
+    started: `${type}_STARTED`,
+    finished: `${type}_FINISHED`
+})
 
-export const plainAction = (type) => () => ({type})
-export const asyncAction = (type) => ({
-    start: () =>  ({type: startActionType(type)}),
-    finish: payload => ({type: finishActionType(type), payload}),
-    startType: startActionType(type),
-    finishType: finishActionType(type)
+export const AsyncAction = asyncTypes => ({
+    start: payload =>  ({type: asyncTypes.started, payload}),
+    finish: payload => ({type: asyncTypes.finished, payload}),
 })
 
 

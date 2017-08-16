@@ -11,7 +11,7 @@ const defaultState = {
 
 const handlers = {
     [configActionsTypes.listQueryChange]: (state, action) => R.assoc('searchQuery', action.payload.toLowerCase(), state),
-    [configActionsTypes.listActiveConfigChange]: (state, action) => R.assoc('active', action.payload, state),
+    [configActionsTypes.loadActiveConfig.finished]: (state, action) => R.assoc('active', action.payload, state),
     [ConfigsInitializer.finishType]: (state, action) => ({
         ...state,
         all: action.payload
