@@ -14,7 +14,7 @@ const activeTextStyle = ({
     color: "#11a42f",
 })
 
-export const ConfigElem = ({item, active, onSetActive}) => (
+export const ConfigElem = ({item, active, onSetActive, children}) => (
     <ListItem>
         <TouchableOpacity  onPress={() => onSetActive(item)}>
             <View style={{flex: 1}}>
@@ -23,7 +23,7 @@ export const ConfigElem = ({item, active, onSetActive}) => (
             </View>
         </TouchableOpacity>
         <Right>
-            <Icon name="more"/>
+            {children}
         </Right>
     </ListItem>
 )
