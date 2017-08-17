@@ -24,7 +24,7 @@ const modifyDb = (path, f) => readDb()
     .then(R.over(R.lensPath(path), f))
     .then(writeDb)
 
-export const readConfigs = () => readDb().then(R.path(['tables', 'configs']))
+export const readConfigs = () => readDb().then(R.path(['tables', 'configs'])).then(R.filter(({name}) => !!name))
 
 export const changeActiveConfig = newActiveConfig => modifyDb(
     ['activeConfig'],

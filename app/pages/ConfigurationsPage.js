@@ -22,11 +22,12 @@ import {ConfigElem} from "../components/configurations/ConfigList"
 import ConfigList from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
 import * as R from "ramda"
-import {changeConfigsSearchQuery, changeActiveConfig} from "../redux/configurations/actions"
+import {changeConfigsSearchQuery, changeActiveConfig, saveConfig} from "../redux/configurations/actions"
 import Menu, {MenuContext, MenuOption, MenuOptions, MenuTrigger} from "react-native-menu"
 import {ActionItem, ActionsMenu} from "../components/containers/ActionsMenu"
+import {getNameOfCopy} from "../libs/funcs"
 
-const ConfigurationsPage = ({history, configurations, isActive, searchQuery, onSearchChange, changeActiveConfig}) =>
+const ConfigurationsPage = ({history, configurations, allConfigs, isActive, searchQuery, onSearchChange, actions}) =>
     <MenuContext style={{flex: 1}}>
         <Container>
             <Header>
@@ -36,7 +37,7 @@ const ConfigurationsPage = ({history, configurations, isActive, searchQuery, onS
                     </Button>
                 </Left>
                 <Body>
-                    <Title>Konfiguracje</Title>
+                <Title>Konfiguracje</Title>
                 </Body>
                 <Right/>
             </Header>
@@ -47,17 +48,17 @@ const ConfigurationsPage = ({history, configurations, isActive, searchQuery, onS
                         <ConfigElem key={config.name}
                                     item={config.name}
                                     active={isActive(config)}
-                                    onSetActive={changeActiveConfig}
+                                    onSetActive={actions.changeActiveConfig}
                         >
                             <ActionsMenu>
-                                <ActionItem onSelect={() => console.log("Duplikuj", config)}>
+                                <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
                                     <Icon name="copy"/>
                                 </ActionItem>
                                 <ActionItem onSelect={() => console.log("Edytuj", config)}>
                                     <Icon name="create"/>
                                 </ActionItem>
-                                <ActionItem onSelect={() => console.log("Aktywuj", config)}>
-                                    <Icon name="flash"/>
+                                <ActionItem onSelect={() => actions.changeActiveConfig(config.name)}>
+                                    <Icon name="arrow-up"/>
                                 </ActionItem>
                                 <ActionItem onSelect={() => console.log("Usun", config)}>
                                     <Icon name="close"/>
@@ -75,6 +76,7 @@ const ConfigurationsPage = ({history, configurations, isActive, searchQuery, onS
     </MenuContext>
 
 const stateToProps = ({configurations}) => ({
+    allConfigs: configurations.all,
     configurations: configurations.all.filter(({name}) => name.toLowerCase().includes(configurations.searchQuery)),
     searchQuery: configurations.searchQuery,
     isActive: config => config.name === configurations.active
@@ -82,7 +84,18 @@ const stateToProps = ({configurations}) => ({
 
 const dispatchToProps = dispatch => ({
     onSearchChange: R.compose(dispatch, changeConfigsSearchQuery),
-    changeActiveConfig: R.compose(dispatch, changeActiveConfig)
+    actions: {
+        changeActiveConfig: R.compose(dispatch, changeActiveConfig),
+        duplicate: R.compose(
+            dispatch,
+            R.apply(saveConfig),
+            R.tap(console.log),
+            (allConfigs, config) => [
+                getNameOfCopy(allConfigs.map(R.prop('name')), config.name),
+                config.config
+            ]
+        )
+    }
 })
 
 export default connect(stateToProps, dispatchToProps)(ConfigurationsPage)
