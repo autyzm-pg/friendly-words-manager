@@ -36,7 +36,7 @@ const ConfigurationsPage = ({history, configurations, isActive, searchQuery, onS
                     </Button>
                 </Left>
                 <Body>
-                <Title>Konfiguracje</Title>
+                    <Title>Konfiguracje</Title>
                 </Body>
                 <Right/>
             </Header>
@@ -52,19 +52,15 @@ const ConfigurationsPage = ({history, configurations, isActive, searchQuery, onS
                             <ActionsMenu>
                                 <ActionItem onSelect={() => console.log("Duplikuj", config)}>
                                     <Icon name="copy"/>
-                                    <Text>Duplikuj</Text>
                                 </ActionItem>
                                 <ActionItem onSelect={() => console.log("Edytuj", config)}>
-                                    <Icon name="edit"/>
-                                    <Text>Edytuj</Text>
+                                    <Icon name="create"/>
                                 </ActionItem>
                                 <ActionItem onSelect={() => console.log("Aktywuj", config)}>
                                     <Icon name="flash"/>
-                                    <Text>Aktywuj</Text>
                                 </ActionItem>
                                 <ActionItem onSelect={() => console.log("Usun", config)}>
                                     <Icon name="close"/>
-                                    <Text>Usun</Text>
                                 </ActionItem>
                             </ActionsMenu>
                         </ConfigElem>

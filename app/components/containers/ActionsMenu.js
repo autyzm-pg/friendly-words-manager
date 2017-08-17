@@ -1,23 +1,15 @@
 import React from "react"
 import * as R from "ramda"
-import Menu, {MenuOption, MenuOptions, MenuTrigger} from "react-native-menu"
-import {Icon, View} from "native-base"
+import {Button, Icon, View} from "native-base"
 
 export const ActionItem = ({onSelect, children}) => (
-    <MenuOption value={onSelect}>
+    <Button onPress={onSelect} transparent style={{marginLeft:5}}>
         {children}
-    </MenuOption>
+    </Button>
 )
 
 export const ActionsMenu = ({children}) => (
-    <Menu onSelect={R.call}>
-        <MenuTrigger>
-            <View style={{paddingLeft:4, paddingRight:4}}>
-                <Icon name="more"/>
-            </View>
-        </MenuTrigger>
-        <MenuOptions>
-            {React.Children.map(children, child => child.type({...child.props}))}
-        </MenuOptions>
-    </Menu>
+    <View style={{flex:1, flexDirection: "row"}}>
+        {children}
+    </View>
 )
