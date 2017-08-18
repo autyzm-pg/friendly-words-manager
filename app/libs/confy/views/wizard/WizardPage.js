@@ -13,9 +13,9 @@ import withProps from "../../libs/withProps"
 import type {Step} from "../steps"
 import type {WizardViewType} from "./wizardView"
 import type {ModelType} from "../../models"
-import withModal from "../../../withModal"
 import {renderField} from "../../fields/fields"
 import {withLink} from "../../libs/withState"
+import {Modal} from "../../../../components/modal/Modal"
 
 
 const enhance = component => currentName => withLink("name", currentName)(component)
@@ -32,7 +32,7 @@ const WizardSaveModal = enhance(({name, nameChange, onSave}) => (
 ))
 const renderWizardSaveModal = (currentName, onSave) => {
     const Component = WizardSaveModal(currentName)
-    return <Component onSave={onSave}/>
+    return <Component onSave={R.compose(Modal.hide, onSave)}/>
 }
 
 type WizardPagePropsFromUser = {
@@ -46,16 +46,12 @@ type WizardPageProps<T> = {
     config: T,
     onFieldChange: <V>(string) => (V) => void,
     steps: Array<Step>,
-    modal: {
-        show: (any) => void,
-        hide: () => void
-    }
 } & WizardPagePropsFromUser
 
-const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props, modal}: WizardPageProps<*>) => (
+const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: WizardPageProps<*>) => (
     <Page>
         <PageHeader onBack={() => props.onBack()} header={name}>
-            <Button transparent onPress={() => modal.show(renderWizardSaveModal(name, onSave(config)))}>
+            <Button transparent onPress={() => Modal.show(renderWizardSaveModal(name, onSave(config)))}>
                 <Icon name="checkmark"/>
             </Button>
         </PageHeader>
@@ -78,5 +74,4 @@ export const _WizardPage = WizardPage
 export const createWizardPage = <T: {}, M: ModelType<T>>(wizardView: WizardViewType<M>) => R.compose(
     withRedux(reducer(wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps),
     withProps({steps: wizardView.steps}),
-    withModal(),
 )(WizardPage)

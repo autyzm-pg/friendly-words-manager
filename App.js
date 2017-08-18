@@ -9,7 +9,7 @@ import * as R from "ramda"
 import {connect} from "react-redux"
 import {startApp} from "./app/redux/app/actions"
 import withCycle from "./app/libs/withCycle"
-import {withLog} from "./app/libs/confy/libs/debug"
+import {ModalRoot} from "./app/components/modal/ModalRoot"
 
 const InternalApp = ({isReady}) => (
     !isReady ?
@@ -33,9 +33,11 @@ const EnhancedApp = R.compose(
 
 const App = () => (
     <Root>
-        <Provider store={store}>
-            <EnhancedApp/>
-        </Provider>
+        <ModalRoot>
+            <Provider store={store}>
+                <EnhancedApp/>
+            </Provider>
+        </ModalRoot>
     </Root>
 )
 

@@ -23,14 +23,12 @@ import ConfigList from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
 import * as R from "ramda"
 import {changeConfigsSearchQuery, changeActiveConfig, saveConfig, deleteConfig} from "../redux/configurations/actions"
-import Menu, {MenuContext, MenuOption, MenuOptions, MenuTrigger} from "react-native-menu"
 import {ActionItem, ActionsMenu} from "../components/containers/ActionsMenu"
 import {getNameOfCopy} from "../libs/funcs"
-import withModal from "../libs/withModal"
 import {withLog} from "../libs/confy/libs/debug"
+import {Modal} from "../components/modal/Modal"
 
 const ConfigurationsPage = ({history, configurations, allConfigs, isActive, searchQuery, onSearchChange, actions}) =>
-    <MenuContext style={{flex: 1}}>
         <Container>
             <Header>
                 <Left>
@@ -75,7 +73,6 @@ const ConfigurationsPage = ({history, configurations, allConfigs, isActive, sear
                 <Icon name="add"/>
             </Fab>
         </Container>
-    </MenuContext>
 
 const stateToProps = ({configurations}) => ({
     allConfigs: configurations.all,
@@ -97,7 +94,7 @@ const dispatchToProps = withLog((dispatch, ownProps) => ({
                 config.config
             ]
         ),
-        delete: (name) => ownProps.modal.ask(`Czy napewno chcesz usunąć '${name}'?`, false)
+        delete: (name) => Modal.ask(`Czy napewno chcesz usunąć '${name}'?`, false)
             .then(R.when(
                 R.identity,
                 () => dispatch(deleteConfig.start(name))
@@ -106,6 +103,5 @@ const dispatchToProps = withLog((dispatch, ownProps) => ({
 }))
 
 export default R.compose(
-    withModal(),
     connect(stateToProps, dispatchToProps)
 )(ConfigurationsPage)

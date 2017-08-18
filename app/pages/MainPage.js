@@ -20,6 +20,7 @@ import {
 
 import {connect} from "react-redux"
 import ToastExt from "../libs/ToastExt"
+import {Modal} from "../components/modal/Modal"
 
 
 const MainPage = ({history, location, activeConfig}) => (
@@ -42,7 +43,10 @@ const MainPage = ({history, location, activeConfig}) => (
         <Footer>
             <Text>Aktywna konfiguracja: {activeConfig}</Text>
             <Body>
-            <Button full light  onPress={() =>{console.log("DUPA@"); ToastExt.success("asdasd")}}>
+            <Button full light  onPress={() =>{
+                console.log("MODAL: ", Modal)
+                Modal.ask("Huehe?")
+            }}>
                 <Body><Text>Przejdz do aplikacji</Text></Body>
                 <Right><Icon name="arrow-round-forward"/></Right>
             </Button>
