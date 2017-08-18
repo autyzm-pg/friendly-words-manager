@@ -6,7 +6,7 @@ import {ConfigsInitializer} from "./initializers"
 const defaultState = {
     all: [],
     searchQuery: "",
-    active: "Nowa konfiguracja"
+    active: ""
 }
 
 const handlers = {

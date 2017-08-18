@@ -19,6 +19,7 @@ import {
 } from 'native-base'
 
 import {connect} from "react-redux"
+import ToastExt from "../libs/ToastExt"
 
 
 const MainPage = ({history, location, activeConfig}) => (
@@ -41,7 +42,7 @@ const MainPage = ({history, location, activeConfig}) => (
         <Footer>
             <Text>Aktywna konfiguracja: {activeConfig}</Text>
             <Body>
-            <Button full light>
+            <Button full light  onPress={() =>{console.log("DUPA@"); ToastExt.success("asdasd")}}>
                 <Body><Text>Przejdz do aplikacji</Text></Body>
                 <Right><Icon name="arrow-round-forward"/></Right>
             </Button>

@@ -1,27 +1,36 @@
 import Rx from "rxjs/Rx"
 import 'rxjs'
-import {changeActiveConfigFinished, loadActiveConfig, loadConfigs, loadConfigsFinish, saveConfigFinish} from "./actions"
-import {Toast} from "native-base"
+import {
+    changeActiveConfigFinished, deleteConfig, loadActiveConfig, loadConfigs, loadConfigsFinish,
+    saveConfigFinish
+} from "./actions"
 import * as configActionTypes from "./actionTypes"
 import {addConfig, changeActiveConfig, readActiveConfig, readConfigs} from "../../db"
 import * as R from "ramda"
+import * as db from "../../db"
+import ToastExt from "../../libs/ToastExt"
 
 export const saveConfigEpic = action$ =>
     action$.ofType(configActionTypes.saveConfig)
         .flatMap(({payload}) => Rx.Observable.fromPromise(
             addConfig(payload).then(R.always(payload))
         ))
+        .do(() => ToastExt.success("Zapisano!"))
         .flatMap(({name, config}) => Rx.Observable.of(
             saveConfigFinish(name, config),
             loadConfigs()
         ))
-        .do(() => Toast.show({
-            text: "Zapisano!",
-            position: "bottom",
-            buttonText: "OK",
-            type: "success",
-            duration: 2000
-        }))
+
+export const deleteConfigEpic = action$ =>
+    action$.ofType(configActionTypes.deleteConfig.started)
+        .flatMap(({payload}) => Rx.Observable.fromPromise(
+            db.deleteConfig(payload).then(R.always(payload))
+        ))
+        .do(name => ToastExt.success(`Usunięto ${name}`))
+        .flatMap( name => Rx.Observable.of(
+            deleteConfig.finish(name),
+            loadConfigs()
+        ))
 
 export const loadConfigsEpic = action$ =>
     action$.ofType(configActionTypes.loadingConfigs)
@@ -45,4 +54,4 @@ export const loadActiveConfigEpic = action$ =>
         .do(data => console.log("Loaded active config: ", data))
         .map(loadActiveConfig.finish)
 
-export default [saveConfigEpic, loadConfigsEpic, loadActiveConfigEpic, activeConfigChangeEpic]
+export default [saveConfigEpic, loadConfigsEpic, loadActiveConfigEpic, activeConfigChangeEpic, deleteConfigEpic]

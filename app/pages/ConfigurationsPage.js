@@ -22,10 +22,12 @@ import {ConfigElem} from "../components/configurations/ConfigList"
 import ConfigList from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
 import * as R from "ramda"
-import {changeConfigsSearchQuery, changeActiveConfig, saveConfig} from "../redux/configurations/actions"
+import {changeConfigsSearchQuery, changeActiveConfig, saveConfig, deleteConfig} from "../redux/configurations/actions"
 import Menu, {MenuContext, MenuOption, MenuOptions, MenuTrigger} from "react-native-menu"
 import {ActionItem, ActionsMenu} from "../components/containers/ActionsMenu"
 import {getNameOfCopy} from "../libs/funcs"
+import withModal from "../libs/withModal"
+import {withLog} from "../libs/confy/libs/debug"
 
 const ConfigurationsPage = ({history, configurations, allConfigs, isActive, searchQuery, onSearchChange, actions}) =>
     <MenuContext style={{flex: 1}}>
@@ -60,7 +62,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, isActive, sear
                                 <ActionItem onSelect={() => actions.changeActiveConfig(config.name)}>
                                     <Icon name="arrow-up"/>
                                 </ActionItem>
-                                <ActionItem onSelect={() => console.log("Usun", config)}>
+                                <ActionItem onSelect={() => actions.delete(config.name)}>
                                     <Icon name="close"/>
                                 </ActionItem>
                             </ActionsMenu>
@@ -82,7 +84,7 @@ const stateToProps = ({configurations}) => ({
     isActive: config => config.name === configurations.active
 })
 
-const dispatchToProps = dispatch => ({
+const dispatchToProps = withLog((dispatch, ownProps) => ({
     onSearchChange: R.compose(dispatch, changeConfigsSearchQuery),
     actions: {
         changeActiveConfig: R.compose(dispatch, changeActiveConfig),
@@ -94,8 +96,16 @@ const dispatchToProps = dispatch => ({
                 getNameOfCopy(allConfigs.map(R.prop('name')), config.name),
                 config.config
             ]
-        )
+        ),
+        delete: (name) => ownProps.modal.ask(`Czy napewno chcesz usunąć '${name}'?`, false)
+            .then(R.when(
+                R.identity,
+                () => dispatch(deleteConfig.start(name))
+            ))
     }
-})
+}))
 
-export default connect(stateToProps, dispatchToProps)(ConfigurationsPage)
+export default R.compose(
+    withModal(),
+    connect(stateToProps, dispatchToProps)
+)(ConfigurationsPage)

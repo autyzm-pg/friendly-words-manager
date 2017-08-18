@@ -1,16 +1,22 @@
+// @flow
 import * as R from "ramda"
 
 export const Action = R.curry((type, payload)  => ({type, payload}))
-export const PlainAction = type => () => ({type})
+export const PlainAction = (type: string) => () => ({type})
 
-export const AsyncActionType = type => ({
+
+type AsyncActionTypeInterface = {
+    started: string,
+    finished: string,
+}
+export const AsyncActionType = (type: string): AsyncActionTypeInterface => ({
     started: `${type}_STARTED`,
     finished: `${type}_FINISHED`
 })
 
-export const AsyncAction = asyncTypes => ({
-    start: payload =>  ({type: asyncTypes.started, payload}),
-    finish: payload => ({type: asyncTypes.finished, payload}),
+export const AsyncAction = (asyncTypes: AsyncActionTypeInterface) => ({
+    start: <T>(payload: T) =>  ({type: asyncTypes.started, payload}),
+    finish: <T>(payload: T) => ({type: asyncTypes.finished, payload}),
 })
 
 

@@ -22,6 +22,8 @@ const saveConfigFactory = action => (name, config) => ({
 export const saveConfig = saveConfigFactory(configActionsTypes.saveConfig)
 export const saveConfigFinish = saveConfigFactory(configActionsTypes.saveConfigFulfilled)
 
+export const deleteConfig = AsyncAction(configActionsTypes.deleteConfig)
+
 export const loadConfigs = PlainAction(loadingConfigs)
 export const loadConfigsFinish = payload => Action(loadingConfigsFulfilled, payload)
 

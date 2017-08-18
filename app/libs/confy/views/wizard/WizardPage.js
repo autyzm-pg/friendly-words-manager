@@ -13,7 +13,7 @@ import withProps from "../../libs/withProps"
 import type {Step} from "../steps"
 import type {WizardViewType} from "./wizardView"
 import type {ModelType} from "../../models"
-import withModal from "../../libs/withModal"
+import withModal from "../../../withModal"
 import {renderField} from "../../fields/fields"
 import {withLink} from "../../libs/withState"
 

@@ -39,3 +39,8 @@ export const addConfig = (newConfig) => modifyDb(
         removeConfigFromList(newConfig.name),
     )
 )
+
+export const deleteConfig = configName => modifyDb(
+    ['tables', 'configs'],
+    removeConfigFromList(configName)
+)
