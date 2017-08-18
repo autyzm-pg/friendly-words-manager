@@ -5,6 +5,12 @@ export const Modal = {
     show: (children) => undefined,
     hide: () => undefined,
     toggle: () => undefined,
+    textAsk: (question, defaultText, positive) => Promise.reject(),
 }
+
+export const onSuccess = f => R.when(
+    ({type}) => type === "success",
+    ({value}) => f(value)
+)
 
 export const initializeModal = R.once(actions => Object.assign(Modal, actions))

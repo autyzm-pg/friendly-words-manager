@@ -25,54 +25,53 @@ import * as R from "ramda"
 import {changeConfigsSearchQuery, changeActiveConfig, saveConfig, deleteConfig} from "../redux/configurations/actions"
 import {ActionItem, ActionsMenu} from "../components/containers/ActionsMenu"
 import {getNameOfCopy} from "../libs/funcs"
-import {withLog} from "../libs/confy/libs/debug"
-import {Modal} from "../components/modal/Modal"
+import {Modal, onSuccess} from "../components/modal/Modal"
 
 const ConfigurationsPage = ({history, configurations, allConfigs, isActive, searchQuery, onSearchChange, actions}) =>
-        <Container>
-            <Header>
-                <Left>
-                    <Button transparent onPress={() => history.push("/")}>
-                        <Icon name='arrow-back'/>
-                    </Button>
-                </Left>
-                <Body>
-                <Title>Konfiguracje</Title>
-                </Body>
-                <Right/>
-            </Header>
+    <Container>
+        <Header>
+            <Left>
+                <Button transparent onPress={() => history.push("/")}>
+                    <Icon name='arrow-back'/>
+                </Button>
+            </Left>
+            <Body>
+            <Title>Konfiguracje</Title>
+            </Body>
+            <Right/>
+        </Header>
 
-            <Content keyboardShouldPersistTaps="handled">
-                <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
-                    {configurations.map(config => (
-                        <ConfigElem key={config.name}
-                                    item={config.name}
-                                    active={isActive(config)}
-                                    onSetActive={actions.changeActiveConfig}
-                        >
-                            <ActionsMenu>
-                                <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
-                                    <Icon name="copy"/>
-                                </ActionItem>
-                                <ActionItem onSelect={() => console.log("Edytuj", config)}>
-                                    <Icon name="create"/>
-                                </ActionItem>
-                                <ActionItem onSelect={() => actions.changeActiveConfig(config.name)}>
-                                    <Icon name="arrow-up"/>
-                                </ActionItem>
-                                <ActionItem onSelect={() => actions.delete(config.name)}>
-                                    <Icon name="close"/>
-                                </ActionItem>
-                            </ActionsMenu>
-                        </ConfigElem>
-                    ))}
-                </ConfigList>
-            </Content>
+        <Content keyboardShouldPersistTaps="handled">
+            <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
+                {configurations.map(config => (
+                    <ConfigElem key={config.name}
+                                item={config.name}
+                                active={isActive(config)}
+                                onSetActive={actions.changeActiveConfig}
+                    >
+                        <ActionsMenu>
+                            <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
+                                <Icon name="copy"/>
+                            </ActionItem>
+                            <ActionItem onSelect={() => console.log("Edytuj", config)}>
+                                <Icon name="create"/>
+                            </ActionItem>
+                            <ActionItem onSelect={() => actions.changeActiveConfig(config.name)}>
+                                <Icon name="arrow-up"/>
+                            </ActionItem>
+                            <ActionItem onSelect={() => actions.delete(config.name)}>
+                                <Icon name="close"/>
+                            </ActionItem>
+                        </ActionsMenu>
+                    </ConfigElem>
+                ))}
+            </ConfigList>
+        </Content>
 
-            <Fab onPress={() => history.push("/creator")} style={{backgroundColor: '#e02161'}}>
-                <Icon name="add"/>
-            </Fab>
-        </Container>
+        <Fab active={false} onPress={() => history.push("/creator")} style={{backgroundColor: '#e02161'}}>
+            <Icon name="add"/>
+        </Fab>
+    </Container>
 
 const stateToProps = ({configurations}) => ({
     allConfigs: configurations.all,
@@ -81,7 +80,7 @@ const stateToProps = ({configurations}) => ({
     isActive: config => config.name === configurations.active
 })
 
-const dispatchToProps = withLog((dispatch, ownProps) => ({
+const dispatchToProps = (dispatch, ownProps) => ({
     onSearchChange: R.compose(dispatch, changeConfigsSearchQuery),
     actions: {
         changeActiveConfig: R.compose(dispatch, changeActiveConfig),
@@ -95,12 +94,9 @@ const dispatchToProps = withLog((dispatch, ownProps) => ({
             ]
         ),
         delete: (name) => Modal.ask(`Czy napewno chcesz usunąć '${name}'?`, false)
-            .then(R.when(
-                R.identity,
-                () => dispatch(deleteConfig.start(name))
-            ))
+            .then(onSuccess(() => dispatch(deleteConfig.start(name))))
     }
-}))
+})
 
 export default R.compose(
     connect(stateToProps, dispatchToProps)

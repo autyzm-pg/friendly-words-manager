@@ -1,6 +1,7 @@
 import React from "react"
 import {View} from "react-native"
-import {Button, Text} from "native-base"
+import {Button, Form, Input, Item, Text} from "native-base"
+import {withLink} from "../../libs/confy/libs/withState"
 
 const askerStyles = {
     buttonsWrapper: {
@@ -16,14 +17,44 @@ const askerStyles = {
         marginLeft: 10,
     }
 }
+
+const Buttons = (positiveText, negativeText) =>  ({onCancel, onConfirm, positive}) =>
+    <View style={askerStyles.buttonsWrapper}>
+        <Button transparent={positive} style={{...askerStyles.buttons, ...askerStyles.buttonNo}}
+                onPress={onCancel}><Text>{negativeText}</Text></Button>
+        <Button transparent={!positive} style={{...askerStyles.buttons, ...askerStyles.buttonYes}}
+                onPress={onConfirm}><Text>{positiveText}</Text></Button>
+    </View>
+
+const YesNoButtons = Buttons("Tak", "Nie")
+const SaveButtons = Buttons("Zapisz", "Anuluj")
+
 export default Asker = ({children, onConfirm, onCancel, positive}) => (
     <View>
         <Text>{children}</Text>
-        <View style={askerStyles.buttonsWrapper}>
-            <Button transparent={positive} style={{...askerStyles.buttons, ...askerStyles.buttonNo}}
-                    onPress={onCancel}><Text>Nie</Text></Button>
-            <Button transparent={!positive} style={{...askerStyles.buttons, ...askerStyles.buttonYes}}
-                    onPress={onConfirm}><Text>Tak</Text></Button>
-        </View>
+        <YesNoButtons onCancel={onCancel} onConfirm={onConfirm} positive={positive}/>
     </View>
 )
+
+
+const textAskerStyles = {
+    form: {
+        width: 400,
+    },
+    question: {
+        marginBottom: 20
+    }
+}
+
+export const TextAsker = defaultText =>
+    withLink("text", defaultText)(
+        ({children, onConfirm, onCancel, positive, text, textChange}) => (
+            <Form style={textAskerStyles.form}>
+                <Text style={textAskerStyles.question}>{children}</Text>
+                <Item regular>
+                    <Input value={text} onChangeText={textChange}/>
+                </Item>
+                <SaveButtons onCancel={() => onCancel(text)} onConfirm={() => onConfirm(text)} positive={positive}/>
+            </Form>
+        )
+    )

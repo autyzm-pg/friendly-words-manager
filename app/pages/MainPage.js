@@ -44,8 +44,7 @@ const MainPage = ({history, location, activeConfig}) => (
             <Text>Aktywna konfiguracja: {activeConfig}</Text>
             <Body>
             <Button full light  onPress={() =>{
-                console.log("MODAL: ", Modal)
-                Modal.ask("Huehe?")
+                Modal.textAsk("Huehe?", "TEST").then(resp => console.log("response!!", resp))
             }}>
                 <Body><Text>Przejdz do aplikacji</Text></Body>
                 <Right><Icon name="arrow-round-forward"/></Right>

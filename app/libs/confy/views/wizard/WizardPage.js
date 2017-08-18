@@ -15,25 +15,8 @@ import type {WizardViewType} from "./wizardView"
 import type {ModelType} from "../../models"
 import {renderField} from "../../fields/fields"
 import {withLink} from "../../libs/withState"
-import {Modal} from "../../../../components/modal/Modal"
+import {Modal, onSuccess} from "../../../../components/modal/Modal"
 
-
-const enhance = component => currentName => withLink("name", currentName)(component)
-const WizardSaveModal = enhance(({name, nameChange, onSave}) => (
-    <Form>
-        <Text>Podaj nazwę</Text>
-        <Item regular>
-            <Input value={name} onChangeText={nameChange}/>
-        </Item>
-        <Button transparent onPress={() => onSave(name)}>
-            <Icon name="checkmark"/>
-        </Button>
-    </Form>
-))
-const renderWizardSaveModal = (currentName, onSave) => {
-    const Component = WizardSaveModal(currentName)
-    return <Component onSave={R.compose(Modal.hide, onSave)}/>
-}
 
 type WizardPagePropsFromUser = {
     onSave: <T>(string, T) => void,
@@ -51,7 +34,7 @@ type WizardPageProps<T> = {
 const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: WizardPageProps<*>) => (
     <Page>
         <PageHeader onBack={() => props.onBack()} header={name}>
-            <Button transparent onPress={() => Modal.show(renderWizardSaveModal(name, onSave(config)))}>
+            <Button transparent onPress={() => Modal.textAsk("Podaj nazwę kroku", name).then(onSuccess(newName => onSave(config, newName)))}>
                 <Icon name="checkmark"/>
             </Button>
         </PageHeader>

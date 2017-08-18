@@ -1,5 +1,4 @@
 import * as React from "react"
-import {withLog} from "./debug"
 
 export default withState = (initialState = {}, stateToProps = () => ({}), setStateToProps = () => ({})) => Component => (
     class StateWrapper extends React.Component {
