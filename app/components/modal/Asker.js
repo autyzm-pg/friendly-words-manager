@@ -2,6 +2,7 @@ import React from "react"
 import {View} from "react-native"
 import {Button, Form, Input, Item, Text} from "native-base"
 import {withLink} from "../../libs/confy/libs/withState"
+import {withLog} from "../../libs/confy/libs/debug"
 
 const askerStyles = {
     buttonsWrapper: {
@@ -18,7 +19,7 @@ const askerStyles = {
     }
 }
 
-const Buttons = (positiveText, negativeText) =>  ({onCancel, onConfirm, positive}) =>
+const Buttons = (positiveText, negativeText) => ({onCancel, onConfirm, positive}) =>
     <View style={askerStyles.buttonsWrapper}>
         <Button transparent={positive} style={{...askerStyles.buttons, ...askerStyles.buttonNo}}
                 onPress={onCancel}><Text>{negativeText}</Text></Button>
@@ -58,3 +59,16 @@ export const TextAsker = defaultText =>
             </Form>
         )
     )
+
+export const askFactory = withLog(actions => AskerComponent => (question, positive = true) => new Promise((resolve, reject) =>
+    actions.show(
+        <AskerComponent onConfirm={value => {
+            resolve({type: "success", value})
+            actions.hide()
+        }} onCancel={value => {
+            resolve({type: "cancel", value})
+            actions.hide()
+        }} positive={positive}>
+            {question}
+        </AskerComponent>
+    )))
