@@ -1,8 +1,9 @@
 import React from "react"
 import {NativeRouter, Route, Switch} from "react-router-native"
 import MainPage from "../pages/MainPage"
-import CreatorPage, {EditPage} from "../pages/CreatorPage"
+import CreatorPage from "../pages/CreatorPage"
 import ConfigurationsPage from "../pages/ConfigurationsPage"
+import {EditPage} from "../pages/EditPage"
 
 
 
