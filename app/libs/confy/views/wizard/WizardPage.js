@@ -35,7 +35,7 @@ const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: Wiza
     <Page>
         <PageHeader onBack={() => props.onBack()} header={name}>
             <Button transparent onPress={() => Modal.textAsk("Podaj nazwę kroku", name).then(onSuccess(newName => onSave(config, newName)))}>
-                <Icon name="checkmark"/>
+                <Text>Zapisz</Text>
             </Button>
         </PageHeader>
         <WizardStepsContainer>

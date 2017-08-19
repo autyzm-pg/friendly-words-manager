@@ -7,7 +7,7 @@ export default ToastExt = {
             position: "bottom",
             buttonText: "OK",
             type: "success",
-            duration: 10000,
+            duration: 12000,
             ...options
         })
     }

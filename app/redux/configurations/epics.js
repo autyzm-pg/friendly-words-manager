@@ -1,7 +1,7 @@
 import Rx from "rxjs/Rx"
 import 'rxjs'
 import {
-    changeActiveConfigFinished, deleteConfig, loadActiveConfig, loadConfigs, loadConfigsFinish,
+    changeActiveConfigFinished, deleteConfig, editConfig, loadActiveConfig, loadConfigs, loadConfigsFinish, saveConfig,
     saveConfigFinish
 } from "./actions"
 import * as configActionTypes from "./actionTypes"
@@ -27,7 +27,7 @@ export const deleteConfigEpic = action$ =>
             db.deleteConfig(payload).then(R.always(payload))
         ))
         .do(name => ToastExt.success(`Usunięto ${name}`))
-        .flatMap( name => Rx.Observable.of(
+        .flatMap(name => Rx.Observable.of(
             deleteConfig.finish(name),
             loadConfigs()
         ))
@@ -47,6 +47,18 @@ export const activeConfigChangeEpic = action$ =>
             loadActiveConfig.start()
         ))
 
+export const editConfigEpic = action$ =>
+    action$.ofType(configActionTypes.editConfig.started)
+        .map(R.prop('payload'))
+        .flatMap(({previousName, name, config}) => Rx.Observable.concat(
+            Rx.Observable.of(deleteConfig.start(previousName)),
+            action$.ofType(configActionTypes.deleteConfig.finished).take(1)
+                .flatMap(() => Rx.Observable.concat(
+                    Rx.Observable.of(saveConfig(name, config)),
+                    action$.ofType(configActionTypes.saveConfigFulfilled).take(1).mapTo(editConfig.finish({name, config}))
+                ))
+        ))
+
 export const loadActiveConfigEpic = action$ =>
     action$.ofType(configActionTypes.loadActiveConfig.started)
         .do(() => console.log("Loading active config..."))
@@ -54,4 +66,4 @@ export const loadActiveConfigEpic = action$ =>
         .do(data => console.log("Loaded active config: ", data))
         .map(loadActiveConfig.finish)
 
-export default [saveConfigEpic, loadConfigsEpic, loadActiveConfigEpic, activeConfigChangeEpic, deleteConfigEpic]
+export default [saveConfigEpic, loadConfigsEpic, loadActiveConfigEpic, activeConfigChangeEpic, deleteConfigEpic, editConfigEpic]

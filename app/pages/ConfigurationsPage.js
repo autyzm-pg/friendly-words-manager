@@ -75,7 +75,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, isActive, sear
 
 const stateToProps = ({configurations}) => ({
     allConfigs: configurations.all,
-    configurations: configurations.all.filter(({name}) => name.toLowerCase().includes(configurations.searchQuery)),
+    configurations: R.reverse(configurations.all.filter(({name}) => name.toLowerCase().includes(configurations.searchQuery))),
     searchQuery: configurations.searchQuery,
     isActive: config => config.name === configurations.active
 })
