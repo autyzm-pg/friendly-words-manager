@@ -53,7 +53,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, isActive, sear
                             <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
                                 <Icon name="copy"/>
                             </ActionItem>
-                            <ActionItem onSelect={() => console.log("Edytuj", config)}>
+                            <ActionItem onSelect={() => history.push(`/creator/${config.name}`)}>
                                 <Icon name="create"/>
                             </ActionItem>
                             <ActionItem onSelect={() => actions.changeActiveConfig(config.name)}>

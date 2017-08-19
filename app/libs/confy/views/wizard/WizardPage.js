@@ -54,7 +54,7 @@ const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: Wiza
 export const _WizardPage = WizardPage
 
 
-export const createWizardPage = <T: {}, M: ModelType<T>>(wizardView: WizardViewType<M>) => R.compose(
-    withRedux(reducer(wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps),
+export const createWizardPage = <T: {}, M: ModelType<T>>(wizardView: WizardViewType<M>, config: any = undefined) => R.compose(
+    withRedux(reducer(config || wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps),
     withProps({steps: wizardView.steps}),
 )(WizardPage)
