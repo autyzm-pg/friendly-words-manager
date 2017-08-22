@@ -1,8 +1,10 @@
 import * as React from "react"
 import {View} from "react-native"
 import CustomModal from "./CustomModal"
-import Asker, {askFactory, TextAsker} from "./Asker"
+import {askFactory} from "./askFactory"
 import {initializeModal} from "./Modal"
+import {Asker} from "./Asker/Asker"
+import {TextAsker} from "./Asker/TextAsker"
 
 export class ModalRoot extends React.Component {
     constructor() {
