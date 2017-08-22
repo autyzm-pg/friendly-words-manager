@@ -1,3 +1,5 @@
+import * as R from "ramda"
+
 export const withLog = f => (...args) => {
     console.group("Invoked function ", f)
     try{
@@ -12,3 +14,5 @@ export const withLog = f => (...args) => {
         throw e;
     }
 }
+
+export const log = R.tap(val => console.log("Returned: ", val))

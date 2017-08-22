@@ -21,15 +21,38 @@ export const saveConfigEpic = action$ =>
             loadConfigs()
         ))
 
-export const deleteConfigEpic = action$ =>
+const isActiveConfig = name => R.compose(
+    R.equals(name),
+    R.path(['active', 'name'])
+)
+
+const takeFirstNotDeleted = nameOfDeleted => R.compose(
+    R.prop('name'),
+    R.prop(0),
+    R.takeLast(1),
+    R.filter(R.o(R.not, R.propEq('name', nameOfDeleted))),
+)
+
+export const deleteConfigEpic = (action$, store) =>
     action$.ofType(configActionTypes.deleteConfig.started)
-        .flatMap(({payload}) => Rx.Observable.fromPromise(
-            db.deleteConfig(payload).then(R.always(payload))
+        .flatMap(({payload: name}) => Rx.Observable.fromPromise(
+            db.deleteConfig(name)
+                .then(() => store.getState())
+                .then(R.prop('configurations'))
+                .then(R.when(
+                    isActiveConfig(name),
+                    ({all, active}) => db.changeActiveConfig(
+                        takeFirstNotDeleted(name)(all),
+                        active.mode
+                    )
+                ))
+                .then(R.always(name)),
         ))
         .do(name => ToastExt.success(`Usunięto ${name}`))
         .flatMap(name => Rx.Observable.of(
             deleteConfig.finish(name),
-            loadConfigs()
+            loadConfigs(),
+            loadActiveConfig.start(),
         ))
 
 export const loadConfigsEpic = action$ =>
