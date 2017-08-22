@@ -29,7 +29,7 @@ import {Modal, onSuccess} from "../components/modal/Modal"
 import {ModeTypes} from "../db"
 import {withLog} from "../libs/confy/libs/debug"
 
-const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions}) =>
+const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) =>
     <Container>
         <Header>
             <Left>
@@ -61,7 +61,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                             <ActionItem onSelect={() => actions.changeActiveConfig(config.name)}>
                                 <Icon name="arrow-up"/>
                             </ActionItem>
-                            <ActionItem onSelect={() => actions.delete(config.name)}>
+                            <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(config.name)}>
                                 <Icon name="close"/>
                             </ActionItem>
                         </ActionsMenu>
@@ -83,7 +83,8 @@ const stateToProps = ({configurations}) => ({
         config => config.name === configurations.active.name,
         () => configurations.active.mode === ModeTypes.learning ? "aktywne uczenie" : "aktywny test",
         R.always(undefined)
-    )
+    ),
+    isDeleteEnabled: configurations.all.length > 1
 })
 
 const askForMode = () => Modal.optionAsk("W jakim trybie chcesz aktywować krok?", [
