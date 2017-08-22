@@ -6,7 +6,6 @@ import {ConfigurationWizardView} from "../config/view"
 import * as R from "ramda"
 import {connect} from "react-redux"
 import {saveConfig, editConfig} from "../redux/configurations/actions"
-import {withLog} from "../libs/confy/libs/debug"
 import {Modal, onSuccess} from "../components/modal/Modal"
 
 const createSave = (history, handler, name, config) => {

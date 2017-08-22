@@ -19,7 +19,7 @@ export const ConfigElem = ({item, active, onSetActive, children}) => (
         <TouchableOpacity onPress={() => onSetActive(item)}>
             <View style={{flex: 1}}>
                 <Text style={active ? activeTextStyle : {}}>{item}</Text>
-                {active && <Text style={{...activeTextStyle, fontStyle: 'italic'}}> {"(aktywny)"}</Text>}
+                {active && <Text style={{...activeTextStyle, fontStyle: 'italic'}}> ({active})</Text>}
             </View>
         </TouchableOpacity>
         <Right>

@@ -1,6 +1,5 @@
 import React from "react"
 import {connect} from "react-redux"
-import {withLog} from "../libs/confy/libs/debug"
 import * as R from "ramda"
 import {editConfig} from "../redux/configurations/actions"
 import {createWizardPage} from "../libs/confy/views/wizard/WizardPage"
@@ -33,4 +32,4 @@ const mapStateToProps = ({configurations}, {match}) => ({
     allConfigNames: configurations.all.map(R.prop('name')),
     config: configurations.all.find(R.o(R.equals(match.params.name), R.prop('name'))).config
 })
-export const EditPage = connect(withLog(mapStateToProps), dispatchToProps)(_EditPage)
+export const EditPage = connect(mapStateToProps, dispatchToProps)(_EditPage)

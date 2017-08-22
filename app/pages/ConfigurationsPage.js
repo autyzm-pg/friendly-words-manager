@@ -26,8 +26,10 @@ import {changeConfigsSearchQuery, changeActiveConfig, saveConfig, deleteConfig} 
 import {ActionItem, ActionsMenu} from "../components/containers/ActionsMenu"
 import {getNameOfCopy} from "../libs/funcs"
 import {Modal, onSuccess} from "../components/modal/Modal"
+import {ModeTypes} from "../db"
+import {withLog} from "../libs/confy/libs/debug"
 
-const ConfigurationsPage = ({history, configurations, allConfigs, isActive, searchQuery, onSearchChange, actions}) =>
+const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions}) =>
     <Container>
         <Header>
             <Left>
@@ -46,7 +48,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, isActive, sear
                 {configurations.map(config => (
                     <ConfigElem key={config.name}
                                 item={config.name}
-                                active={isActive(config)}
+                                active={activeMessage(config)}
                                 onSetActive={actions.changeActiveConfig}
                     >
                         <ActionsMenu>
@@ -77,13 +79,22 @@ const stateToProps = ({configurations}) => ({
     allConfigs: configurations.all,
     configurations: R.reverse(configurations.all.filter(({name}) => name.toLowerCase().includes(configurations.searchQuery))),
     searchQuery: configurations.searchQuery,
-    isActive: config => config.name === configurations.active
+    activeMessage: R.ifElse(
+        config => config.name === configurations.active.name,
+        () => configurations.active.mode === ModeTypes.learning ? "aktywne uczenie" : "aktywny test",
+        R.always(undefined)
+    )
 })
+
+const askForMode = () => Modal.optionAsk("W jakim trybie chcesz aktywować krok?", [
+    {verbose: "Uczenie", value: ModeTypes.learning, primary: true},
+    {verbose: "Test", value: ModeTypes.test}
+]).then(R.prop('value'))
 
 const dispatchToProps = (dispatch, ownProps) => ({
     onSearchChange: R.compose(dispatch, changeConfigsSearchQuery),
     actions: {
-        changeActiveConfig: R.compose(dispatch, changeActiveConfig),
+        changeActiveConfig: name => askForMode().then(withLog(mode => dispatch(changeActiveConfig({name, mode})))),
         duplicate: R.compose(
             dispatch,
             R.apply(saveConfig),

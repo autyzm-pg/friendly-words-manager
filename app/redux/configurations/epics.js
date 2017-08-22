@@ -41,7 +41,7 @@ export const loadConfigsEpic = action$ =>
 
 export const activeConfigChangeEpic = action$ =>
     action$.ofType(configActionTypes.changedActiveConfig)
-        .flatMap(({payload}) => Rx.Observable.fromPromise(changeActiveConfig(payload).then(R.always(payload))))
+        .flatMap(({payload}) => Rx.Observable.fromPromise(changeActiveConfig(payload.name, payload.mode).then(R.always(payload))))
         .flatMap((activeConfig) => Rx.Observable.of(
             changeActiveConfigFinished(activeConfig),
             loadActiveConfig.start()

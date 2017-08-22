@@ -21,6 +21,7 @@ import {
 import {connect} from "react-redux"
 import ToastExt from "../libs/ToastExt"
 import {Modal} from "../components/modal/Modal"
+import {ModeTypes} from "../db"
 
 
 const MainPage = ({history, location, activeConfig}) => (
@@ -41,7 +42,7 @@ const MainPage = ({history, location, activeConfig}) => (
             </Button>
         </Content>
         <Footer>
-            <Text>Aktywna konfiguracja: {activeConfig}</Text>
+            <Text>Aktywna konfiguracja: {activeConfig.name} ({activeConfig.mode === ModeTypes.learning ? "uczenie" : "test"})</Text>
             <Body>
             <Button full light  onPress={() =>{
                 Modal.textAsk("Huehe?", "TEST").then(resp => console.log("response!!", resp))

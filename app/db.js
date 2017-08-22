@@ -6,14 +6,22 @@ const addConfigToList = (name, config) => R.append({
     config
 })
 
+export const ModeTypes = {
+    learning: 0,
+    test: 1
+}
+
 const emptyDb = {
     tables: {
         configs: []
     },
-    activeConfig: undefined
+    activeConfig: {
+        name: undefined,
+        mode: ModeTypes.learning
+    }
 }
 
-const configsDatabase = Expo.FileSystem.documentDirectory + "db-test.json"
+const configsDatabase = Expo.FileSystem.documentDirectory + "db-test2.json"
 
 const readDb = () => Expo.FileSystem.readAsStringAsync(configsDatabase)
     .catch(R.always(JSON.stringify(emptyDb)))
@@ -26,9 +34,9 @@ const modifyDb = (path, f) => readDb()
 
 export const readConfigs = () => readDb().then(R.path(['tables', 'configs'])).then(R.filter(({name}) => !!name))
 
-export const changeActiveConfig = newActiveConfig => modifyDb(
+export const changeActiveConfig = (newActiveConfig, mode) => modifyDb(
     ['activeConfig'],
-    R.always(newActiveConfig)
+    R.always({name: newActiveConfig, mode})
 )
 export const readActiveConfig = () => readDb().then(R.prop('activeConfig'))
 

@@ -5,6 +5,7 @@ import {withStyle} from "../../../libs/withStyle"
 const styles = {
     buttonsContainer: {
         flexDirection: "row",
+        justifyContent: "space-between",
         marginTop: 10,
     },
     buttons: {
