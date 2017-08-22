@@ -5,6 +5,7 @@ import {askFactory} from "./askFactory"
 import {initializeModal} from "./Modal"
 import {Asker} from "./Asker/Asker"
 import {TextAsker} from "./Asker/TextAsker"
+import OptionAsker from "./Asker/OptionAsker"
 
 export class ModalRoot extends React.Component {
     constructor() {
@@ -23,6 +24,7 @@ export class ModalRoot extends React.Component {
         toggle: () => this.setState(prevState => ({isOpened: !prevState.isOpened})),
         ask: this.askFactory(Asker),
         textAsk: (question, defaultText="", positive=true) => this.askFactory(TextAsker(defaultText))(question, positive),
+        optionAsk: (question, options) => this.askFactory(OptionAsker(options))(question)
     }
 
     componentWillMount() {

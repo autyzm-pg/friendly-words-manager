@@ -6,6 +6,7 @@ export const Modal = {
     hide: () => undefined,
     toggle: () => undefined,
     textAsk: (question, defaultText, positive) => Promise.reject(),
+    optionAsk: (question, options) => Promise.reject()
 }
 
 export const onSuccess = f => R.when(
