@@ -50,13 +50,15 @@ export const activeConfigChangeEpic = action$ =>
 export const editConfigEpic = action$ =>
     action$.ofType(configActionTypes.editConfig.started)
         .map(R.prop('payload'))
-        .flatMap(({previousName, name, config}) => Rx.Observable.concat(
-            Rx.Observable.of(deleteConfig.start(previousName)),
-            action$.ofType(configActionTypes.deleteConfig.finished).take(1)
-                .flatMap(() => Rx.Observable.concat(
-                    Rx.Observable.of(saveConfig(name, config)),
-                    action$.ofType(configActionTypes.saveConfigFulfilled).take(1).mapTo(editConfig.finish({name, config}))
-                ))
+        .flatMap(({previousName, name, config}) => Rx.Observable.fromPromise(
+            db.deleteConfig(previousName)
+                .then(() => addConfig({name, config}))
+                .then(R.always({previousName, name, config}))
+        ))
+        .do(() => ToastExt.success("Zapisano!"))
+        .flatMap((payload) => Rx.Observable.of(
+            editConfig.finish(payload),
+            loadConfigs()
         ))
 
 export const loadActiveConfigEpic = action$ =>
