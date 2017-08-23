@@ -21,7 +21,7 @@ import {
 import {connect} from "react-redux"
 import ToastExt from "../libs/ToastExt"
 import {Modal} from "../components/modal/Modal"
-import {ModeTypes} from "../db"
+import {ModeTypes} from "../db/format"
 
 
 const MainPage = ({history, location, activeConfig}) => (

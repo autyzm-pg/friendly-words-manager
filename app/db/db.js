@@ -1,25 +1,12 @@
 import * as R from "ramda"
+import {_addRecord, _deleteRecord, _updateRecord} from "./tables"
+import {emptyDb} from "./format"
 
 const removeConfigFromList = name => R.filter(config => config.name !== name)
 const addConfigToList = (name, config) => R.append({
     name,
     config
 })
-
-export const ModeTypes = {
-    learning: 0,
-    test: 1
-}
-
-const emptyDb = {
-    tables: {
-        configs: []
-    },
-    activeConfig: {
-        name: undefined,
-        mode: ModeTypes.learning
-    }
-}
 
 const configsDatabase = Expo.FileSystem.documentDirectory + "db-test2.json"
 
@@ -31,6 +18,10 @@ const writeDb = newDb => Expo.FileSystem.writeAsStringAsync(configsDatabase, JSO
 const modifyDb = (path, f) => readDb()
     .then(R.over(R.lensPath(path), f))
     .then(writeDb)
+
+export const addRecord = _addRecord(readDb, writeDb)
+export const updateRecord = _updateRecord(readDb, writeDb)
+export const deleteRecord = _deleteRecord(readDb, writeDb)
 
 export const readConfigs = () => readDb().then(R.path(['tables', 'configs'])).then(R.filter(({name}) => !!name))
 

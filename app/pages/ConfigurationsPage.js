@@ -26,7 +26,7 @@ import {changeConfigsSearchQuery, changeActiveConfig, saveConfig, deleteConfig} 
 import {ActionItem, ActionsMenu} from "../components/containers/ActionsMenu"
 import {getNameOfCopy} from "../libs/funcs"
 import {Modal, onSuccess} from "../components/modal/Modal"
-import {ModeTypes} from "../db"
+import {ModeTypes} from "../db/format"
 import {withLog} from "../libs/confy/libs/debug"
 
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) =>

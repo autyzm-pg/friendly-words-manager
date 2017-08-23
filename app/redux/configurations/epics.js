@@ -5,9 +5,9 @@ import {
     saveConfigFinish
 } from "./actions"
 import * as configActionTypes from "./actionTypes"
-import {addConfig, changeActiveConfig, readActiveConfig, readConfigs} from "../../db"
+import {addConfig, changeActiveConfig, readActiveConfig, readConfigs} from "../../db/db"
 import * as R from "ramda"
-import * as db from "../../db"
+import * as db from "../../db/db"
 import ToastExt from "../../libs/ToastExt"
 
 export const saveConfigEpic = action$ =>
