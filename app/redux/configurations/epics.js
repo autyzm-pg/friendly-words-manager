@@ -1,14 +1,19 @@
 import Rx from "rxjs/Rx"
 import 'rxjs'
 import {
-    changeActiveConfigFinished, deleteConfig, editConfig, loadActiveConfig, loadConfigs, loadConfigsFinish, saveConfig,
-    saveConfigFinish
+    changeActiveConfigFinished,
+    editConfig,
+    loadActiveConfig,
+    loadConfigs,
+    loadConfigsFinish,
+    saveConfigFinish,
+    deleteConfig as deleteConfigAction,
 } from "./actions"
 import * as configActionTypes from "./actionTypes"
-import {addConfig, changeActiveConfig, readActiveConfig, readConfigs} from "../../db/db"
+import {addConfig, readActiveConfig, updateConfig} from "../../db/configs"
 import * as R from "ramda"
-import * as db from "../../db/db"
 import ToastExt from "../../libs/ToastExt"
+import {changeActiveConfig, deleteConfig, readConfigs} from "../../db/configs"
 
 export const saveConfigEpic = action$ =>
     action$.ofType(configActionTypes.saveConfig)
@@ -21,28 +26,29 @@ export const saveConfigEpic = action$ =>
             loadConfigs()
         ))
 
-const isActiveConfig = name => R.compose(
-    R.equals(name),
-    R.path(['active', 'name'])
+const isActiveConfig = id => R.compose(
+    R.equals(id),
+    R.path(['active', 'id'])
 )
 
-const takeFirstNotDeleted = nameOfDeleted => R.compose(
-    R.prop('name'),
+const takeFirstNotDeleted = (idOfDeleted, all) => R.compose(
+    R.prop('id'),
     R.prop(0),
     R.takeLast(1),
-    R.filter(R.o(R.not, R.propEq('name', nameOfDeleted))),
-)
+    R.filter(R.o(R.not, R.propEq('id', idOfDeleted))),
+)(all)
 
 export const deleteConfigEpic = (action$, store) =>
     action$.ofType(configActionTypes.deleteConfig.started)
-        .flatMap(({payload: name}) => Rx.Observable.fromPromise(
-            db.deleteConfig(name)
+        .map(R.prop('payload'))
+        .flatMap(({id, name}) => Rx.Observable.fromPromise(
+            deleteConfig(id)
                 .then(() => store.getState())
                 .then(R.prop('configurations'))
                 .then(R.when(
-                    isActiveConfig(name),
-                    ({all, active}) => db.changeActiveConfig(
-                        takeFirstNotDeleted(name)(all),
+                    isActiveConfig(id),
+                    ({all, active}) => changeActiveConfig(
+                        takeFirstNotDeleted(id, all),
                         active.mode
                     )
                 ))
@@ -50,7 +56,7 @@ export const deleteConfigEpic = (action$, store) =>
         ))
         .do(name => ToastExt.success(`Usunięto ${name}`))
         .flatMap(name => Rx.Observable.of(
-            deleteConfig.finish(name),
+            deleteConfigAction.finish(name),
             loadConfigs(),
             loadActiveConfig.start(),
         ))
@@ -64,7 +70,7 @@ export const loadConfigsEpic = action$ =>
 
 export const activeConfigChangeEpic = action$ =>
     action$.ofType(configActionTypes.changedActiveConfig)
-        .flatMap(({payload}) => Rx.Observable.fromPromise(changeActiveConfig(payload.name, payload.mode).then(R.always(payload))))
+        .flatMap(({payload}) => Rx.Observable.fromPromise(changeActiveConfig(payload.id, payload.mode).then(R.always(payload))))
         .flatMap((activeConfig) => Rx.Observable.of(
             changeActiveConfigFinished(activeConfig),
             loadActiveConfig.start()
@@ -73,10 +79,9 @@ export const activeConfigChangeEpic = action$ =>
 export const editConfigEpic = action$ =>
     action$.ofType(configActionTypes.editConfig.started)
         .map(R.prop('payload'))
-        .flatMap(({previousName, name, config}) => Rx.Observable.fromPromise(
-            db.deleteConfig(previousName)
-                .then(() => addConfig({name, config}))
-                .then(R.always({previousName, name, config}))
+        .flatMap(({id, name, config}) => Rx.Observable.fromPromise(
+            updateConfig(id, {name, config})
+                .then(R.always({id, name, config}))
         ))
         .do(() => ToastExt.success("Zapisano!"))
         .flatMap((payload) => Rx.Observable.of(

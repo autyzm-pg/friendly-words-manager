@@ -10,7 +10,7 @@ export const emptyDb = {
         configs: []
     },
     activeConfig: {
-        name: undefined,
+        id: undefined,
         mode: ModeTypes.learning
     }
 }

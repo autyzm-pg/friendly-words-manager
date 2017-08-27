@@ -7,7 +7,7 @@ const defaultState = {
     all: [],
     searchQuery: "",
     active: {
-        name: "",
+        id: undefined,
         mode: undefined
     }
 }

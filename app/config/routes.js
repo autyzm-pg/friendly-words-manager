@@ -12,7 +12,7 @@ export default Router = () =>
         <Switch>
             <Route exact path="/" component={MainPage}/>
             <Route path="/configurations" component={ConfigurationsPage}/>
-            <Route path="/creator/:name" component={EditPage} />
+            <Route path="/creator/:id" component={EditPage} />
             <Route path="/creator" component={CreatorPage}/>
         </Switch>
     </NativeRouter>

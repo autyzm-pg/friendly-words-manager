@@ -47,7 +47,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
             <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
                 {configurations.map(config => (
                     <ConfigElem key={config.name}
-                                item={config.name}
+                                item={config}
                                 active={activeMessage(config)}
                                 onSetActive={actions.changeActiveConfig}
                     >
@@ -55,13 +55,13 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                             <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
                                 <Icon name="copy"/>
                             </ActionItem>
-                            <ActionItem onSelect={() => history.push(`/creator/${config.name}`)}>
+                            <ActionItem onSelect={() => history.push(`/creator/${config.id}`)}>
                                 <Icon name="create"/>
                             </ActionItem>
-                            <ActionItem onSelect={() => actions.changeActiveConfig(config.name)}>
+                            <ActionItem onSelect={() => actions.changeActiveConfig(config.id)}>
                                 <Icon name="arrow-up"/>
                             </ActionItem>
-                            <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(config.name)}>
+                            <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(config)}>
                                 <Icon name="close"/>
                             </ActionItem>
                         </ActionsMenu>
@@ -80,7 +80,7 @@ const stateToProps = ({configurations}) => ({
     configurations: R.reverse(configurations.all.filter(({name}) => name.toLowerCase().includes(configurations.searchQuery))),
     searchQuery: configurations.searchQuery,
     activeMessage: R.ifElse(
-        config => config.name === configurations.active.name,
+        config => config.id === configurations.active.id,
         () => configurations.active.mode === ModeTypes.learning ? "aktywne uczenie" : "aktywny test",
         R.always(undefined)
     ),
@@ -95,18 +95,17 @@ const askForMode = () => Modal.optionAsk("W jakim trybie chcesz aktywować krok?
 const dispatchToProps = (dispatch, ownProps) => ({
     onSearchChange: R.compose(dispatch, changeConfigsSearchQuery),
     actions: {
-        changeActiveConfig: name => askForMode().then(withLog(mode => dispatch(changeActiveConfig({name, mode})))),
+        changeActiveConfig: id => askForMode().then(mode => dispatch(changeActiveConfig({id, mode}))),
         duplicate: R.compose(
             dispatch,
             R.apply(saveConfig),
-            R.tap(console.log),
             (allConfigs, config) => [
                 getNameOfCopy(allConfigs.map(R.prop('name')), config.name),
                 config.config
             ]
         ),
-        delete: (name) => Modal.ask(`Czy napewno chcesz usunąć '${name}'?`, false)
-            .then(onSuccess(() => dispatch(deleteConfig.start(name))))
+        delete: (config) => Modal.ask(`Czy napewno chcesz usunąć '${config.name}'?`, false)
+            .then(onSuccess(() => dispatch(deleteConfig.start(config))))
     }
 })
 

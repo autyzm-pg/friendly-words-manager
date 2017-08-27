@@ -15,6 +15,9 @@ const removeFromTable = (db, tableName, id) => R.compose(
     idEqual
 )(id)(db)
 
+export const _readTable = readDb => tableName => readDb()
+    .then(R.view(tablePath(tableName)))
+
 export const _addRecord = (readDb, writeDb) => (tableName, record) => readDb()
     .then(R.over(idSeedsPath(tableName), R.add(1)))
     .then(db => [db, record])
@@ -31,7 +34,7 @@ export const _updateRecord = (readDb, writeDb) => (tableName, id, record) => rea
         return [db, oldRecord]
     })
     .then(([db, oldRecord]) => [removeFromTable(db, tableName, oldRecord.id), oldRecord])
-    .then(([db, oldRecord]) => [db, record])
+    .then(([db, oldRecord]) => [db, {...record, id}])
     .then(([db, newRecord]) => addToTable(db, tableName, newRecord))
     .then(writeDb)
 
