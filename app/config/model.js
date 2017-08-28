@@ -2,6 +2,7 @@
 import {Model} from "../libs/confy/models"
 import {OptionField} from "../libs/confy/fields/options/optionField"
 import {TextField} from "../libs/confy/fields/text/textField"
+import {ImageMultiChooserField} from "../libs/confy/fields/multiOptions/multiOptionField";
 
 // export const WordModel = Model({
 //     name: TextField(),
@@ -16,9 +17,14 @@ export const ConfigurationModel = Model({
             "option1",
             "option2"
         ]
-
+    }),
+    wordImages: ImageMultiChooserField("Wybierz obrazki dla słowa", {
+        options: [
+            "img1.jpg", "img2.png", "img3.wtf"
+        ],
+        def: ["img2.png"]
     })
-})
+});
 
 // export const ConfigurationModel = Model({
 //     materials: ArrayField(ObjectField({

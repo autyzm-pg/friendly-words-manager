@@ -35,7 +35,10 @@ export const Option = ({isChecked, onPress, label }) => {
 };
 
 export const ImageOption = ({src, ...rest}) => {
+/*
 	const label = <Image source={{uri: src}} style={{width: 50, height: 50}}/>;
+*/
+	const label = <Text>{src}</Text>;
 	return <Option {...rest} label={label} />
 };
 

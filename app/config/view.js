@@ -8,7 +8,7 @@ import {Column, ColumnView} from "../libs/confy/views/column/columnView"
 
 export const ConfigurationWizardView = WizardView(fields => [
     WizardStep("Step 1", ColumnView([
-        Column([fields.someText])
+        Column([fields.someText, fields.wordImages])
     ])),
     WizardStep("Step 2", ColumnView([
         Column([fields.someOptionField])
