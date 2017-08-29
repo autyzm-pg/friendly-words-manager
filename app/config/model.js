@@ -20,7 +20,12 @@ export const ConfigurationModel = Model({
     }),
     wordImages: ImageMultiChooserField("Wybierz obrazki dla słowa", {
         options: [
-            "img1.jpg", "img2.png", "img3.wtf"
+            "https://images-na.ssl-images-amazon.com/images/I/81ep8rBNqFL._SX466_.jpg",
+            "https://s-media-cache-ak0.pinimg.com/236x/61/ac/e2/61ace20ff0969cfa19e1082f047feec3--realistic-dolls-vintage-dolls.jpg",
+            "https://truimg.toysrus.com/product/images/09FF80A7.zoom.jpg?fit=inside|356:368",
+	       "https://i.ytimg.com/vi/-CKvt1KNU74/maxresdefault.jpg",
+            "http://dreamatico.com/data_images/chicken/chicken-4.jpg",
+            "http://static.boredpanda.com/blog/wp-content/uploads/2017/02/goth-black-chicken-ayam-cemani-21.jpg"
         ],
         def: ["img2.png"]
     })
