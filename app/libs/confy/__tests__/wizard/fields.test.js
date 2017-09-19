@@ -16,7 +16,7 @@ describe('Wizard component', () => {
         expect(wrapper).toBeTruthy()
     })
 
-    it("has verbose prop", () => {
+    it.skip("has verbose prop", () => {
         const config = {}
         const field = {
             component: () => <View/>,
@@ -27,7 +27,7 @@ describe('Wizard component', () => {
         expect(wrapper.instance().props).toHaveProperty('verbose', field.verbose)
     })
 
-    it("has 'value' prop with expected value", () => {
+    it.skip("has 'value' prop with expected value", () => {
         const fieldName = "someFieldName"
         const config = {
             [fieldName]: 'this value should be inserted into the "value" prop'

@@ -65,7 +65,7 @@ describe("updateRecord ", () => {
 
         await updateRecord(tableName, id, newRecord)
 
-        expect(writeDb.mock.calls[0][0].tables[tableName].find(record => record.id === id)).toBe(newRecord)
+        expect(writeDb.mock.calls[0][0].tables[tableName].find(record => record.id === id)).toEqual(newRecord)
     })
 
     it("doesn't touch other records", async () => {
