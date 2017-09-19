@@ -41,3 +41,6 @@ export const _updateRecord = (readDb, writeDb) => (tableName, id, record) => rea
 export const _deleteRecord = (readDb, writeDb) => (tableName, id) => readDb()
     .then(R.over(tablePath(tableName), R.filter(record => record.id !== id)))
     .then(writeDb)
+
+export const _createTable = (readDb, writeDb) => (tableName) => readDb()
+    .then(R.set(tablePath(tableName), []))

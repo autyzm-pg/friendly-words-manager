@@ -1,17 +1,19 @@
 // @flow
-import {Model} from "../libs/confy/models"
+import {MainModel, Model} from "../libs/confy/models"
 import {OptionField} from "../libs/confy/fields/options/optionField"
 import {TextField} from "../libs/confy/fields/text/textField"
 import {BoolField} from "../libs/confy/fields/switch/boolField"
 import {ImageMultiChooserField} from "../libs/confy/fields/multiOptions/multiOptionField";
+import {createTableForModel} from "../db/db"
 
-// export const WordModel = Model({
-//     name: TextField(),
-//     images: ArrayField(UriField()),
-//     tags: ArrayField(TextField())
-// })
+export const WordModel = Model("words", {
+    name: TextField("Slowo"),
+    images: TextField("Obrazy"),
+    tags: TextField("Kategorie")
+})
+createTableForModel(WordModel)
 
-export const ConfigurationModel = Model({
+export const ConfigurationModel = MainModel({
     someText: TextField("Some text"),
     someOptionField: OptionField("Some option", {
         options: [

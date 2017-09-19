@@ -17,3 +17,6 @@ export const addRecord = _addRecord(readDb, writeDb)
 export const updateRecord = _updateRecord(readDb, writeDb)
 export const deleteRecord = _deleteRecord(readDb, writeDb)
 export const readTable = _readTable(readDb)
+export const createTable = _createTable(readDb, writeDb)
+
+export const createTableForModel = model => createTable(model.name)
