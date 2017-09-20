@@ -1,5 +1,6 @@
-import {notImplementedFunc} from "../../../funcs"
+import {SectionPage} from "./SectionPage";
 
-export const SectionView = notImplementedFunc
-export const Section = notImplementedFunc
+export const SectionView = sections => ({component: SectionPage, props: {sections}})
+
+export const Section = (name, fields) => ({name, fields});
 

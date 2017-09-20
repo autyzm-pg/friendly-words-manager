@@ -2,17 +2,27 @@
 import {ConfigurationModel} from "./model"
 import {WizardStep, WizardView} from "../libs/confy/views/wizard/wizardView"
 import {Column, ColumnView} from "../libs/confy/views/column/columnView"
+import {Section, SectionView} from "../libs/confy/views/section/sectionView"
 
 // const DetailedListView = notImplementedFunc
 // const CustomTestView = notImplementedFunc
 
 export const ConfigurationWizardView = WizardView(fields => [
-    WizardStep("Step 1", ColumnView([
+    WizardStep("Materiał", ColumnView([
         Column([fields.someText, fields.wordImages])
     ])),
-    WizardStep("Step 2", ColumnView([
-        Column([fields.someOptionField])
-    ]))
+    WizardStep("Sposób uczenia", SectionView([
+        Section("Ustawienia kroku", [fields.commandText, fields.picturesNumber, fields.showPicturesLabels, fields.readCommand]),
+	    Section("Ustawienia próby", [fields.repetitionsNumber]),
+	    Section("Ustawienia podpowiedzi", [fields.repetitionsNumber])
+
+    ])),
+	WizardStep("Wzmocnienia", ColumnView([
+		Column([fields.someOptionField])
+	])),
+	WizardStep("Test", ColumnView([
+		Column([fields.someOptionField])
+	]))
 ], ConfigurationModel)
 
 // export const ConfigurationWizardView = WizardView(fields => [

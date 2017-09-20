@@ -2,6 +2,7 @@
 import {Model} from "../libs/confy/models"
 import {OptionField} from "../libs/confy/fields/options/optionField"
 import {TextField} from "../libs/confy/fields/text/textField"
+import {BoolField} from "../libs/confy/fields/switch/boolField"
 import {ImageMultiChooserField} from "../libs/confy/fields/multiOptions/multiOptionField";
 
 // export const WordModel = Model({
@@ -28,7 +29,12 @@ export const ConfigurationModel = Model({
             "http://static.boredpanda.com/blog/wp-content/uploads/2017/02/goth-black-chicken-ayam-cemani-21.jpg"
         ],
         def: ["img2.png"]
-    })
+    }),
+    commandText: TextField("Wybierz polecenie dla kroku"),
+    repetitionsNumber: TextField("Liczba prób dla słowa"),
+    picturesNumber: TextField("Wybierz ilość wyświetlanych obrazków"),
+    showPicturesLabels: BoolField("Pokazuj podpisy pod obrazkami", {def: true}),
+    readCommand: BoolField("Czytaj komende", {def: true})
 });
 
 // export const ConfigurationModel = Model({
