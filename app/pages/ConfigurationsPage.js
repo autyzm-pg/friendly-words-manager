@@ -1,79 +1,58 @@
 import React from "react"
 
 import {
-    Container,
-    Fab,
-    Content,
-    Header,
-    Body,
-    Title,
     Button,
-    Text,
-    Tab,
-    Tabs,
-    TabHeading,
+    Container,
+    Content,
+    Fab,
+    Header,
     Icon,
     Left,
-    Right,
     List,
-    ListItem
+    ListItem,
+    Right,
+    Tab,
+    TabHeading,
+    Tabs,
+    Title
 } from 'native-base'
-import {ConfigElem} from "../components/configurations/ConfigList"
-import ConfigList from "../components/configurations/ConfigList"
+import ConfigList, {ConfigElem} from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
 import * as R from "ramda"
-import {changeConfigsSearchQuery, changeActiveConfig, saveConfig, deleteConfig} from "../redux/configurations/actions"
+import {changeActiveConfig, changeConfigsSearchQuery, deleteConfig, saveConfig} from "../redux/configurations/actions"
 import {ActionItem, ActionsMenu} from "../components/containers/ActionsMenu"
 import {getNameOfCopy} from "../libs/funcs"
 import {Modal, onSuccess} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
-import {withLog} from "../libs/confy/libs/debug"
+import {ListPage} from "../components/resources/ListPage"
 
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) =>
-    <Container>
-        <Header>
-            <Left>
-                <Button transparent onPress={() => history.push("/")}>
-                    <Icon name='arrow-back'/>
-                </Button>
-            </Left>
-            <Body>
-            <Title>Konfiguracje</Title>
-            </Body>
-            <Right/>
-        </Header>
-
-        <Content keyboardShouldPersistTaps="handled">
-            <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
-                {configurations.map(config => (
-                    <ConfigElem key={config.name}
-                                item={config}
-                                active={activeMessage(config)}
-                                onSetActive={actions.changeActiveConfig}
-                    >
-                        <ActionsMenu>
-                            <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
-                                <Icon name="copy"/>
-                            </ActionItem>
-                            <ActionItem onSelect={() => history.push(`/creator/${config.id}`)}>
-                                <Icon name="create"/>
-                            </ActionItem>
-                            <ActionItem onSelect={() => actions.changeActiveConfig(config.id)}>
-                                <Icon name="arrow-up"/>
-                            </ActionItem>
-                            <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(config)}>
-                                <Icon name="close"/>
-                            </ActionItem>
-                        </ActionsMenu>
-                    </ConfigElem>
-                ))}
-            </ConfigList>
-        </Content>
-
-        <Fab active={false} onPress={() => history.push("/creator")} style={{backgroundColor: '#e02161'}}>
-            <Icon name="add"/>
-        </Fab>
-    </Container>
+    <ListPage onBack={() => history.push("/")} title={"Konfiguracje"} onFabPress={()=>history.push("/creator")}>
+        <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
+            {configurations.map(config => (
+                <ConfigElem key={config.id}
+                            item={config}
+                            active={activeMessage(config)}
+                            onSetActive={actions.changeActiveConfig}
+                >
+                    <ActionsMenu>
+                        <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
+                            <Icon name="copy"/>
+                        </ActionItem>
+                        <ActionItem onSelect={() => history.push(`/creator/${config.id}`)}>
+                            <Icon name="create"/>
+                        </ActionItem>
+                        <ActionItem onSelect={() => actions.changeActiveConfig(config.id)}>
+                            <Icon name="arrow-up"/>
+                        </ActionItem>
+                        <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(config)}>
+                            <Icon name="close"/>
+                        </ActionItem>
+                    </ActionsMenu>
+                </ConfigElem>
+            ))}
+        </ConfigList>
+    </ListPage>
 
 const stateToProps = ({configurations}) => ({
     allConfigs: configurations.all,
