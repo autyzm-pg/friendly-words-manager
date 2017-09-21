@@ -1,5 +1,5 @@
 import * as R from "ramda"
-import {_addRecord, _deleteRecord, _readTable, _updateRecord} from "./tables"
+import {_addRecord, _createTable, _deleteRecord, _readTable, _updateRecord} from "./tables"
 import {emptyDb} from "./format"
 
 const configsDatabase = Expo.FileSystem.documentDirectory + "db-test3.json"

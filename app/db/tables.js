@@ -43,4 +43,10 @@ export const _deleteRecord = (readDb, writeDb) => (tableName, id) => readDb()
     .then(writeDb)
 
 export const _createTable = (readDb, writeDb) => (tableName) => readDb()
-    .then(R.set(tablePath(tableName), []))
+    .then(R.when(
+        R.pipe(R.prop('tables'), R.has(tableName)),
+        R.pipe(
+            R.set(tablePath(tableName), []),
+            R.set(idSeedsPath(tableName), 1000)
+        )
+    ))

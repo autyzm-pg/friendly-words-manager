@@ -19,5 +19,7 @@ export const AsyncAction = (asyncTypes: AsyncActionTypeInterface) => ({
     finish: <T>(payload: T) => ({type: asyncTypes.finished, payload}),
 })
 
-
-
+export const SimpleAsyncAction = (asyncTypes: AsyncActionTypeInterface) => ({
+    start: <T>(payload: T) =>  ({type: asyncTypes.started, payload}),
+    finish: <T>(payload: T) => ({type: asyncTypes.finished, payload}),
+})

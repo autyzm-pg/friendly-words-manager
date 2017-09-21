@@ -1,6 +1,6 @@
 import {loadActiveConfig, loadingConfigs, loadingConfigsFulfilled} from "./actionTypes"
-import {ActionInitializer} from "../../libs/initializers"
+import {SimpleActionInitializer} from "../../libs/initializers"
 
 
-export const ConfigsInitializer = ActionInitializer(loadingConfigs, loadingConfigsFulfilled)
-export const ActiveConfigInitializer = ActionInitializer(loadActiveConfig.started, loadActiveConfig.finished)
+export const ConfigsInitializer = SimpleActionInitializer(loadingConfigs, loadingConfigsFulfilled)
+export const ActiveConfigInitializer = SimpleActionInitializer(loadActiveConfig.started, loadActiveConfig.finished)

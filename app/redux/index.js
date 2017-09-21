@@ -5,10 +5,15 @@ import appEpics from "./app/epics"
 import appReducer from "./app/reducers"
 import initializers from "./initializersRegister"
 import * as R from "ramda"
+import {createResourcesReducerFromModels} from "./resources/reducers"
+import {WordModel} from "../config/model"
+import {ResourcesEpic, ResourcesReducer} from "./resources"
+
 
 export const reducers = {
     configurations: configurationsReducer,
-    app: appReducer
+    app: appReducer,
+    resources: ResourcesReducer
 }
 
 const initializersEpic = combineEpics(
@@ -18,5 +23,6 @@ const initializersEpic = combineEpics(
 export const rootEpic = combineEpics(
     ...appEpics,
     ...configEpics,
+    ResourcesEpic,
     initializersEpic,
 )

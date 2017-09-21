@@ -17,8 +17,10 @@ export const Initializer = (type, promiseFactory) => ((types => ({
 }))(makeTypes(type)))
 
 export const ActionInitializer = (startAction, finishType) => ({
-    startAction: PlainAction(startAction),
+    startAction: startAction,
     finishType,
     epic: action$ =>
         action$.skipWhile(R.always(true))
 })
+
+export const SimpleActionInitializer = (startActionType, finishType) => ActionInitializer(PlainAction(startActionType), finishType)
