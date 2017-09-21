@@ -2,7 +2,7 @@ import React from "react"
 import {List, ListItem, Right, View} from "native-base"
 import {TouchableOpacity} from "react-native"
 
-export const ResourceElem = ({item, onElemClick, children}) => (
+export const ResourceElem = ({item, onElemClick = () => null, children}) => (
     <ListItem>
         <TouchableOpacity onPress={onElemClick}>
             <View style={{flex: 1}}>

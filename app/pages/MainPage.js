@@ -22,6 +22,8 @@ import {connect} from "react-redux"
 import ToastExt from "../libs/ToastExt"
 import {Modal} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
+import {WordModel} from "../config/model"
+import * as R from "ramda"
 
 
 const MainPage = ({history, location, activeConfig}) => (
@@ -37,7 +39,9 @@ const MainPage = ({history, location, activeConfig}) => (
             }}>
                 <Text>Konfiguracje</Text>
             </Button>
-            <Button block light disabled>
+            <Button block light onPress={() => {
+                history.push(`/resources/${WordModel.name}`)
+            }}>
                 <Text>Zasoby</Text>
             </Button>
         </Content>
@@ -59,7 +63,7 @@ const stateToProps = ({configurations}) => ({
     activeConfig: {
         id: configurations.active.id,
         mode: configurations.active.mode,
-        name: configurations.all.find(config => config.id === configurations.active.id).name
+        name: R.propOr('Brak', "name", configurations.all.find(config => config.id === configurations.active.id))
     }
 })
 

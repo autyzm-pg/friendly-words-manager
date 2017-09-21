@@ -2,7 +2,7 @@ import * as R from "ramda"
 import {_addRecord, _createTable, _deleteRecord, _readTable, _updateRecord} from "./tables"
 import {emptyDb} from "./format"
 
-const configsDatabase = Expo.FileSystem.documentDirectory + "db-test3.json"
+const configsDatabase = Expo.FileSystem.documentDirectory + "db-test8.json"
 
 export const readDb = () => Expo.FileSystem.readAsStringAsync(configsDatabase)
     .catch(R.always(JSON.stringify(emptyDb)))

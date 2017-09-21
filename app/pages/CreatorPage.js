@@ -6,7 +6,7 @@ import {ConfigurationWizardView} from "../config/view"
 import * as R from "ramda"
 import {connect} from "react-redux"
 import {saveConfig, editConfig} from "../redux/configurations/actions"
-import {Modal, onSuccess} from "../components/modal/Modal"
+import {Modal, onConfirm} from "../components/modal/Modal"
 
 const createSave = (history, handler, name, config) => {
     handler(name, config)
@@ -14,7 +14,7 @@ const createSave = (history, handler, name, config) => {
 }
 const onCreateSave = R.curry((allConfigNames, handler, history, config, name) => R.ifElse(
     R.any(R.equals(name)),
-    () => Modal.ask(`Krok o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false).then(onSuccess(() => createSave(history, handler, name, config))),
+    () => Modal.ask(`Krok o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false).then(onConfirm(() => createSave(history, handler, name, config))),
     () => createSave(history, handler, name, config)
 )(allConfigNames))
 

@@ -31,7 +31,7 @@ export const SaveButtons = Buttons("Zapisz", "Anuluj")
 export const askFactory = actions => AskerComponent => (question, positive = true) => new Promise((resolve, reject) =>
     actions.show(
         <AskerComponent onConfirm={value => {
-            resolve({type: "success", value})
+            resolve({type: "confirm", value})
             actions.hide()
         }} onCancel={value => {
             resolve({type: "cancel", value})

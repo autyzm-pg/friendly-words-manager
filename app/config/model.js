@@ -11,7 +11,6 @@ export const WordModel = Model("words", {
     images: TextField("Obrazy"),
     tags: TextField("Kategorie")
 })
-createTableForModel(WordModel)
 
 export const ConfigurationModel = MainModel({
     someText: TextField("Some text"),

@@ -22,7 +22,7 @@ import * as R from "ramda"
 import {changeActiveConfig, changeConfigsSearchQuery, deleteConfig, saveConfig} from "../redux/configurations/actions"
 import {ActionItem, ActionsMenu} from "../components/containers/ActionsMenu"
 import {getNameOfCopy} from "../libs/funcs"
-import {Modal, onSuccess} from "../components/modal/Modal"
+import {Modal, onConfirm} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
 import {ListPage} from "../components/resources/ListPage"
 
@@ -84,7 +84,7 @@ const dispatchToProps = (dispatch, ownProps) => ({
             ]
         ),
         delete: (config) => Modal.ask(`Czy napewno chcesz usunąć '${config.name}'?`, false)
-            .then(onSuccess(() => dispatch(deleteConfig.start(config))))
+            .then(onConfirm(() => dispatch(deleteConfig.start(config))))
     }
 })
 

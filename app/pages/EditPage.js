@@ -5,7 +5,7 @@ import {editConfig} from "../redux/configurations/actions"
 import {createWizardPage} from "../libs/confy/views/wizard/WizardPage"
 import {ConfigurationWizardView} from "../config/view"
 import {goBack} from "./CreatorPage"
-import {Modal, onSuccess} from "../components/modal/Modal"
+import {Modal, onConfirm} from "../components/modal/Modal"
 import {withLog} from "../libs/confy/libs/debug"
 
 const editSave = (history, handler, id, name, config) => {
@@ -15,7 +15,7 @@ const editSave = (history, handler, id, name, config) => {
 const isNameCollision = (name, previousName, allNames) => previousName !== name && R.any(R.equals(name), allNames)
 const onEditSave = R.curry((id, previousName, allConfigNames, handler, history, config, name) => {
     if(isNameCollision(name, previousName, allConfigNames)) {
-        return Modal.ask(`Krok o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false).then(onSuccess(() => editSave(history, handler, previousName, name, config)))
+        return Modal.ask(`Krok o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false).then(onConfirm(() => editSave(history, handler, previousName, name, config)))
     }
     editSave(history, handler, id, name, config)
 })

@@ -9,8 +9,8 @@ export const Modal = {
     optionAsk: (question, options) => Promise.reject()
 }
 
-export const onSuccess = f => R.when(
-    ({type}) => type === "success",
+export const onConfirm = f => R.when(
+    ({type}) => type === "confirm",
     ({value}) => f(value)
 )
 
