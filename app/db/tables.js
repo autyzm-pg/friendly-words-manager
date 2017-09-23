@@ -1,5 +1,4 @@
 import * as R from "ramda"
-import {withLog} from "../libs/confy/libs/debug"
 
 const tablePath = tableName => R.lensPath(['tables', tableName])
 const idSeedsPath = tableName => R.lensPath(['idSeeds', tableName])
@@ -44,11 +43,12 @@ export const _deleteRecord = (readDb, writeDb) => (tableName, id) => readDb()
     .then(writeDb)
 
 export const _createTable = (readDb, writeDb) => (tableName) => readDb()
-    .then(R.when(
-        withLog(R.pipe(R.prop('tables'), R.has(tableName), R.not)),
+    .then(R.ifElse(
+        R.pipe(R.prop('tables'), R.has(tableName), R.not),
         R.pipe(
             R.set(tablePath(tableName), []),
             R.set(idSeedsPath(tableName), 1000),
-            withLog(writeDb)
-        )
+            writeDb
+        ),
+        writeDb
     ))

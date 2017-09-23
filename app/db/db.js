@@ -1,22 +1,30 @@
 import * as R from "ramda"
 import {_addRecord, _createTable, _deleteRecord, _readTable, _updateRecord} from "./tables"
 import {emptyDb} from "./format"
+import Mutex from "../libs/mutex"
 
-const configsDatabase = Expo.FileSystem.documentDirectory + "db-test8.json"
+const dbMutex = Mutex.create()
 
-export const readDb = () => Expo.FileSystem.readAsStringAsync(configsDatabase)
+const configsDatabase = Expo.FileSystem.documentDirectory + "db-test112.json"
+
+const readDb = () =>  Expo.FileSystem.readAsStringAsync(configsDatabase)
     .catch(R.always(JSON.stringify(emptyDb)))
-    .then(configsStr => JSON.parse(configsStr))
-export const writeDb = newDb => Expo.FileSystem.writeAsStringAsync(configsDatabase, JSON.stringify(newDb))
+    .then(configsStr =>  JSON.parse(configsStr))
+const writeDb = newDb =>  Expo.FileSystem.writeAsStringAsync(configsDatabase, JSON.stringify(newDb))
 
-export const modifyDb = (path, f) => readDb()
+const readDbWithLock = () => dbMutex.lock().then(readDb)
+const writeDbWithLock = (newDb) => writeDb(newDb).then(R.tap(dbMutex.unlock))
+
+export const readDbSafe = () => dbMutex.lock().then(readDb).then(R.tap(dbMutex.unlock))
+
+export const modifyDb = (path, f) => readDbWithLock()
     .then(R.over(R.lensPath(path), f))
-    .then(writeDb)
+    .then(writeDbWithLock)
 
-export const addRecord = _addRecord(readDb, writeDb)
-export const updateRecord = _updateRecord(readDb, writeDb)
-export const deleteRecord = _deleteRecord(readDb, writeDb)
-export const readTable = _readTable(readDb)
-export const createTable = _createTable(readDb, writeDb)
+export const addRecord = _addRecord(readDbWithLock, writeDbWithLock)
+export const updateRecord = _updateRecord(readDbWithLock, writeDbWithLock)
+export const deleteRecord = _deleteRecord(readDbWithLock, writeDbWithLock)
+export const readTable = _readTable(readDbSafe)
+export const createTable = _createTable(readDbWithLock, writeDbWithLock)
 
 export const createTableForModel = model => createTable(model.name)

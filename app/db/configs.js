@@ -1,4 +1,4 @@
-import {addRecord, deleteRecord, modifyDb, readDb, readTable, updateRecord} from "./db"
+import {addRecord, deleteRecord, modifyDb, readDb, readDbSafe, readTable, updateRecord} from "./db"
 import * as R from "ramda"
 
 const removeConfigFromList = name => R.filter(config => config.name !== name)
@@ -17,4 +17,4 @@ export const changeActiveConfig = (newActiveConfigId, mode) => modifyDb(
     ['activeConfig'],
     R.always({id: newActiveConfigId, mode})
 )
-export const readActiveConfig = () => readDb().then(R.prop('activeConfig'))
+export const readActiveConfig = () => readDbSafe().then(R.prop('activeConfig'))
