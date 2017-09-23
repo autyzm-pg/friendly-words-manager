@@ -9,6 +9,7 @@ import {EnhancedResourcesPage} from "../components/containers/ResourcesPage"
 import {EnhancedResourceCreatorPage} from "../components/resources/ResourceCreatorPage"
 import {WordsWizardView} from "./view"
 import {Text, View} from "native-base"
+import {EnhancedResourceEditPage} from "../components/resources/ResourceEditPage"
 
 
 const WordLabel = ({item}) => (
@@ -20,9 +21,11 @@ const WordLabel = ({item}) => (
 const createResourcePages = (model, WizardView, listPageTitle, ListElementComponent, toString) => {
     const ResourcePage = EnhancedResourcesPage(model.name, listPageTitle, ListElementComponent, toString)
     const WizardPage = EnhancedResourceCreatorPage(model.name, WizardView)
+    const EditPage = EnhancedResourceEditPage(model.name, WizardView)
 
     return [
         {path:`/resources/${model.name}`, component: ResourcePage},
+        {path:`/creator/resource/${model.name}/:id`, component: EditPage},
         {path:`/creator/resource/${model.name}`, component: WizardPage}
     ]
 }

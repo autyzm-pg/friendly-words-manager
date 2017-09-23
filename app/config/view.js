@@ -9,7 +9,7 @@ import {Section, SectionView} from "../libs/confy/views/section/sectionView"
 
 export const WordsWizardView = WizardView(fields => [
 	WizardStep("Test", ColumnView([
-		Column([fields.name, fields.images])
+		Column([fields.images, fields.tags])
 	]))
 ], WordModel)
 
