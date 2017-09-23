@@ -1,11 +1,17 @@
 // @flow
-import {ConfigurationModel} from "./model"
+import {ConfigurationModel, WordModel} from "./model"
 import {WizardStep, WizardView} from "../libs/confy/views/wizard/wizardView"
 import {Column, ColumnView} from "../libs/confy/views/column/columnView"
 import {Section, SectionView} from "../libs/confy/views/section/sectionView"
 
 // const DetailedListView = notImplementedFunc
 // const CustomTestView = notImplementedFunc
+
+export const WordsWizardView = WizardView(fields => [
+	WizardStep("Test", ColumnView([
+		Column([fields.name, fields.images])
+	]))
+], WordModel)
 
 export const ConfigurationWizardView = WizardView(fields => [
     WizardStep("Materiał", ColumnView([

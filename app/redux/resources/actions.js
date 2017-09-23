@@ -17,7 +17,7 @@ export const editResource = {
 }
 export const deleteResource = {
     start: (resourceName, id) => Action(resourcesActionTypes.deleteResource.started, {resourceName, id}),
-    finish: (resourceName) => Action(resourcesActionTypes.deleteResource.finished, {resourceName, id, data}),
+    finish: (resourceName) => Action(resourcesActionTypes.deleteResource.finished, {resourceName}),
 }
 export const loadResources = {
     start: (resourceName) => Action(resourcesActionTypes.loadResources.started, {resourceName}),
