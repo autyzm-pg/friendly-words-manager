@@ -15,7 +15,7 @@ export const WordsWizardView = WizardView(fields => [
 
 export const ConfigurationWizardView = WizardView(fields => [
     WizardStep("Materiał", ColumnView([
-        Column([fields.someText, fields.wordImages])
+        Column([fields.materials, fields.wordImages])
     ])),
     WizardStep("Sposób uczenia", SectionView([
         Section("Ustawienia kroku", [fields.commandText, fields.picturesNumber, fields.showPicturesLabels, fields.readCommand]),

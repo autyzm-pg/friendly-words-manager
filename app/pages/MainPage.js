@@ -49,7 +49,7 @@ const MainPage = ({history, location, activeConfig}) => (
             <Text>Aktywna konfiguracja: {activeConfig.name} ({activeConfig.mode === ModeTypes.learning ? "uczenie" : "test"})</Text>
             <Body>
             <Button full light  onPress={() =>{
-                Modal.textAsk("Huehe?", "TEST").then(resp => console.log("response!!", resp))
+                // Modal.textAsk("Huehe?", "TEST").then(resp => console.log("response!!", resp))
             }}>
                 <Body><Text>Przejdz do aplikacji</Text></Body>
                 <Right><Icon name="arrow-round-forward"/></Right>

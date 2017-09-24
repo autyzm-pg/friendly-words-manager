@@ -5,6 +5,8 @@ import {TextField} from "../libs/confy/fields/text/textField"
 import {BoolField} from "../libs/confy/fields/switch/boolField"
 import {ImageMultiChooserField} from "../libs/confy/fields/multiOptions/multiOptionField";
 import {createTableForModel} from "../db/db"
+import {ObjectField} from "../libs/confy/fields/object/ObjectField"
+import {ArrayField} from "../libs/confy/fields/array/ArrayField"
 
 export const WordModel = Model("words", {
     name: TextField("Slowo"),
@@ -20,6 +22,15 @@ export const ConfigurationModel = MainModel({
             "option2"
         ]
     }),
+    materials: ArrayField("Materiały",
+        TextField("Some text")
+        /*ObjectField("Ustawienia słowa", {
+            // word: ForeignField(WordModel),
+            // isInLearning: BoolField({def: true}),
+            // isInTestingMode: BoolField({def: true}),
+            someText: TextField("Some text in object in array")
+        })*/
+    ),
     wordImages: ImageMultiChooserField("Wybierz obrazki dla słowa", {
         options: [
             "https://images-na.ssl-images-amazon.com/images/I/81ep8rBNqFL._SX466_.jpg",

@@ -1,13 +1,23 @@
 // @flow
 import FieldSimpleView from "./text/TextInput"
 import * as R from "ramda"
-import * as React from "react"
+import React from "react"
 
 export type BaseFieldType = {
     name: string,
     component: any,
     verbose: string,
-    props: any
+    props: any,
+
+    getDefaultValue(): any,
+    renderField(getValueForName: (string) => any, onChange: ([string | number]) => () => void): React.Element<*>
+}
+
+export function _renderField(getValueForName, onChange) {
+    const Component = this.component
+
+    return <Component value={getValueForName(this.name)} key={this.name} onChange={onChange([this.name])}
+                      verbose={this.verbose} {...this.props}/>
 }
 
 type FieldConstructor = (component: ?any, defaultSettings: ?any) => (string, any) => (string) => BaseFieldType;
@@ -19,9 +29,11 @@ export const Field: FieldConstructor = (component = FieldSimpleView, defaultSett
         ...defaultSettings,
         ...settings
     },
-    getDefaultValue: function() {
+    getDefaultValue() {
         return this.props.def
-    }
+    },
+
+    renderField: _renderField
 })
 
 export type FieldProps<T> = {
@@ -30,10 +42,13 @@ export type FieldProps<T> = {
     verbose: string
 }
 
-export const renderField = (config: *, onChange: (string) => () => void) => (Field: BaseFieldType) =>(
-    <Field.component value={config[Field.name]} key={Field.name} onChange={onChange([Field.name])} verbose={Field.verbose} {...Field.props}/>
-)
+// export const renderField = (config: *, onChange: (string) => () => void) => (Field: BaseFieldType) => (
+//     <Field.component value={config[Field.name]} key={Field.name} onChange={onChange([Field.name])}
+//                      verbose={Field.verbose} {...Field.props}/>
+// )
 
+export const renderField = (getValueForName: (string) => *, onChange: (string) => () => void) => (field: BaseFieldType) =>
+    field.renderField(getValueForName, onChange)
 
 
 // export const BoolField = Field(TextInput, {def: false})

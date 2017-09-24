@@ -42,7 +42,7 @@ const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: Wiza
             {
                 steps.map(Step => (
                     <WizardStepView key={Step.name} name={Step.name}>
-                        <Step.view.component renderField={renderField(config, onFieldChange)} {...Step.view.props}
+                        <Step.view.component renderField={renderField(name => config[name], onFieldChange)} {...Step.view.props}
                                              config={config}/>
                     </WizardStepView>
                 ))
