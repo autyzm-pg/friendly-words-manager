@@ -7,6 +7,7 @@ const setForPath = withLog((path, array, value) => R.set(R.lensPath(path), value
 
 export default ArrayInput = ({verbose, value, onChange, field}) => (
     <View>
+        <Text>{verbose}</Text>
         <List>
             {value.map((elementValue, index) => (
                 <ListItem key={index}>

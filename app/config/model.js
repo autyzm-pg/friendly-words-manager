@@ -22,6 +22,10 @@ export const ConfigurationModel = MainModel({
             "option2"
         ]
     }),
+    someObject: ObjectField("Some complex field", {
+        word: TextField("A text", {def:"Domyslna wartosc"}),
+        text: TextField("Another text")
+    }),
     materials: ArrayField("Materiały",
         TextField("Some text")
         /*ObjectField("Ustawienia słowa", {

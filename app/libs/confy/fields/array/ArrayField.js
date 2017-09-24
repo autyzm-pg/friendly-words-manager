@@ -1,10 +1,10 @@
 import ArrayInput from "./ArrayInput"
 import {_renderField} from "../fields"
 
-export const ArrayField = (verbose, field, component=undefined) => name => ({
+export const ArrayField = (verbose, field, component = ArrayInput) => name => ({
     name,
     verbose,
-    component: component || ArrayInput,
+    component,
     props: {
         field: {
             ...field(),

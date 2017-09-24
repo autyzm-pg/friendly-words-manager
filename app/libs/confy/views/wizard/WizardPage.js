@@ -34,7 +34,8 @@ type WizardPageProps<T> = {
 const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: WizardPageProps<*>) => (
     <Page>
         <PageHeader onBack={() => props.onBack()} header={name}>
-            <Button transparent onPress={() => Modal.textAsk("Podaj nazwę kroku", name).then(onConfirm(newName => onSave(config, newName)))}>
+            <Button transparent
+                    onPress={() => Modal.textAsk("Podaj nazwę kroku", name).then(onConfirm(newName => onSave(config, newName)))}>
                 <Text>Zapisz</Text>
             </Button>
         </PageHeader>
@@ -42,8 +43,9 @@ const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: Wiza
             {
                 steps.map(Step => (
                     <WizardStepView key={Step.name} name={Step.name}>
-                        <Step.view.component renderField={renderField(name => config[name], onFieldChange)} {...Step.view.props}
-                                             config={config}/>
+                        <Step.view.component
+                            renderField={renderField(name => config[name], onFieldChange)} {...Step.view.props}
+                            config={config}/>
                     </WizardStepView>
                 ))
             }
