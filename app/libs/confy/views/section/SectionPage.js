@@ -34,7 +34,7 @@ const _SectionPage =
 			<Grid style={sectionPageStyle.container}>
 				<Col style={sectionPageStyle.sections} size={30}>
 					{sections.map((section, idx) =>
-						<View style={[sectionPageStyle.sectionListItem, activeSectionIdx === idx && sectionPageStyle.activeSectionListItem]}>
+						<View style={[sectionPageStyle.sectionListItem, activeSectionIdx === idx && sectionPageStyle.activeSectionListItem]} key={section.name}>
 							<Text style={{fontSize: 20}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
 						</View>)}
 				</Col>
