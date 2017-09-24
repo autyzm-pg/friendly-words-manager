@@ -1,9 +1,8 @@
 import React from "react"
 import {Button, List, ListItem, Text, View} from "native-base"
 import * as R from "ramda"
-import {withLog} from "../../libs/debug"
 
-const setForPath = withLog((path, obj, value) => R.set(R.lensPath(path), value, obj))
+const setForPath = (path, obj, value) => R.set(R.lensPath(path), value, obj)
 
 export const ObjectListInput = ({verbose, value, onChange, fields}) => (
     <View>

@@ -6,7 +6,6 @@ import {createWizardPage} from "../libs/confy/views/wizard/WizardPage"
 import {ConfigurationWizardView} from "../config/view"
 import {goBack} from "./CreatorPage"
 import {Modal, onConfirm} from "../components/modal/Modal"
-import {withLog} from "../libs/confy/libs/debug"
 
 const editSave = (history, handler, id, name, config) => {
     handler({id, name, config})
@@ -35,4 +34,4 @@ const mapStateToProps = ({configurations}, {match}) => ({
     allConfigs: configurations.all,
     allConfigNames: configurations.all.map(R.prop('name')),
 })
-export const EditPage = connect(withLog(mapStateToProps), dispatchToProps)(_EditPage)
+export const EditPage = connect(mapStateToProps, dispatchToProps)(_EditPage)

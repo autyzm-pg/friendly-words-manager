@@ -1,9 +1,8 @@
 import React from "react"
 import {Button, List, ListItem, Text, View} from "native-base"
 import * as R from "ramda"
-import {withLog} from "../../libs/debug"
 
-const setForPath = withLog((path, array, value) => R.set(R.lensPath(path), value, array))
+const setForPath = (path, array, value) => R.set(R.lensPath(path), value, array)
 
 export default ArrayInput = ({verbose, value, onChange, field}) => (
     <View>

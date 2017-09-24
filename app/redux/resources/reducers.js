@@ -2,7 +2,6 @@ import {conditionReducer, createReducer} from "../../libs/reducers"
 import R from "ramda"
 import {resourcesActionTypes} from "./actions"
 import {combineReducers} from "redux"
-import {withLog} from "../../libs/confy/libs/debug"
 
 const defaultState = {
     all: []
