@@ -2,21 +2,23 @@ import * as R from "ramda"
 import {_renderField} from "../fields"
 import {ObjectListInput} from "./ObjectInput"
 
-function predefinedRenderField(value, onChange) {
-    return _renderField.call(this, () => value, () => onChange)
+function predefinedRenderField(value, onChange, config, path) {
+    return _renderField.call(this, () => value, () => onChange, config, path)
 }
 
-export const ObjectField = (verbose, fields, component = ObjectListInput) => name => ({
+export const ObjectField = (verbose, fields, settings = {}, component = ObjectListInput) => name => ({
     name,
     verbose,
     component,
+    dynamicMapper: () => ({}),
     props: {
         fields: R.compose(
             R.map(R.set(R.lensProp('renderField'), predefinedRenderField)),
             R.fromPairs,
             R.map(([fieldName, fieldFunc]) => [fieldName, fieldFunc(fieldName)]),
             R.toPairs
-        )(fields)
+        )(fields),
+        hiddenFields: settings.hidden || []
     },
 
     getDefaultValue() {
@@ -25,9 +27,5 @@ export const ObjectField = (verbose, fields, component = ObjectListInput) => nam
             this.props.fields)
     },
 
-    renderField(getValueForName, onChange) {
-        if (this.component) {
-            return _renderField.call(this, getValueForName, onChange)
-        }
-    }
+    renderField: _renderField
 })

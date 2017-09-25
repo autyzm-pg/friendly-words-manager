@@ -3,16 +3,25 @@ import {MainModel, Model} from "../libs/confy/models"
 import {OptionField} from "../libs/confy/fields/options/optionField"
 import {TextField} from "../libs/confy/fields/text/textField"
 import {BoolField} from "../libs/confy/fields/switch/boolField"
-import {ImageMultiChooserField} from "../libs/confy/fields/multiOptions/multiOptionField";
+import {ImageMultiChooserField} from "../libs/confy/fields/multiOptions/multiOptionField"
 import {createTableForModel} from "../db/db"
 import {ObjectField} from "../libs/confy/fields/object/ObjectField"
 import {ArrayField} from "../libs/confy/fields/array/ArrayField"
+import * as R from "ramda"
 
 export const WordModel = Model("words", {
     name: TextField("Slowo"),
     images: TextField("Obrazy"),
     tags: TextField("Kategorie")
 })
+
+const getSibling = (config, path, name) =>
+    R.compose(
+        R.view,
+        R.lensPath,
+        R.append(name),
+        R.dropLast(1)
+    )(path)(config)
 
 export const ConfigurationModel = MainModel({
     someText: TextField("Some text"),
@@ -22,36 +31,35 @@ export const ConfigurationModel = MainModel({
             "option2"
         ]
     }),
-    someObject: ObjectField("Some complex field", {
-        word: TextField("A text", {def:"Domyslna wartosc"}),
-        text: TextField("Another text")
-    }),
     materials: ArrayField("Materiały",
-        TextField("Some text")
-        /*ObjectField("Ustawienia słowa", {
-            // word: ForeignField(WordModel),
-            // isInLearning: BoolField({def: true}),
-            // isInTestingMode: BoolField({def: true}),
-            someText: TextField("Some text in object in array")
-        })*/
+        ObjectField("Some complex field", {
+            someOptions: ImageMultiChooserField("Wybierz obrazki dla słowa", {
+                options: [],
+                def: ["https://images-na.ssl-images-amazon.com/images/I/81ep8rBNqFL._SX466_.jpg", "https://i.ytimg.com/vi/-CKvt1KNU74/maxresdefault.jpg",
+                    "http://static.boredpanda.com/blog/wp-content/uploads/2017/02/goth-black-chicken-ayam-cemani-21.jpg"]
+            }),
+            someDynamicOptions: ImageMultiChooserField("Wybierz obrazki dynamic!", {}, (config, path) => ({
+                options: getSibling(config, path, 'someOptions')
+            }))
+        }, {hidden: ['someOptions']})
     ),
     wordImages: ImageMultiChooserField("Wybierz obrazki dla słowa", {
         options: [
             "https://images-na.ssl-images-amazon.com/images/I/81ep8rBNqFL._SX466_.jpg",
             "https://s-media-cache-ak0.pinimg.com/236x/61/ac/e2/61ace20ff0969cfa19e1082f047feec3--realistic-dolls-vintage-dolls.jpg",
             "https://truimg.toysrus.com/product/images/09FF80A7.zoom.jpg?fit=inside|356:368",
-	       "https://i.ytimg.com/vi/-CKvt1KNU74/maxresdefault.jpg",
+            "https://i.ytimg.com/vi/-CKvt1KNU74/maxresdefault.jpg",
             "http://dreamatico.com/data_images/chicken/chicken-4.jpg",
             "http://static.boredpanda.com/blog/wp-content/uploads/2017/02/goth-black-chicken-ayam-cemani-21.jpg"
         ],
-        def: ["img2.png"]
+        def: []
     }),
     commandText: TextField("Wybierz polecenie dla kroku"),
     repetitionsNumber: TextField("Liczba prób dla słowa"),
     picturesNumber: TextField("Wybierz ilość wyświetlanych obrazków"),
     showPicturesLabels: BoolField("Pokazuj podpisy pod obrazkami", {def: true}),
     readCommand: BoolField("Czytaj komende", {def: true})
-});
+})
 
 // export const ConfigurationModel = Model({
 //     materials: ArrayField(ObjectField({

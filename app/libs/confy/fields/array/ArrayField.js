@@ -5,11 +5,12 @@ export const ArrayField = (verbose, field, component = ArrayInput) => name => ({
     name,
     verbose,
     component,
+    dynamicMapper: () => ({}),
     props: {
         field: {
             ...field(),
-            renderField(value, onChange) {
-                return _renderField.call(this, () => value, () => onChange)
+            renderField(value, onChange, config, path) {
+                return _renderField.call(this, () => value, () => onChange, config, path)
             }
         }
     },

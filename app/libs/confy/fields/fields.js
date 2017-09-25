@@ -13,18 +13,20 @@ export type BaseFieldType = {
     renderField(getValueForName: (string) => any, onChange: ([string | number]) => () => void): React.Element<*>
 }
 
-export function _renderField(getValueForName, onChange) {
+export function _renderField(getValueForName, onChange, config, path) {
     const Component = this.component
 
     return <Component value={getValueForName(this.name)} key={this.name} onChange={onChange([this.name])}
-                      verbose={this.verbose} {...this.props}/>
+                      verbose={this.verbose} {...this.props} {...this.dynamicMapper(config, path)} config={config}
+                      path={path}/>
 }
 
 type FieldConstructor = (component: ?any, defaultSettings: ?any) => (string, any) => (string) => BaseFieldType;
-export const Field: FieldConstructor = (component = FieldSimpleView, defaultSettings = {}) => (verbose, settings) => name => ({
+export const Field: FieldConstructor = (component = FieldSimpleView, defaultSettings = {}) => (verbose, settings, dynamicMapper = () => ({})) => name => ({
     name,
     component,
     verbose,
+    dynamicMapper,
     props: {
         ...defaultSettings,
         ...settings
@@ -47,8 +49,8 @@ export type FieldProps<T> = {
 //                      verbose={Field.verbose} {...Field.props}/>
 // )
 
-export const renderField = (getValueForName: (string) => *, onChange: (string) => () => void) => (field: BaseFieldType) =>
-    field.renderField(getValueForName, onChange)
+export const renderField = (getValueForName: (string) => *, onChange: (string) => () => void, context: any, getPath: string => [string | number]) => (field: BaseFieldType) =>
+    field.renderField(getValueForName, onChange, context, getPath(field.name))
 
 
 // export const BoolField = Field(TextInput, {def: false})

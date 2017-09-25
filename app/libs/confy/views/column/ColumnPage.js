@@ -3,6 +3,7 @@ import React from "react"
 import {View} from "native-base"
 import type {ColumnType} from "./columnView"
 import type {StepPageProps} from "../steps"
+import {withLog} from "../../libs/debug"
 
 const Column = ({children}) => (
     <View>
@@ -25,4 +26,4 @@ const ColumnPage = ({columns, renderField, config}: StepColumnViewProps) => (
     </View>
 )
 
-export default ColumnPage
+export default withLog(ColumnPage)
