@@ -8,11 +8,12 @@ import {createTableForModel} from "../db/db"
 import {ObjectField} from "../libs/confy/fields/object/ObjectField"
 import {ArrayField} from "../libs/confy/fields/array/ArrayField"
 import * as R from "ramda"
+import {ImagePickerField} from "../libs/confy/fields/imagePicker/ImagePickerField"
 
 export const WordModel = Model("words", {
     name: TextField("Slowo"),
-    images: TextField("Obrazy"),
-    tags: TextField("Kategorie")
+    tags: TextField("Kategorie"),
+    images: ImagePickerField("Obrazy")
 })
 
 const getSibling = (config, path, name) =>
