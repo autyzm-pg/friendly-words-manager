@@ -1,4 +1,4 @@
-import {addRecord, deleteRecord, modifyDb, readDb, readDbSafe, readTable, updateRecord} from "./db"
+import {addRecord, deleteRecord, modifyDb, readDbSafe, readTable, updateRecord} from "./db"
 import * as R from "ramda"
 
 const removeConfigFromList = name => R.filter(config => config.name !== name)
