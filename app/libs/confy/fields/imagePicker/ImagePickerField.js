@@ -1,4 +1,4 @@
 import {Field} from "../fields"
 import ImagePicker from "./ImagePicker"
 
-export const ImagePickerField = Field(ImagePicker,{initOptions: [], def: []})
+export const ImagePickerField = Field(ImagePicker,{def: []})
