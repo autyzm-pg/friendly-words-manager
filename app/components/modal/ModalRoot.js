@@ -24,7 +24,8 @@ export class ModalRoot extends React.Component {
         toggle: () => this.setState(prevState => ({isOpened: !prevState.isOpened})),
         ask: this.askFactory(Asker),
         textAsk: (question, defaultText="", positive=true) => this.askFactory(TextAsker(defaultText))(question, positive),
-        optionAsk: (question, options) => this.askFactory(OptionAsker(options))(question)
+        optionAsk: (question, options) => this.askFactory(OptionAsker(options))(question),
+        custom: (Component) => this.askFactory(Component)()
     }
 
     componentWillMount() {

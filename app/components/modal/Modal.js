@@ -6,12 +6,19 @@ export const Modal = {
     hide: () => undefined,
     toggle: () => undefined,
     textAsk: (question, defaultText, positive) => Promise.reject(),
-    optionAsk: (question, options) => Promise.reject()
+    optionAsk: (question, options) => Promise.reject(),
+    custom: (Component) => Promise.reject(),
 }
 
 export const onConfirm = f => R.when(
     ({type}) => type === "confirm",
     ({value}) => f(value)
+)
+
+export const ifConfirmOrElse = (onConfirm, onCancel) => R.ifElse(
+    ({type}) => type === "confirm",
+    ({value}) => onConfirm(value),
+    ({value}) => onCancel(value)
 )
 
 export const initializeModal = R.once(actions => Object.assign(Modal, actions))

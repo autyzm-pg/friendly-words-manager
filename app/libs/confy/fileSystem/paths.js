@@ -1,2 +1,4 @@
-export const configsDatabase = Expo.FileSystem.documentDirectory + "db-test112.json"
-export const uploadAssetsDirectory = Expo.FileSystem.documentDirectory + "/assets/"
+import {FileSystem} from "expo"
+
+export const configsDatabase = FileSystem.documentDirectory + "db-test112.json"
+export const uploadAssetsDirectory = FileSystem.documentDirectory + "/assets/"
