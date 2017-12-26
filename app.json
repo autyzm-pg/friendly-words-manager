@@ -4,7 +4,7 @@
     "description": "An empty new project",
     "slug": "friendly-lines-manager",
     "privacy": "public",
-    "sdkVersion": "19.0.0",
+    "sdkVersion": "23.0.0",
     "version": "1.0.0",
     "orientation": "landscape",
     "primaryColor": "#cccccc",
