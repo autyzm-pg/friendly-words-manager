@@ -7,6 +7,9 @@ import {addImageFromCamera, addImageFromLibrary} from "./imageHandling"
 import {ifConfirmOrElse, Modal, onConfirm} from "../../../../components/modal/Modal"
 import {withStyle} from "../../../withStyle"
 import {catchError} from "../../libs/errors"
+import {imagePickerStyles} from "./styles"
+import {PlusButton} from "../../components/ui/PlusButton"
+import {XButton} from "../../components/ui/XButton"
 
 const styles = {
     buttonsContainer: {
@@ -48,7 +51,7 @@ const onImageAddPress = addImage => () => Modal.custom(SourceChooser)
         R.ifElse(
             R.equals(SourceOptions.camera),
             addImageFromCamera,
-            addImageFromLibrary
+            addImageFromLibrary,
         ),
         () => ({cancelled: true})
     ))
@@ -57,15 +60,34 @@ const onImageAddPress = addImage => () => Modal.custom(SourceChooser)
         addImage
     ))
 
-const ImageUploader = ({verbose, value, onChange, options}) => (
+const removeUriFromList = (uri, all) => R.pipe(
+    R.propEq('uri'),
+    R.complement,
+    R.filter,
+)(uri)(all)
+
+const ImageContainer = ({children, onDelete}) => (
     <View>
-        <Text>{verbose}</Text>
-        <View>
-            {value.map(({uri, width, height}) => <Image key={uri} source={{uri}} style={{width, height}}/>)}
+        <View style={imagePickerStyles.imageContainer}>
+            {children}
         </View>
-        <Button onPress={onImageAddPress(image => onChange([...value, image]))}>
-            <Text>Dodaj obrazek</Text>
-        </Button>
+        <XButton small style={imagePickerStyles.deleteButton} onPress={onDelete}/>
+    </View>
+)
+
+const ImageUploader = ({verbose, value, onChange, options}) => (
+    <View style={imagePickerStyles.container}>
+        <Text>{verbose}</Text>
+        <View style={[imagePickerStyles.imagesContainer, value.length === 0 && {justifyContent: "center"}]}>
+            {value.length === 0 && <Text style={imagePickerStyles.emptyText}>Brak obrazków</Text>}
+            {value.map(({uri, width, height}) =>
+                <ImageContainer key={uri} onDelete={() => onChange(withLog(removeUriFromList)(uri, value))}>
+                    <Image source={{uri}} style={imagePickerStyles.image}/>
+                </ImageContainer>
+            )}
+        </View>
+        <PlusButton style={imagePickerStyles.addButton}
+                    onPress={onImageAddPress(image => onChange([...value, image]))}/>
     </View>
 )
 
