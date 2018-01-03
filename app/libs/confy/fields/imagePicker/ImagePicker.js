@@ -75,13 +75,17 @@ const ImageContainer = ({children, onDelete}) => (
     </View>
 )
 
+const onImageDelete = onDeleteConfirmed => () =>
+    Modal.ask("Czy napewno chcesz usunąć ten obrazek?", false)
+        .then(onConfirm(onDeleteConfirmed))
+
 const ImageUploader = ({verbose, value, onChange, options}) => (
     <View style={imagePickerStyles.container}>
         <Text>{verbose}</Text>
         <View style={[imagePickerStyles.imagesContainer, value.length === 0 && {justifyContent: "center"}]}>
             {value.length === 0 && <Text style={imagePickerStyles.emptyText}>Brak obrazków</Text>}
             {value.map(({uri, width, height}) =>
-                <ImageContainer key={uri} onDelete={() => onChange(withLog(removeUriFromList)(uri, value))}>
+                <ImageContainer key={uri} onDelete={onImageDelete(() => onChange(removeUriFromList(uri, value)))}>
                     <Image source={{uri}} style={imagePickerStyles.image}/>
                 </ImageContainer>
             )}
