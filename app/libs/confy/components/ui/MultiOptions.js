@@ -76,9 +76,6 @@ const styles = StyleSheet.create({
 	},
 
     checkbox: {
-        position: "absolute",
-        zIndex: -1,
-        top: 0,
-        left: 0
+		display: "none"
     }
 });
