@@ -3,7 +3,7 @@ import React from "react"
 import {View} from "native-base";
 import {FieldProps} from "../fields";
 import {StyleSheet} from "react-native";
-import {MultiChooser, ImageOption} from "../../components/ui/MultiChooser";
+import {MultiOptions, ImageOption} from "../../components/ui/MultiOptions";
 
 type ImageMultiChooserProps = {
 	options: Array<string>
@@ -11,10 +11,10 @@ type ImageMultiChooserProps = {
 
 export const ImageMultiChooser = ({verbose, value, onChange, options}: ImageMultiChooserProps) =>
 	<View>
-		<MultiChooser style={styles.container} value={value} onChange={onChange}>
+		<MultiOptions style={styles.container} value={value} onChange={onChange}>
 			{options.map(option => <ImageOption style={styles.imageOption} size={150} key={option}
 			                                    src={option} value={option} checkboxStyle={styles.checkbox}/>)}
-		</MultiChooser>
+		</MultiOptions>
 	</View>;
 
 

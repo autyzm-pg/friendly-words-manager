@@ -2,10 +2,10 @@ import React from "react"
 import {
 	CheckBox
 } from 'native-base'
-import {View, Text, Image, TouchableOpacity} from "react-native"
+import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native"
 import R from "ramda"
 
-export const MultiChooser = ({value, onChange, children, style}) => {
+export const MultiOptions = ({value, onChange, children, style}) => {
 
 	const onChangeHandler = (changedVal) => {
 		const newValue = value.includes(changedVal)
@@ -34,6 +34,12 @@ export const Option = ({isChecked, onPress, label, checkboxStyle, style }) => {
 	</TouchableOpacity>
 };
 
+export const SimpleOption = (props) => {
+	const {isChecked, label, ...rest} = props
+	const boxedLabel = <View style={[styles.simpleOption, isChecked && styles.checkedOption]}><Text>{label}</Text></View>;
+	return <Option {...rest} label={boxedLabel} checkboxStyle={styles.checkbox}/>
+}
+
 export const ImageOption = ({src, size, ...rest}) => {
 	const {isChecked} = rest;
 	const label = <Image source={{uri: src}} style={[{width: size, height: size}, isChecked && {transform: [{scale: 0.8}]}]}/>
@@ -45,3 +51,34 @@ export const ColorOption = ({hex, ...rest}) => {
 	const label = <View style={{backgroundColor: hex, height: 50, width: 50, borderRadius: 100}} />;
 	return <Option {...rest} label={label} />
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        justifyContent: "center",
+        flexWrap: "wrap"
+    },
+
+    simpleOption: {
+        padding: 10,
+		borderRadius: 8,
+		overflow: "hidden",
+		borderWidth: 2,
+		backgroundColor: "white",
+		borderColor: "gray",
+		minWidth: 48,
+		alignItems: "center"
+    },
+
+	checkedOption: {
+    	backgroundColor: "pink",
+		borderColor: "red"
+	},
+
+    checkbox: {
+        position: "absolute",
+        zIndex: -1,
+        top: 0,
+        left: 0
+    }
+});
