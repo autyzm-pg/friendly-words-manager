@@ -113,13 +113,7 @@ const mapStateToProps = (state, {materialModel}) => ({
 const MaterialsArrayInput = connect(mapStateToProps)(_MaterialsArrayInput)
 
 export const MaterialsArrayField = (materialModel) => Field(MaterialsArrayInput, {
-    def: [{
-        word: {
-            name: "Siemano"
-        },
-        isInLearningMode: false,
-        isInTestMode: false,
-    }],
+    def: [],
     materialModel: Model("Material", materialModel)
 })()
 
