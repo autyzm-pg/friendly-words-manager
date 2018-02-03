@@ -2,33 +2,15 @@ import React from "react"
 import {Button, Icon, List, ListItem, Text, View} from "native-base"
 import * as R from "ramda"
 import {Field} from "../../../libs/confy/fields/fields"
-import {ScrollView, StyleSheet} from "react-native"
+import {ScrollView} from "react-native"
 import styles from "./styles"
 import {styled} from "../../../libs/styled"
 import {connect} from "react-redux"
 import {Modal} from "../../../components/modal/Modal"
 import {Model} from "../../../libs/confy/models"
 import {ActionItem} from "../../../components/containers/ActionsMenu"
+import {Cell, Row, Table} from "../../../components/table/Table"
 
-const tableStyles = {
-    table: {
-        flexDirection: "column"
-    },
-    row: {
-        flexDirection: "row"
-    },
-    cell: {
-        flex: 1,
-        padding: 2,
-        justifyContent: "center",
-        alignItems: "center"
-    }
-}
-
-
-const Table = styled(ScrollView, tableStyles.table)
-const Row = styled(View, tableStyles.row)
-const Cell = styled(View, tableStyles.cell)
 
 const onWordAddClick = (resources, onSubmit) =>
     Modal.show(
