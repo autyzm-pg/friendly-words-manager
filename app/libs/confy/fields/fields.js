@@ -34,10 +34,10 @@ export const _renderFieldWithComponent = Component => function (getValueForName,
 type FieldConstructor = (component: ?any, defaultSettings: ?any) => (string, any) => (string) => BaseFieldType;
 export const Field: FieldConstructor =
     (component = FieldSimpleView, defaultSettings = {}) =>
-        (verbose, settings, dynamicSettingsMapper = () => ({})) =>
+        (verbose, settings={}, dynamicSettingsMapper = () => ({})) =>
             name => ({
                 name,
-                component,
+                component: settings.component || component,
                 verbose,
                 dynamicMapper: dynamicSettingsMapper,
                 props: {

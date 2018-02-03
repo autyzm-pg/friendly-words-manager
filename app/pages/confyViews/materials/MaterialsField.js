@@ -61,6 +61,12 @@ const createNewMaterial = R.curry((model, word) => ({
     word
 }))
 
+const onFieldChange = R.curry((onChange, currentValue, index, fieldName, newValue) => onChange(R.set(
+    R.lensPath([index, fieldName]),
+    newValue,
+    currentValue
+)))
+
 const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) => (
     <View style={styles.container}>
         <View style={styles.listContainer}>
@@ -72,11 +78,21 @@ const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) => (
                         <Cell><Text>W teście</Text></Cell>
                         <Cell><Text>Usuń</Text></Cell>
                     </Row>
-                    {value.map(material => (
+                    {value.map((material, index) => (
                         <Row key={material.word.name}>
                             <Cell><Text>{material.word.name}</Text></Cell>
-                            <Cell><Text>{material.isInLearningMode.toString()}</Text></Cell>
-                            <Cell><Text>{material.isInTestMode.toString()}</Text></Cell>
+                            <Cell>
+                                {materialModel.fields.isInLearningMode.renderField(
+                                    R.always(material.isInLearningMode),
+                                    onFieldChange(onChange, value, index)
+                                )}
+                            </Cell>
+                            <Cell>
+                                {materialModel.fields.isInTestMode.renderField(
+                                    R.always(material.isInTestMode),
+                                    onFieldChange(onChange, value, index)
+                                )}
+                            </Cell>
                             <Cell>
                                 <ActionItem
                                     onSelect={() => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}>

@@ -12,6 +12,7 @@ import {ImagePickerField} from "../libs/confy/fields/imagePicker/ImagePickerFiel
 import {IntegerField} from "../libs/confy/fields/integer/IntegerField"
 import {MaterialsArrayField, MaterialsArrayInput} from "../pages/confyViews/materials/MaterialsField"
 import {ForeignField} from "../libs/confy/fields/foreign/foreignField"
+import {SimpleCheckbox} from "../pages/confyViews/materials/SimpleCheckbox"
 
 export const WordModel = DBModel("words", {
     name: TextField("Slowo"),
@@ -38,8 +39,8 @@ const get = R.curry((path, config) =>
 export const ConfigurationModel = MainModel({
     materials: MaterialsArrayField({
         word: ForeignField("Wybrane słowo", WordModel),
-        isInLearningMode: BoolField("W uczeniu"),
-        isInTestMode: BoolField("W teście"),
+        isInLearningMode: BoolField("W uczeniu", {component: SimpleCheckbox}),
+        isInTestMode: BoolField("W teście", {component: SimpleCheckbox}),
         images: ImageMultiChooserField("Wybierz materiały wizualne", undefined, (obj, path) => ({
             options: R.pipe(
                 getSiblingProp("word"),
