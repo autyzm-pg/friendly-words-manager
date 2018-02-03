@@ -1,5 +1,5 @@
 // @flow
-import {MainModel, Model} from "../libs/confy/models"
+import {MainModel, DBModel, Model} from "../libs/confy/models"
 import {OptionField} from "../libs/confy/fields/options/optionField"
 import {TextField} from "../libs/confy/fields/text/textField"
 import {BoolField} from "../libs/confy/fields/switch/boolField"
@@ -9,45 +9,45 @@ import {ObjectField} from "../libs/confy/fields/object/ObjectField"
 import {ArrayField} from "../libs/confy/fields/array/ArrayField"
 import * as R from "ramda"
 import {ImagePickerField} from "../libs/confy/fields/imagePicker/ImagePickerField"
+import {IntegerField} from "../libs/confy/fields/integer/IntegerField"
+import {MaterialsArrayField, MaterialsArrayInput} from "../pages/confyViews/materials/MaterialsField"
+import {ForeignField} from "../libs/confy/fields/foreign/foreignField"
 
-export const WordModel = Model("words", {
+export const WordModel = DBModel("words", {
     name: TextField("Slowo"),
     tags: TextField("Kategorie"),
     images: ImagePickerField("Obrazy")
 })
 
-const getSiblingPath = R.curry((path, name) =>
+const getSiblingProp = R.curry((name, path) =>
     R.compose(
         R.append(name),
         R.dropLast(1)
     )(path)
 )
 
-const getChildPath = R.curry((path, name) => R.append(name, path))
+const getChildProp = R.curry((name, path) => R.append(name, path))
 
 
-const get = R.curry((config, path) =>
+const get = R.curry((path, config) =>
     R.compose(
         R.view,
         R.lensPath,
     )(path)(config))
 
 export const ConfigurationModel = MainModel({
-    materials: ArrayField("Materiały", ObjectField("Słowo", {
-        word: ObjectField("Zasób", {
-            name: TextField("Nazwa słowa"),
-            images: ArrayField("Obrazki", TextField("Ścieżka"))
-        }),
-        isInLearningMode: BoolField("w uczeniu"),
-        isInTestingMode: BoolField("w teście"),
-        images: ImageMultiChooserField("Wybierz materiał wizualne", {}, (config, path) => ({
+    materials: MaterialsArrayField({
+        word: ForeignField("Wybrane słowo", WordModel),
+        isInLearningMode: BoolField("W uczeniu"),
+        isInTestMode: BoolField("W teście"),
+        images: ImageMultiChooserField("Wybierz materiały wizualne", undefined, (obj, path) => ({
             options: R.pipe(
-                getSiblingPath(R.__, "word"),
-                getChildPath(R.__, "images"),
-                get(config)
-            )(path)
+                getSiblingProp("word"),
+                getChildProp("images"),
+                get
+            )(path, obj)
         }))
-    })),
+    }),
     hintType: OptionField("Rodzaj podpowiedzi", [
         "Wyszarz",
         "TAK",
@@ -58,24 +58,24 @@ export const ConfigurationModel = MainModel({
         "Pokaz gdzie jest {slowo}",
         "{slowo}",
     ]),
-    // picturesNumber: IntegerField(1, 6),
-    isTextForPicture: BoolField("Wyświetlanie podpisów pod obrazkami"),
+    picturesNumber: IntegerField("Ilość obrazków", {min:1, max: 6, def: 1}),
+    showPicturesLabels: BoolField("Pokazuj podpisy pod obrazkami", {def: true}),
     isReadingCommands: BoolField("Czytanie poleceń"),
-    // showHintAfter: IntegerField(1, 20),
-    // numberOfRepetitions: IntegerField(1, 20),
+    showHintAfter: IntegerField("Czas do pokazania podpowiedzi", {min:1, max: 20, def: 5, units: "s"}),
+    numberOfRepetitions: IntegerField("Ilość powtórzeń", {min:1, max: 20, def: 1}),
     // textRewards: MultiOptionField([
-    //     "Super",
-    //     "TAK",
-    //     "SWIETNIE"
+    //      "Super",
+    //      "TAK",
+    //      "SWIETNIE"
     // ]),
     isReadingRewards: BoolField("Odczytywanie głosowe wzmocnień"),
     // animationRewards: MultiImageOptionField([
     //     "image/path"
     // ]),
-    // testConfig: ObjectField({
-    //     numberOfRepetitions: IntegerField(1, 20),
-    //     timeForAnswer: IntegerField(1, 10)
-    // })
+    testConfig: ObjectField({
+        numberOfRepetitions: IntegerField("Ilość powtórzeń", {min:1, max: 20, def: 1}),
+        timeForAnswer: IntegerField("Czas na odpowiedź", {min:1, max: 10, def: 1, units: "s"})
+    })
 })
 
 //     someText: TextField("Some text"),

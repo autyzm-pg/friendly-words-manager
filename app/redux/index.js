@@ -9,6 +9,7 @@ import {createResourcesReducerFromModels} from "./resources/reducers"
 import {WordModel} from "../config/model"
 import {ResourcesEpic, ResourcesReducer} from "./resources"
 
+console.disableYellowBox = true;
 
 export const reducers = {
     configurations: configurationsReducer,

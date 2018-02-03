@@ -2,6 +2,7 @@ import React from "react"
 import {View, Text} from "native-base"
 import {withLink} from "../../libs/withState"
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import {ScrollView} from "react-native"
 
 const sectionPageStyle = {
 	sections: {
@@ -24,19 +25,21 @@ const sectionPageStyle = {
 }
 
 const Section = ({children}) => (
-	<View style={sectionPageStyle.section}>
+	<ScrollView style={sectionPageStyle.section}>
 		{children}
-	</View>
+	</ScrollView>
 )
 
 const _SectionPage =
 		({sections, renderField, config, activeSectionIdx, activeSectionIdxChange}) =>
 			<Grid style={sectionPageStyle.container}>
 				<Col style={sectionPageStyle.sections} size={30}>
+					<ScrollView>
 					{sections.map((section, idx) =>
 						<View style={[sectionPageStyle.sectionListItem, activeSectionIdx === idx && sectionPageStyle.activeSectionListItem]} key={section.name}>
 							<Text style={{fontSize: 20}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
 						</View>)}
+					</ScrollView>
 				</Col>
 				<Col style={{justifyContent: "center"}} size={70}>
 					<Section>

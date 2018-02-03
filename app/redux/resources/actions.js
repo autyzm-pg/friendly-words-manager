@@ -23,3 +23,22 @@ export const loadResources = {
     start: (resourceName) => Action(resourcesActionTypes.loadResources.started, {resourceName}),
     finish: (resourceName, data) => Action(resourcesActionTypes.loadResources.finished, {resourceName, data}),
 }
+
+export const createActionsForModel = ({name}) => ({
+    add: {
+        start: addResource.start.bind(undefined, name),
+        finish: addResource.finish.bind(undefined, name),
+    },
+    edit: {
+        start: editResource.start.bind(undefined, name),
+        finish: editResource.finish.bind(undefined, name),
+    },
+    delete: {
+        start: deleteResource.start.bind(undefined, name),
+        finish: deleteResource.finish.bind(undefined, name),
+    },
+    load: {
+        start: loadResources.start.bind(undefined, name),
+        finish: loadResources.finish.bind(undefined, name),
+    },
+})

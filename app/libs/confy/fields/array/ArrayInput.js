@@ -2,7 +2,7 @@ import React from "react"
 import {Button, List, ListItem, Text, View} from "native-base"
 import * as R from "ramda"
 
-const setForPath = (path, array, value) => R.set(R.lensPath(path), value, array)
+export const setForPath = (path, array, value) => R.set(R.lensPath(path), value, array)
 
 export default ArrayInput = ({verbose, value, onChange, field, config, path}) => (
     <View>
