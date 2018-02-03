@@ -1,7 +1,8 @@
 import React from "react"
-import {View, Text} from "native-base"
+import {View, Content, Text} from "native-base"
 import {withLink} from "../../libs/withState"
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import {moderateScale} from "../../../scaling";
 
 const sectionPageStyle = {
 	sections: {
@@ -10,8 +11,8 @@ const sectionPageStyle = {
 	},
 
 	sectionListItem: {
-		padding: 25,
-		marginVertical: 10
+		padding: moderateScale(10),
+		marginVertical: moderateScale(5)
 	},
 
 	activeSectionListItem: {
@@ -20,18 +21,14 @@ const sectionPageStyle = {
 	},
 
 	section: {
-		flex: 1,
-		justifyContent:"center",
-		flexDirection: "column",
-		paddingVertical: 60,
-		paddingHorizontal: 120
+		padding: moderateScale(30)
 	}
 }
 
 const Section = ({children}) => (
-	<View style={sectionPageStyle.section}>
+	<Content contentContainerStyle={sectionPageStyle.section}>
 		{children}
-	</View>
+	</Content>
 )
 
 const _SectionPage =
@@ -41,7 +38,7 @@ const _SectionPage =
 					{sections.map((section, idx) => {
 						const isActive = activeSectionIdx === idx
 						return <View style={[sectionPageStyle.sectionListItem, isActive && sectionPageStyle.activeSectionListItem]} key={section.name}>
-							<Text style={{fontSize: 28, color: isActive ? "black" : "white"}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
+							<Text style={{fontSize: moderateScale(16), color: isActive ? "black" : "white"}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
 						</View>
 						})
 					}

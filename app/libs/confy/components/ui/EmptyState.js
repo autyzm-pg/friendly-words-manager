@@ -1,21 +1,26 @@
 import React from "react"
-import {Icon, Text, Button} from 'native-base'
-import {TouchableOpacity, StyleSheet} from "react-native"
+import {Text, Button, View} from 'native-base'
+import {FontAwesome as Icon} from '@expo/vector-icons'
+import {StyleSheet} from "react-native"
+import {Containers} from "../../styles/containers"
+import {moderateScale} from "../../../scaling";
+
 export const EmptyState  = ({icon, description, action, actionLabel}) =>
-    <TouchableOpacity onPress={action}>
-        {icon && <Icon name={icon} />}
+    <View onPress={action} style={[Containers.full, Containers.centered]}>
+        {icon && <View style={[style.roundContainer, Containers.centered]}><Icon name={icon} size={moderateScale(60)} color={"#2196F3"}/></View>}
         {description && <Text>{description}</Text>}
-        {actionLabel && <Button><Text>{actionLabel}</Text></Button>}
-    </TouchableOpacity>
+        {actionLabel && <Button style={{alignSelf: "center", marginTop: moderateScale(20)}} onPress={action}><Text>{actionLabel}</Text></Button>}
+    </View>
+
+const iconContainerSize = moderateScale(120);
 
 const style = StyleSheet.create({
-    container: {
-
-    },
-    icon: {
-        fontSize: 60
-    },
-    description: {
-        fontSize: 30
+    roundContainer: {
+        padding: 20,
+        width: iconContainerSize,
+        height: iconContainerSize,
+        backgroundColor: "#F7F9FF",
+        borderRadius: iconContainerSize,
+        marginBottom: 20
     }
 })

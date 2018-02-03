@@ -25,34 +25,45 @@ import {getNameOfCopy} from "../libs/funcs"
 import {Modal, onConfirm} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
 import {ListPage} from "../components/resources/ListPage"
+import {EmptyState} from "../libs/confy/components/ui/EmptyState";
 
-const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) =>
-    <ListPage onBack={() => history.push("/")} title={"Konfiguracje"} onFabPress={()=>history.push("/creator")}>
-        <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
-            {configurations.map(config => (
-                <ConfigElem key={config.id}
-                            item={config}
-                            active={activeMessage(config)}
-                            onSetActive={actions.changeActiveConfig}
-                >
-                    <ActionsMenu>
-                        <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
-                            <Icon name="copy"/>
-                        </ActionItem>
-                        <ActionItem onSelect={() => history.push(`/creator/${config.id}`)}>
-                            <Icon name="create"/>
-                        </ActionItem>
-                        <ActionItem onSelect={() => actions.changeActiveConfig(config.id)}>
-                            <Icon name="arrow-up"/>
-                        </ActionItem>
-                        <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(config)}>
-                            <Icon name="trash"/>
-                        </ActionItem>
-                    </ActionsMenu>
-                </ConfigElem>
-            ))}
-        </ConfigList>
+const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
+    const goToConfigCreator = () => history.push("/creator")
+
+    return <ListPage onBack={() => history.push("/")} title={"Konfiguracje"}>
+        {R.isEmpty(allConfigs)
+            ? <EmptyState icon="cogs" description="Lista konfiguracji jest pusta" actionLabel="Utwórz konfiguracje"
+                          action={goToConfigCreator}/>
+            : <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
+                {configurations.map(config => (
+                    <ConfigElem key={config.id}
+                                item={config}
+                                active={activeMessage(config)}
+                                onSetActive={actions.changeActiveConfig}
+                    >
+                        <ActionsMenu>
+                            <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
+                                <Icon name="copy"/>
+                            </ActionItem>
+                            <ActionItem onSelect={() => history.push(`/creator/${config.id}`)}>
+                                <Icon name="create"/>
+                            </ActionItem>
+                            <ActionItem onSelect={() => actions.changeActiveConfig(config.id)}>
+                                <Icon name="arrow-up"/>
+                            </ActionItem>
+                            <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(config)}>
+                                <Icon name="trash"/>
+                            </ActionItem>
+                        </ActionsMenu>
+                    </ConfigElem>
+                ))}
+                <Fab active={false} onPress={goToConfigCreator} style={{backgroundColor: '#e02161'}}>
+                    <Icon name="add"/>
+                </Fab>
+            </ConfigList>
+        }
     </ListPage>
+}
 
 const stateToProps = ({configurations}) => ({
     allConfigs: configurations.all,

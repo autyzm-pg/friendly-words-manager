@@ -11,7 +11,7 @@ export const WizardStepsContainer = ({children}) => (
 )
 
 export const WizardStepView = ({name, key, children}) => (
-    <Tab key={key} heading={ <TabHeading><Text style={{fontSize: 28}}>{name}</Text></TabHeading>}>
+    <Tab key={key} heading={ <TabHeading><Text>{name}</Text></TabHeading>}>
         {children}
     </Tab>
 )

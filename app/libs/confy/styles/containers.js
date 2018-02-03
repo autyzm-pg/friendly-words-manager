@@ -7,6 +7,17 @@ export const Containers = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center"
     },
+
+    full: {
+      flex: 1,
+        alignItems: "stretch"
+    },
+
+    centered: {
+        alignItems: "center",
+        justifyContent: "center"
+    },
+
     formField: {
         flex: 1,
         marginVertical: 20
