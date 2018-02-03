@@ -14,7 +14,8 @@ const editSave = (history, handler, id, name, config) => {
 const isNameCollision = (name, previousName, allNames) => previousName !== name && R.any(R.equals(name), allNames)
 const onEditSave = R.curry((id, previousName, allConfigNames, handler, history, config, name) => {
     if(isNameCollision(name, previousName, allConfigNames)) {
-        return Modal.ask(`Krok o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false).then(onConfirm(() => editSave(history, handler, previousName, name, config)))
+        return Modal.ask(`Krok o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false)
+            .then(onConfirm(() => editSave(history, handler, id, name, config)))
     }
     editSave(history, handler, id, name, config)
 })

@@ -15,10 +15,31 @@ import * as R from "ramda"
 import ToastExt from "../../libs/ToastExt"
 import {changeActiveConfig, deleteConfig, readConfigs} from "../../db/configs"
 
-export const saveConfigEpic = action$ =>
+const deleteExistingWithName = (state) => ({payload}) => R.pipe(
+    payload => ({
+        data: payload,
+        allConfigs: state.getState().configurations.all
+    }),
+    ({data, allConfigs}) => Rx.Observable.fromPromise(
+        R.pipe(
+            R.propEq('name'),
+            R.filter(R.__, allConfigs),
+            R.filter(foundExisting => foundExisting.id !== data.id),
+            R.take(1),
+            R.ifElse(
+                R.complement(R.isEmpty),
+                ([existing]) => deleteConfig(existing.id).then(R.always(data)),
+                R.always(Promise.resolve(data))
+            )
+        )(data.name)
+    )
+)(payload)
+
+export const saveConfigEpic = (action$, state) =>
     action$.ofType(configActionTypes.saveConfig)
-        .flatMap(({payload}) => Rx.Observable.fromPromise(
-            addConfig(payload).then(R.always(payload))
+        .flatMap(deleteExistingWithName(state))
+        .flatMap((data) => Rx.Observable.fromPromise(
+            addConfig(data).then(R.always(data))
         ))
         .do(() => ToastExt.success("Zapisano!"))
         .flatMap(({name, config}) => Rx.Observable.of(
@@ -76,9 +97,9 @@ export const activeConfigChangeEpic = action$ =>
             loadActiveConfig.start()
         ))
 
-export const editConfigEpic = action$ =>
+export const editConfigEpic = (action$, state) =>
     action$.ofType(configActionTypes.editConfig.started)
-        .map(R.prop('payload'))
+        .flatMap(deleteExistingWithName(state))
         .flatMap(({id, name, config}) => Rx.Observable.fromPromise(
             updateConfig(id, {name, config})
                 .then(R.always({id, name, config}))
@@ -88,6 +109,7 @@ export const editConfigEpic = action$ =>
             editConfig.finish(payload),
             loadConfigs()
         ))
+
 
 export const loadActiveConfigEpic = action$ =>
     action$.ofType(configActionTypes.loadActiveConfig.started)

@@ -10,16 +10,38 @@ import {combineEpics} from 'redux-observable'
 import ToastExt from "../../libs/ToastExt"
 import {addRecord, deleteRecord, readTable, updateRecord} from "../../db/db"
 
-export const addResourceEpic = action$ =>
+const deleteExistingWithName = (state) => ({payload}) => R.pipe(
+    payload => ({
+        data: payload,
+        allResources: state.getState().resources[payload.resourceName].all
+    }),
+    ({data, allResources}) => Rx.Observable.fromPromise(
+        R.pipe(
+            R.propEq('name'),
+            R.filter(R.__, allResources),
+            R.filter(foundExisting => foundExisting.id !== data.id),
+            R.take(1),
+            R.ifElse(
+                R.complement(R.isEmpty),
+                ([existing]) => deleteRecord(data.resourceName, existing.id).then(R.always(data)),
+                R.always(Promise.resolve(data))
+            )
+        )(data.data.name)
+    )
+)(payload)
+
+export const addResourceEpic = (action$, state) =>
     action$.ofType(resourcesActionTypes.addResource.started)
-        .flatMap(({payload}) => Rx.Observable.fromPromise(
-            addRecord(payload.resourceName, payload.data).then(R.always(payload))
+        .flatMap(deleteExistingWithName(state))
+        .flatMap(data => Rx.Observable.fromPromise(
+            addRecord(data.resourceName, data.data).then(R.always(data))
         ))
         .do(() => ToastExt.success("Zapisano!"))
         .flatMap(({resourceName, data}) => Rx.Observable.of(
             addResource.finish(resourceName, data),
             loadResources.start(resourceName)
         ))
+
 
 export const deleteResourceEpic = action$ =>
     action$.ofType(resourcesActionTypes.deleteResource.started)
@@ -42,9 +64,9 @@ export const loadResourcesEpic = action$ =>
                 .map(data => loadResources.finish(payload.resourceName, data))
         )
 
-export const editConfigEpic = action$ =>
+export const editConfigEpic = (action$, state) =>
     action$.ofType(resourcesActionTypes.editResource.started)
-        .map(R.prop('payload'))
+        .flatMap(deleteExistingWithName(state))
         .flatMap(({id, resourceName, data}) => Rx.Observable.fromPromise(
             updateRecord(resourceName, id, data)
                 .then(R.always({id, resourceName, data}))

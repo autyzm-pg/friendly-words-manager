@@ -3,7 +3,6 @@ import styles from "./styles"
 import {Form, Input, Item, Text as BaseText} from "native-base"
 import {Text, TextInput, TouchableOpacity, View} from "react-native"
 import R from "ramda"
-import {withLog} from "../../libs/debug"
 import withState, {withLink} from "../../libs/withState"
 import ConfyTextInput from "../text/TextInput"
 
@@ -57,4 +56,4 @@ const SimpleIntegerInput = ({verbose, value, onChange, min, max, unit, isFocused
     )
 }
 
-export const IntegerInput = withLink("isFocused", false)(withLog(SimpleIntegerInput))
+export const IntegerInput = withLink("isFocused", false)(SimpleIntegerInput)
