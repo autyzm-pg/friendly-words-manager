@@ -1,15 +1,13 @@
 import React from "react"
-import {Form, Text, View} from "native-base"
-import {Switch} from "react-native"
-
-const styles = {
-	"wrapper": {flex: 1, flexDirection: "row", justifyContent: "space-between"}
-}
+import {Form} from "native-base"
+import {Switch, View} from "react-native"
+import FieldLabel from "../../components/ui/FieldLabel"
+import {Containers} from "../../styles/containers"
 
 const SwitchInput = ({verbose, value, onChange}) => (
-	<Form>
-		<Text>{verbose}</Text>
-		<Switch value={value} onValueChange={onChange} />
-	</Form>
+    <View style={[Containers.inline, Containers.formField]}>
+        <FieldLabel text={verbose}/>
+        <Switch style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }} value={value} onValueChange={onChange}/>
+    </View>
 )
 export default SwitchInput

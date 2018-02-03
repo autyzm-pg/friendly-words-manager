@@ -5,7 +5,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 
 const sectionPageStyle = {
 	sections: {
-		backgroundColor: "#e0e0e0",
+		backgroundColor: "#5e92f3",
 		justifyContent: "center"
 	},
 
@@ -15,10 +15,15 @@ const sectionPageStyle = {
 	},
 
 	activeSectionListItem: {
-		backgroundColor: "#fff"
+		backgroundColor: "#fff",
+		color: "black"
 	},
 
 	section: {
+		flex: 1,
+		justifyContent:"center",
+		flexDirection: "column",
+		paddingVertical: 60,
 		paddingHorizontal: 120
 	}
 }
@@ -33,10 +38,13 @@ const _SectionPage =
 		({sections, renderField, config, activeSectionIdx, activeSectionIdxChange}) =>
 			<Grid style={sectionPageStyle.container}>
 				<Col style={sectionPageStyle.sections} size={30}>
-					{sections.map((section, idx) =>
-						<View style={[sectionPageStyle.sectionListItem, activeSectionIdx === idx && sectionPageStyle.activeSectionListItem]} key={section.name}>
-							<Text style={{fontSize: 20}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
-						</View>)}
+					{sections.map((section, idx) => {
+						const isActive = activeSectionIdx === idx
+						return <View style={[sectionPageStyle.sectionListItem, isActive && sectionPageStyle.activeSectionListItem]} key={section.name}>
+							<Text style={{fontSize: 28, color: isActive ? "black" : "white"}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
+						</View>
+						})
+					}
 				</Col>
 				<Col style={{justifyContent: "center"}} size={70}>
 					<Section>

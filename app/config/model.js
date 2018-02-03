@@ -4,6 +4,7 @@ import {OptionField} from "../libs/confy/fields/options/optionField"
 import {TextField} from "../libs/confy/fields/text/textField"
 import {BoolField} from "../libs/confy/fields/switch/boolField"
 import {ImageMultiChooserField} from "../libs/confy/fields/multiOptions/multiOptionField"
+import {IntegerField} from "../libs/confy/fields/integer/IntegerField"
 import {createTableForModel} from "../db/db"
 import {ObjectField} from "../libs/confy/fields/object/ObjectField"
 import {ArrayField} from "../libs/confy/fields/array/ArrayField"
@@ -56,8 +57,8 @@ export const ConfigurationModel = MainModel({
         def: []
     }),
     commandText: TextField("Wybierz polecenie dla kroku"),
-    repetitionsNumber: TextField("Liczba prób dla słowa"),
-    picturesNumber: TextField("Wybierz ilość wyświetlanych obrazków"),
+    repetitionsNumber: IntegerField("Liczba prób dla słowa", {def: 3, min: 1}),
+    picturesNumber: IntegerField("Wybierz ilość wyświetlanych obrazków", {def: 3, min: 1, max: 6}),
     showPicturesLabels: BoolField("Pokazuj podpisy pod obrazkami", {def: true}),
     readCommand: BoolField("Czytaj komende", {def: true})
 })

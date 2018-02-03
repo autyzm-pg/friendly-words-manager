@@ -3,7 +3,7 @@ import {Content, List, ListItem, Right, TabHeading, Tabs, Tab, Text, View} from 
 import * as R from "ramda"
 
 export const WizardStepsContainer = ({children}) => (
-    <Tabs>
+    <Tabs locked>
         {
             React.Children.map(children, child => child.type({...child.props}))
         }
@@ -11,7 +11,7 @@ export const WizardStepsContainer = ({children}) => (
 )
 
 export const WizardStepView = ({name, key, children}) => (
-    <Tab key={key} heading={ <TabHeading><Text>{name}</Text></TabHeading>}>
+    <Tab key={key} heading={ <TabHeading><Text style={{fontSize: 28}}>{name}</Text></TabHeading>}>
         {children}
     </Tab>
 )
