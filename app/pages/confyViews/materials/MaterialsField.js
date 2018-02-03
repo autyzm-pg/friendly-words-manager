@@ -19,8 +19,7 @@ const tableStyles = {
     },
     cell: {
         flex: 1,
-        paddingTop: 2,
-        paddingBottom: 2,
+        padding: 2,
         justifyContent: "center",
         alignItems: "center"
     }
@@ -31,24 +30,25 @@ const Table = styled(ScrollView, tableStyles.table)
 const Row = styled(View, tableStyles.row)
 const Cell = styled(View, tableStyles.cell)
 
-const onWordAddClick = withLog((resources, onSubmit) =>
+const onWordAddClick = (resources, onSubmit) =>
     Modal.show(
         <View>
             <Text>Wybierz słowo, które chcesz dodać</Text>
             <ScrollView style={{marginTop: 10}}>
                 <List>
-                    {resources.map(resource => (
-                        <ListItem onPress={() => {
-                            Modal.hide()
-                            onSubmit(resource)
-                        }}>
-                            <Text>{resource.name}</Text>
-                        </ListItem>
-                    ))}
+                    {resources
+                        .map(resource => (
+                            <ListItem onPress={() => {
+                                Modal.hide()
+                                onSubmit(resource)
+                            }}>
+                                <Text>{resource.name}</Text>
+                            </ListItem>
+                        ))}
                 </List>
             </ScrollView>
         </View>
-    ))
+    )
 
 const AddButton = styled(Button, {
     position: "absolute",
@@ -82,11 +82,13 @@ const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) => (
                     ))}
                 </Table>
             </View>
-            <AddButton onPress={() => onWordAddClick(resources, R.pipe(
-                createNewMaterial(materialModel),
-                R.append(R.__, value),
-                onChange
-            ))}>
+            <AddButton onPress={() => onWordAddClick(
+                resources.filter(({name}) => !R.contains(name, value.map(R.path(['word', 'name'])))),
+                R.pipe(
+                    createNewMaterial(materialModel),
+                    R.append(R.__, value),
+                    onChange
+                ))}>
                 <Text>Dodaj</Text>
             </AddButton>
         </View>
@@ -102,7 +104,7 @@ const mapStateToProps = (state, {materialModel}) => ({
     resources: materialModel.fields.word.props.model.mapStateToList(state)
 })
 
-const MaterialsArrayInput = connect(withLog(mapStateToProps))(_MaterialsArrayInput)
+const MaterialsArrayInput = connect(mapStateToProps)(_MaterialsArrayInput)
 
 export const MaterialsArrayField = (materialModel) => Field(MaterialsArrayInput, {
     def: [{
