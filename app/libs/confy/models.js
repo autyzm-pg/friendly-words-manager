@@ -1,6 +1,8 @@
 // @flow
 import * as R from "ramda"
 import {createTableForModel} from "../../db/db"
+import {createResourcesReducerFromModels} from "../../redux/resources/reducers"
+import {createActionsForModel} from "../../redux/resources/actions"
 
 type ExtractTypeFunc = <V>((string) => V) => V
 export type ModelType<M> = {
@@ -9,30 +11,31 @@ export type ModelType<M> = {
     getDefaultConfig: () => any
 }
 
-// type ModelFactoryType<M> = (M) => ({
-//     fields: ModelType<M>
-// })
-
-export const Model = <M>(name: string, configDefinition: M): ModelType<M> => {
-    const model = ({
-        name,
-        fields: R.compose(
+export const Model = <M>(name: string, configDefinition: M): ModelType<M> => ({
+    name,
+    fields: R.compose(
+        R.fromPairs,
+        R.map(([fieldName, fieldFunc]) => [fieldName, fieldFunc(fieldName)]),
+        R.toPairs
+    )(configDefinition),
+    getDefaultConfig: function () {
+        return R.compose(
             R.fromPairs,
-            R.map(([fieldName, fieldFunc]) => [fieldName, fieldFunc(fieldName)]),
+            R.map(([fieldName, field]) => [fieldName, field.getDefaultValue()]),
             R.toPairs
-        )(configDefinition),
-        getDefaultConfig: function () {
-            return R.compose(
-                R.fromPairs,
-                R.map(([fieldName, field]) => [fieldName, field.getDefaultValue()]),
-                R.toPairs
-            )(this.fields)
-        }
-    })
+        )(this.fields)
+    },
+    reducers: createResourcesReducerFromModels([{name}]),
+    actions: createActionsForModel({name}),
+    mapStateToList: (state) => state.resources[name].all
+})
+
+export const DBModel = <M>(name: string, configDefinition: M): ModelType<M> => {
+    const model = Model(name, configDefinition)
 
     createTableForModel(model)
 
     return model
 }
 
-export const MainModel = configDefinition => Model("configs", configDefinition)
+export const MainModel = configDefinition => DBModel("configs", configDefinition)

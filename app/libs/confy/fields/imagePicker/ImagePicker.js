@@ -2,7 +2,6 @@ import React from "react"
 import {Text, View, Button} from "native-base"
 import R from "ramda"
 import {Image} from 'react-native'
-import {withLog} from "../../libs/debug"
 import {addImageFromCamera, addImageFromLibrary} from "./imageHandling"
 import {ifConfirmOrElse, Modal, onConfirm} from "../../../../components/modal/Modal"
 import {withStyle} from "../../../withStyle"

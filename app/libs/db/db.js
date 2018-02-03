@@ -1,7 +1,6 @@
 import * as R from "ramda"
 import {_addRecord, _createTable, _deleteRecord, _readTable, _updateRecord} from "./tables"
 import Mutex from "../mutex"
-import {withLog} from "../confy/libs/debug"
 
 const readFile = fileName => Expo.FileSystem.readAsStringAsync(fileName)
 const writeToFile = (fileName, data) => Expo.FileSystem.writeAsStringAsync(fileName, data)

@@ -21,22 +21,35 @@ export function _renderField(getValueForName, onChange, config, path) {
                       path={path}/>
 }
 
-type FieldConstructor = (component: ?any, defaultSettings: ?any) => (string, any) => (string) => BaseFieldType;
-export const Field: FieldConstructor = (component = FieldSimpleView, defaultSettings = {}) => (verbose, settings, dynamicMapper = () => ({})) => name => ({
-    name,
-    component,
-    verbose,
-    dynamicMapper,
-    props: {
-        ...defaultSettings,
-        ...settings
-    },
-    getDefaultValue() {
-        return this.props.def
-    },
+export const _renderFieldWithComponentName = componentName => function (getValueForName, onChange, config, path) {
+    const newContext = {...this, component: this[componentName]}
+    return _renderField.call(newContext, getValueForName, onChange, config, path)
+}
 
-    renderField: _renderField
-})
+export const _renderFieldWithComponent = Component => function (getValueForName, onChange, config, path) {
+    const newContext = {...this, component: Component}
+    return _renderField.call(newContext, getValueForName, onChange, config, path)
+}
+
+type FieldConstructor = (component: ?any, defaultSettings: ?any) => (string, any) => (string) => BaseFieldType;
+export const Field: FieldConstructor =
+    (component = FieldSimpleView, defaultSettings = {}) =>
+        (verbose, settings={}, dynamicSettingsMapper = () => ({})) =>
+            name => ({
+                name,
+                component: settings.component || component,
+                verbose,
+                dynamicMapper: dynamicSettingsMapper,
+                props: {
+                    ...defaultSettings,
+                    ...settings
+                },
+                getDefaultValue() {
+                    return this.props.def
+                },
+
+                renderField: _renderField
+            })
 
 export type FieldProps<T> = {
     value: T,
