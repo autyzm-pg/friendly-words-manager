@@ -1,5 +1,5 @@
 import React from "react"
-import {Button, List, ListItem, Text, View} from "native-base"
+import {Button, Icon, List, ListItem, Text, View} from "native-base"
 import * as R from "ramda"
 import {Field} from "../../../libs/confy/fields/fields"
 import {ScrollView, StyleSheet} from "react-native"
@@ -9,6 +9,7 @@ import {styled} from "../../../libs/styled"
 import {connect} from "react-redux"
 import {Modal} from "../../../components/modal/Modal"
 import {Model} from "../../../libs/confy/models"
+import {ActionItem} from "../../../components/containers/ActionsMenu"
 
 const tableStyles = {
     table: {
@@ -77,7 +78,12 @@ const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) => (
                             <Cell><Text>{material.word.name}</Text></Cell>
                             <Cell><Text>{material.isInLearningMode.toString()}</Text></Cell>
                             <Cell><Text>{material.isInTestMode.toString()}</Text></Cell>
-                            <Cell><Text>Usuń</Text></Cell>
+                            <Cell>
+                                <ActionItem
+                                    onSelect={() => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}>
+                                    <Icon name="trash"/>
+                                </ActionItem>
+                            </Cell>
                         </Row>
                     ))}
                 </Table>

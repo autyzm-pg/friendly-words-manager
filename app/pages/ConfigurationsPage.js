@@ -46,7 +46,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                             <Icon name="arrow-up"/>
                         </ActionItem>
                         <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(config)}>
-                            <Icon name="close"/>
+                            <Icon name="trash"/>
                         </ActionItem>
                     </ActionsMenu>
                 </ConfigElem>

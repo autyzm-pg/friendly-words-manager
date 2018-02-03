@@ -20,7 +20,7 @@ export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, tit
                             <Icon name="create"/>
                         </ActionItem>
                         <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(resource)}>
-                            <Icon name="close"/>
+                            <Icon name="trash"/>
                         </ActionItem>
                     </ActionsMenu>
                 </ResourceElem>
