@@ -1,6 +1,6 @@
 // @flow
 import {ConfigurationModel, WordModel} from "./model"
-import {WizardStep, WizardView} from "../libs/confy/views/wizard/wizardView"
+import {WizardSingleView, WizardStep, WizardView} from "../libs/confy/views/wizard/wizardView"
 import {Column, ColumnView} from "../libs/confy/views/column/columnView"
 import {Section, SectionView} from "../libs/confy/views/section/sectionView"
 import {SingleView} from "../libs/confy/views/single/singleView"
@@ -8,26 +8,27 @@ import {SingleView} from "../libs/confy/views/single/singleView"
 // const DetailedListView = notImplementedFunc
 // const CustomTestView = notImplementedFunc
 
-export const WordsWizardView = WizardView(fields => [
-	WizardStep("Test", ColumnView([
-		Column([fields.images, fields.tags])
-	]))
-], WordModel)
+export const WordsWizardView = WizardSingleView(fields =>
+    ColumnView([
+        Column([fields.images, fields.tags])
+    ]),
+    WordModel
+)
 
 export const ConfigurationWizardView = WizardView(fields => [
     WizardStep("Materiał", SingleView(fields.materials)),
     WizardStep("Sposób uczenia", SectionView([
         Section("Ustawienia kroku", [fields.commandText, fields.picturesNumber, fields.showPicturesLabels, fields.isReadingCommands]),
-	    Section("Ustawienia próby", [fields.numberOfRepetitions]),
-	    Section("Ustawienia podpowiedzi", [fields.numberOfRepetitions])
+        Section("Ustawienia próby", [fields.numberOfRepetitions]),
+        Section("Ustawienia podpowiedzi", [fields.numberOfRepetitions])
 
     ])),
-	WizardStep("Wzmocnienia", ColumnView([
-		Column([])
-	])),
-	WizardStep("Test", ColumnView([
-		Column([])
-	]))
+    WizardStep("Wzmocnienia", ColumnView([
+        Column([])
+    ])),
+    WizardStep("Test", ColumnView([
+        Column([])
+    ]))
 ], ConfigurationModel)
 
 // export const ConfigurationWizardView = WizardView(fields => [

@@ -1,6 +1,6 @@
 import React from "react"
 import {Container, Content, Header, Body, Title, Button, Text, Tab, Tabs, TabHeading, Icon, Left} from 'native-base'
-import {createWizardPage} from "../libs/confy/views/wizard/WizardPage"
+import {createWizardPage} from "../libs/confy/views/wizard/createWizardPage"
 
 import {ConfigurationWizardView} from "../config/view"
 import * as R from "ramda"

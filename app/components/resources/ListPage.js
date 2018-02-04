@@ -1,7 +1,7 @@
 import React from "react"
-import {Body, Button, Container, Content, Header, Icon, Left, Right, Title} from "native-base"
+import {Body, Button, Container, Content, Header, Icon, Left, Right, Text, Title} from "native-base"
 
-export const ListPage = ({onBack, title, children}) =>
+export const ListPage = ({onBack, title, children, onFabPress}) =>
     <Container>
         <Header>
             <Left>
@@ -10,9 +10,11 @@ export const ListPage = ({onBack, title, children}) =>
                 </Button>
             </Left>
             <Body>
-            <Title>{title}</Title>
+                <Title>{title}</Title>
             </Body>
-            <Right/>
+            <Right>
+                <Button transparent onPress={onFabPress}><Text>Dodaj</Text></Button>
+            </Right>
         </Header>
 
         <Content keyboardShouldPersistTaps="handled">

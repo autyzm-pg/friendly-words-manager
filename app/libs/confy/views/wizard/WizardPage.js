@@ -1,20 +1,10 @@
 // @flow
 import React from "react"
-import {
-    Button, Container, Header, Icon, Tab, TabHeading, Tabs, Text, Left, Title, Body, Right, View,
-    Form, Item, Input
-} from "native-base"
+import {Button, Text} from "native-base"
 import Page, {PageHeader} from "../../components/layout/Page"
 import {WizardStepsContainer, WizardStepView} from "./WizardSteps"
-import {withRedux} from "../../libs/redux/withRedux"
-import {mapDispatchToProps, mapStateToProps, reducer} from "./wizardRedux"
-import * as R from "ramda"
-import withProps from "../../libs/withProps"
 import type {Step} from "../steps"
-import type {WizardViewType} from "./wizardView"
-import type {ModelType} from "../../models"
 import {renderField} from "../../fields/fields"
-import {withLink} from "../../libs/withState"
 import {Modal, onConfirm} from "../../../../components/modal/Modal"
 
 
@@ -31,32 +21,42 @@ type WizardPageProps<T> = {
     steps: Array<Step>,
 } & WizardPagePropsFromUser
 
-const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: WizardPageProps<*>) => (
+const BaseWizardPage = ({name, onBack, children, onSave, config}) => (
     <Page>
-        <PageHeader onBack={() => props.onBack()} header={name}>
+        <PageHeader onBack={() => onBack()} header={name}>
             <Button transparent
                     onPress={() => Modal.textAsk("Podaj nazwę kroku", name).then(onConfirm(newName => onSave(config, newName)))}>
                 <Text>Zapisz</Text>
             </Button>
         </PageHeader>
+        {children}
+    </Page>
+)
+
+const renderView = (View, config, onFieldChange) => (
+    <View.component
+        renderField={renderField(name => config[name], onFieldChange, config, name => [name])} {...View.props}
+        config={config}/>
+)
+
+export const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: WizardPageProps<*>) => (
+    <BaseWizardPage onBack={props.onBack} name={name} onSave={onSave} config={config}>
         <WizardStepsContainer>
             {
-                steps.map(Step => (
-                    <WizardStepView key={Step.name} name={Step.name}>
-                        <Step.view.component
-                            renderField={renderField(name => config[name], onFieldChange, config, name => [name])} {...Step.view.props}
-                            config={config}/>
+                steps.map(step => (
+                    <WizardStepView key={step.name} name={step.name}>
+                        {renderView(step.view, config, onFieldChange)}
                     </WizardStepView>
                 ))
             }
         </WizardStepsContainer>
-    </Page>
+    </BaseWizardPage>
+)
+
+export const WizardSinglePage = ({view, name, config, onFieldChange, onSave, ...props}: WizardPageProps<*>) => (
+    <BaseWizardPage onBack={props.onBack} name={name} onSave={onSave} config={config}>
+        {renderView(view, config, onFieldChange)}
+    </BaseWizardPage>
 )
 
 export const _WizardPage = WizardPage
-
-
-export const createWizardPage = <T: {}, M: ModelType<T>>(wizardView: WizardViewType<M>, config: any = undefined) => R.compose(
-    withRedux(reducer(config || wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps),
-    withProps({steps: wizardView.steps}),
-)(WizardPage)
