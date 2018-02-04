@@ -4,14 +4,13 @@ import {WizardSingleView, WizardStep, WizardView} from "../libs/confy/views/wiza
 import {Column, ColumnView} from "../libs/confy/views/column/columnView"
 import {Section, SectionView} from "../libs/confy/views/section/sectionView"
 import {SingleView} from "../libs/confy/views/single/singleView"
+import {ListView} from "../libs/confy/views/list/listView"
 
 // const DetailedListView = notImplementedFunc
 // const CustomTestView = notImplementedFunc
 
 export const WordsWizardView = WizardSingleView(fields =>
-    ColumnView([
-        Column([fields.images, fields.tags])
-    ]),
+    ListView([fields.images, fields.tags]),
     WordModel
 )
 

@@ -1,22 +1,19 @@
 import React from "react"
 import {Item, List, ListItem, Picker, Right, Text, View} from "native-base"
 import * as R from "ramda"
+import {ScrollView, StyleSheet} from "react-native"
 
-export default ListPage = ({step, model, activeConfig}) => (
-    <View>
-        <List>
-            {
-                step.fields.map(fieldName => {
-                    const field = model[fieldName]
-                    const FieldComponent = field.component
-                    return (
-                        <ListItem key={fieldName}>
-                            <FieldComponent verbose={field.verbose} field={R.dissoc("component", field)} value={activeConfig[fieldName]}/>
-                        </ListItem>
-                    )
-                })
-            }
+const styles = StyleSheet.create({
+    page: {
+        flexDirection: "column",
+        padding: 5,
+    }
+})
 
-        </List>
-    </View>
+export const ListPage = ({fields, renderField, config}) => (
+    <ScrollView style={styles.page}>
+        {
+            fields.map(renderField)
+        }
+    </ScrollView>
 )
