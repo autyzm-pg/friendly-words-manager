@@ -2,7 +2,7 @@ import React from "react"
 import {Button, Icon, List, ListItem, Text, View} from "native-base"
 import * as R from "ramda"
 import {Field} from "../../../libs/confy/fields/fields"
-import {ScrollView} from "react-native"
+import {ScrollView, TouchableOpacity} from "react-native"
 import styles from "./styles"
 import {styled} from "../../../libs/styled"
 import {connect} from "react-redux"
@@ -10,6 +10,7 @@ import {Modal} from "../../../components/modal/Modal"
 import {Model} from "../../../libs/confy/models"
 import {ActionItem} from "../../../components/containers/ActionsMenu"
 import {Cell, Row, Table} from "../../../components/table/Table"
+import {withLink} from "../../../libs/confy/libs/withState"
 
 
 const onWordAddClick = (resources, onSubmit) =>
@@ -49,41 +50,67 @@ const onFieldChange = R.curry((onChange, currentValue, index, fieldName, newValu
     currentValue
 )))
 
-const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) => (
+const SelectableRow = styled(Row, ({isSelected}) => ({
+    backgroundColor: isSelected ? 'rgba(0,0,0, 0.2)' : 'transparent'
+}))
+
+const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, onSelect}) => (
+    <Table>
+        <Row style={styles.tableHeader}>
+            <Cell><Text>Słowo</Text></Cell>
+            <Cell><Text>W uczeniu</Text></Cell>
+            <Cell><Text>W teście</Text></Cell>
+            <Cell><Text>Usuń</Text></Cell>
+        </Row>
+        {materials.map((material, index) => (
+            <SelectableRow isSelected={R.pathEq(['word', 'name'], material.word.name, selected)} key={material.word.name}>
+                <Cell>
+                    <TouchableOpacity onPress={() => onSelect(material)}>
+                        <Text>{material.word.name}</Text>
+                    </TouchableOpacity>
+                </Cell>
+                <Cell>
+                    {fields.isInLearningMode.renderField(
+                        R.always(material.isInLearningMode),
+                        onRowChange(index)
+                    )}
+                </Cell>
+                <Cell>
+                    {fields.isInTestMode.renderField(
+                        R.always(material.isInTestMode),
+                        onRowChange(index)
+                    )}
+                </Cell>
+                <Cell>
+                    <ActionItem
+                        onSelect={() => onRowDelete(material)}>
+                        <Icon name="trash"/>
+                    </ActionItem>
+                </Cell>
+            </SelectableRow>
+        ))}
+    </Table>
+)
+
+const MaterialDetails = ({material=undefined}) => (
+    <ScrollView>
+        { !material ? <Text>Wybierz materiał w tabeli obok</Text> :
+            <Text>{material.toString()}</Text>
+        }
+    </ScrollView>
+)
+
+const _MaterialsArrayInput = ({value, onChange, resources, materialModel, selectedMaterial, selectedMaterialChange}) => (
     <View style={styles.container}>
         <View style={styles.listContainer}>
             <View>
-                <Table>
-                    <Row style={styles.tableHeader}>
-                        <Cell><Text>Słowo</Text></Cell>
-                        <Cell><Text>W uczeniu</Text></Cell>
-                        <Cell><Text>W teście</Text></Cell>
-                        <Cell><Text>Usuń</Text></Cell>
-                    </Row>
-                    {value.map((material, index) => (
-                        <Row key={material.word.name}>
-                            <Cell><Text>{material.word.name}</Text></Cell>
-                            <Cell>
-                                {materialModel.fields.isInLearningMode.renderField(
-                                    R.always(material.isInLearningMode),
-                                    onFieldChange(onChange, value, index)
-                                )}
-                            </Cell>
-                            <Cell>
-                                {materialModel.fields.isInTestMode.renderField(
-                                    R.always(material.isInTestMode),
-                                    onFieldChange(onChange, value, index)
-                                )}
-                            </Cell>
-                            <Cell>
-                                <ActionItem
-                                    onSelect={() => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}>
-                                    <Icon name="trash"/>
-                                </ActionItem>
-                            </Cell>
-                        </Row>
-                    ))}
-                </Table>
+                <MaterialsTable
+                    materials={value}
+                    onSelect={selectedMaterialChange}
+                    selected={selectedMaterial}
+                    onRowChange={onFieldChange(onChange, value)}
+                    onRowDelete={material => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}
+                    fields={materialModel.fields}/>
             </View>
             <AddButton onPress={() => onWordAddClick(
                 resources.filter(({name}) => !R.contains(name, value.map(R.path(['word', 'name'])))),
@@ -96,9 +123,7 @@ const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) => (
             </AddButton>
         </View>
         <View style={styles.detailsContainer}>
-            <ScrollView styles={styles.scrollView}>
-                <Text>DUPA2</Text>
-            </ScrollView>
+            <MaterialDetails material={selectedMaterial}/>
         </View>
     </View>
 )
@@ -107,7 +132,10 @@ const mapStateToProps = (state, {materialModel}) => ({
     resources: materialModel.fields.word.props.model.mapStateToList(state)
 })
 
-const MaterialsArrayInput = connect(mapStateToProps)(_MaterialsArrayInput)
+const MaterialsArrayInput = R.compose(
+    connect(mapStateToProps),
+    withLink("selectedMaterial", undefined)
+)(_MaterialsArrayInput)
 
 export const MaterialsArrayField = (materialModel) => Field(MaterialsArrayInput, {
     def: [],
