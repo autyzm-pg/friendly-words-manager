@@ -11,7 +11,7 @@ import {deleteResource} from "../../redux/resources/actions"
 
 export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => (
     <ListPage onBack={() => history.push("/")} title={title}
-              onFabPress={() => history.push(`/creator/resource/${resourceName}`)}>
+              onAdd={() => history.push(`/creator/resource/${resourceName}`)}>
         <ResourceList>
             {resources.map(resource =>
                 <ResourceElem key={resource.id} item={<ResourceBox item={resource}/>}>
