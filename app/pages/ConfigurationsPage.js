@@ -1,20 +1,7 @@
 import React from "react"
 
 import {
-    Button,
-    Container,
-    Content,
-    Fab,
-    Header,
     Icon,
-    Left,
-    List,
-    ListItem,
-    Right,
-    Tab,
-    TabHeading,
-    Tabs,
-    Title
 } from 'native-base'
 import ConfigList, {ConfigElem} from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
@@ -25,12 +12,12 @@ import {getNameOfCopy} from "../libs/funcs"
 import {Modal, onConfirm} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
 import {ListPage} from "../components/resources/ListPage"
-import {EmptyState} from "../libs/confy/components/ui/EmptyState";
+import {EmptyState} from "../libs/confy/components/ui/EmptyState"
 
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
     const goToConfigCreator = () => history.push("/creator")
 
-    return <ListPage onBack={() => history.push("/")} title={"Konfiguracje"}>
+    return <ListPage onBack={() => history.push("/")} title={"Konfiguracje"} onAdd={goToConfigCreator}>
         {R.isEmpty(allConfigs)
             ? <EmptyState icon="cogs" description="Lista konfiguracji jest pusta" actionLabel="Utwórz konfiguracje"
                           action={goToConfigCreator}/>
@@ -57,9 +44,6 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                         </ActionsMenu>
                     </ConfigElem>
                 ))}
-                <Fab active={false} onPress={goToConfigCreator} style={{backgroundColor: '#e02161'}}>
-                    <Icon name="add"/>
-                </Fab>
             </ConfigList>
         }
     </ListPage>

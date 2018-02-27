@@ -80,7 +80,12 @@ const onImageDelete = onDeleteConfirmed => () =>
 
 const ImageUploader = ({verbose, value, onChange, options}) => (
     <View style={imagePickerStyles.container}>
-        <Text>{verbose}</Text>
+        <View style={{flexDirection: "row"}}>
+            <Text>{verbose}</Text>
+            <Button style={imagePickerStyles.addButton} onPress={onImageAddPress(image => onChange([...value, image]))}>
+                <Text>Dodaj</Text>
+            </Button>
+        </View>
         <View style={[imagePickerStyles.imagesContainer, value.length === 0 && {justifyContent: "center"}]}>
             {value.length === 0 && <Text style={imagePickerStyles.emptyText}>Brak obrazków</Text>}
             {value.map(({uri, width, height}) =>
@@ -89,8 +94,6 @@ const ImageUploader = ({verbose, value, onChange, options}) => (
                 </ImageContainer>
             )}
         </View>
-        <PlusButton style={imagePickerStyles.addButton}
-                    onPress={onImageAddPress(image => onChange([...value, image]))}/>
     </View>
 )
 

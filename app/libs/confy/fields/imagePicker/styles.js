@@ -24,9 +24,8 @@ export const imagePickerStyles = {
         alignSelf: "center",
     },
     addButton: {
-        position: "absolute",
-        bottom: -5,
-        right: -5,
+        marginLeft: 10,
+        height: 28
     },
     imageContainer: {
         borderWidth: imageCardContainerBorder,

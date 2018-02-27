@@ -1,7 +1,7 @@
 import React from "react"
 import {Body, Button, Container, Content, Header, Icon, Left, Right, Text, Title} from "native-base"
 
-export const ListPage = ({onBack, title, children, onFabPress}) =>
+export const ListPage = ({onBack, title, children, onAdd}) =>
     <Container>
         <Header>
             <Left>
@@ -13,7 +13,7 @@ export const ListPage = ({onBack, title, children, onFabPress}) =>
                 <Title>{title}</Title>
             </Body>
             <Right>
-                <Button transparent onPress={onFabPress}><Text>Dodaj</Text></Button>
+                <Button transparent onPress={onAdd}><Text>Dodaj</Text></Button>
             </Right>
         </Header>
 
