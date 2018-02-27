@@ -11,6 +11,7 @@ import {Model} from "../../../libs/confy/models"
 import {ActionItem} from "../../../components/containers/ActionsMenu"
 import {Cell, Row, Table} from "../../../components/table/Table"
 import {withLink} from "../../../libs/confy/libs/withState"
+import {withLog} from "../../../libs/confy/libs/debug"
 
 
 const onWordAddClick = (resources, onSubmit) =>
@@ -63,9 +64,10 @@ const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, 
             <Cell><Text>Usuń</Text></Cell>
         </Row>
         {materials.map((material, index) => (
-            <SelectableRow isSelected={R.pathEq(['word', 'name'], material.word.name, selected)} key={material.word.name}>
+            <SelectableRow isSelected={index === selected}
+                           key={material.word.name}>
                 <Cell>
-                    <TouchableOpacity onPress={() => onSelect(material)}>
+                    <TouchableOpacity onPress={() => onSelect(index)}>
                         <Text>{material.word.name}</Text>
                     </TouchableOpacity>
                 </Cell>
@@ -92,22 +94,27 @@ const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, 
     </Table>
 )
 
-const MaterialDetails = ({material=undefined}) => (
+const MaterialDetails = ({material = undefined, renderField}) => (
     <ScrollView>
-        { !material ? <Text>Wybierz materiał w tabeli obok</Text> :
-            <Text>{material.toString()}</Text>
+        {!material ? <Text>Wybierz materiał w tabeli obok</Text> :
+            <View>
+                {renderField(material)}
+            </View>
         }
     </ScrollView>
 )
 
-const _MaterialsArrayInput = ({value, onChange, resources, materialModel, selectedMaterial, selectedMaterialChange}) => (
+const getIndex = (selected, all) => R.findIndex(R.pathEq(['word', 'name'], selected.word.name), all)
+const onImagesChange = (onChange, material, all) => (newImages) => onChange(R.assocPath([getIndex(material, all), 'images'], newImages, all))
+
+const _MaterialsArrayInput = ({value, onChange, resources, materialModel, selectedMaterialIndex, selectedMaterialIndexChange, path, config}) => (
     <View style={styles.container}>
         <View style={styles.listContainer}>
             <View>
                 <MaterialsTable
                     materials={value}
-                    onSelect={selectedMaterialChange}
-                    selected={selectedMaterial}
+                    onSelect={selectedMaterialIndexChange}
+                    selected={selectedMaterialIndex}
                     onRowChange={onFieldChange(onChange, value)}
                     onRowDelete={material => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}
                     fields={materialModel.fields}/>
@@ -123,7 +130,15 @@ const _MaterialsArrayInput = ({value, onChange, resources, materialModel, select
             </AddButton>
         </View>
         <View style={styles.detailsContainer}>
-            <MaterialDetails material={selectedMaterial}/>
+            <MaterialDetails
+                material={value[selectedMaterialIndex]}
+                renderField={material => materialModel.fields.images.renderField(
+                    R.always(material.images),
+                    () => onImagesChange(withLog(onChange), material, value),
+                    config,
+                    [...path, getIndex(material, value), 'images']
+                )}
+            />
         </View>
     </View>
 )
@@ -134,7 +149,7 @@ const mapStateToProps = (state, {materialModel}) => ({
 
 const MaterialsArrayInput = R.compose(
     connect(mapStateToProps),
-    withLink("selectedMaterial", undefined)
+    withLink("selectedMaterialIndex", undefined)
 )(_MaterialsArrayInput)
 
 export const MaterialsArrayField = (materialModel) => Field(MaterialsArrayInput, {

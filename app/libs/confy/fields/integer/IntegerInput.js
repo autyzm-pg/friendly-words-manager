@@ -4,7 +4,6 @@ import {Form, Input, Item} from "native-base"
 import {Text, TouchableOpacity, View, Slider} from "react-native"
 import FieldLabel from "../../components/ui/FieldLabel"
 import R from "ramda"
-import {withLog} from "../../libs/debug"
 import {withLink} from "../../libs/withState"
 import {Containers} from "../../styles/containers"
 
@@ -62,5 +61,5 @@ const IntegerSlider = ({verbose, value, onChange, min, max, unit, isFocused, isF
         <Slider minimumValue={min} maximumValue={max} onValueChange={onChange} value={value} step={1} />
     </View>
 }
-export const IntegerInput = withLink("isFocused", false)(withLog(IntegerSlider))
+export const IntegerInput = withLink("isFocused", false)(IntegerSlider)
 //export const IntegerInput = withLink("isFocused", false)(withLog(SimpleIntegerInput))

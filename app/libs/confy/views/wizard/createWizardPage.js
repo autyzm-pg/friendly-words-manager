@@ -4,9 +4,8 @@ import * as R from "ramda"
 import {withRedux} from "../../libs/redux/withRedux"
 import {mapDispatchToProps, mapStateToProps, reducer} from "./wizardRedux"
 import withProps from "../../libs/withProps"
-import {withLog} from "../../libs/debug"
 
-export const createWizardPage = withLog(<T: {}, M: ModelType<T>, Props>(wizardView: WizardViewType<M, Props>, config: any = undefined) => R.compose(
+export const createWizardPage = <T: {}, M: ModelType<T>, Props>(wizardView: WizardViewType<M, Props>, config: any = undefined) => R.compose(
     withRedux(reducer(config || wizardView.model.getDefaultConfig()), mapStateToProps, mapDispatchToProps),
     withProps({...wizardView.props}),
-)(wizardView.component))
+)(wizardView.component)

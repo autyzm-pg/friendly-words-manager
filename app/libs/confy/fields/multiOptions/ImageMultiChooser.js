@@ -1,21 +1,24 @@
 // @flow
 import React from "react"
-import {View} from "native-base";
+import {Text, View} from "native-base"
 import {FieldProps} from "../fields";
 import {StyleSheet} from "react-native";
 import {MultiOptions, ImageOption} from "../../components/ui/MultiOptions";
+import * as R from "ramda"
+import {withLog} from "../../libs/debug"
 
 type ImageMultiChooserProps = {
 	options: Array<string>
 } & FieldProps<Array<string>>
 
-export const ImageMultiChooser = ({verbose, value, onChange, options}: ImageMultiChooserProps) =>
+export const ImageMultiChooser = withLog(({verbose, value, onChange, options}: ImageMultiChooserProps) =>
 	<View>
+		<Text>{verbose}</Text>
 		<MultiOptions style={styles.container} value={value} onChange={onChange}>
-			{options.map(option => <ImageOption style={styles.imageOption} size={150} key={option}
+			{options.map(R.prop('uri')).map(option => <ImageOption style={styles.imageOption} size={150} key={option}
 			                                    src={option} value={option} checkboxStyle={styles.checkbox}/>)}
 		</MultiOptions>
-	</View>;
+	</View>);
 
 
 const styles = StyleSheet.create({
