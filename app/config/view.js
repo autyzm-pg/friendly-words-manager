@@ -19,7 +19,7 @@ export const ConfigurationWizardView = WizardView(fields => [
     WizardStep("Sposób uczenia", SectionView([
         Section("Ustawienia kroku", [fields.commandText, fields.picturesNumber, fields.showPicturesLabels, fields.isReadingCommands]),
         Section("Ustawienia próby", [fields.numberOfRepetitions]),
-        Section("Ustawienia podpowiedzi", [fields.numberOfRepetitions])
+        Section("Ustawienia podpowiedzi", [fields.hintType ,fields.showHintAfter])
 
     ])),
     WizardStep("Wzmocnienia", ColumnView([

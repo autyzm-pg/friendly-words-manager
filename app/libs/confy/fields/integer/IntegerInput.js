@@ -54,10 +54,10 @@ const SimpleIntegerInput = ({verbose, value, onChange, min, max, unit, isFocused
     )
 }
 
-const IntegerSlider = ({verbose, value, onChange, min, max, unit, isFocused, isFocusedChange}) => {
+const IntegerSlider = ({verbose, value, onChange, min, max, units, isFocused, isFocusedChange}) => {
     return <View style={Containers.formField}>
         <FieldLabel text={verbose}/>
-        <Text>{value}</Text>
+        <Text>{value}{units ? ` ${units}` : ""}</Text>
         <Slider minimumValue={min} maximumValue={max} onValueChange={onChange} value={value} step={1} />
     </View>
 }
