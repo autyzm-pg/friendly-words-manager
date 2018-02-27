@@ -34,16 +34,16 @@ export const ConfigurationModel = MainModel({
             }))
         )
     }),
-    hintType: OptionField("Rodzaj podpowiedzi", [
+    hintType: OptionField("Rodzaj podpowiedzi", {options: [
         "Wyszarz",
         "TAK",
         "Powieksz",
         "Brak"
-    ]),
-    commandText: OptionField("Rodzaj polecenia", [
+    ]}),
+    commandText: OptionField("Rodzaj polecenia", {options: [
         "Pokaz gdzie jest {slowo}",
         "{slowo}",
-    ]),
+    ]}),
     picturesNumber: IntegerField("Ilość obrazków", {min: 1, max: 6, def: 1}),
     showPicturesLabels: BoolField("Pokazuj podpisy pod obrazkami", {def: true}),
     isReadingCommands: BoolField("Czytanie poleceń"),
