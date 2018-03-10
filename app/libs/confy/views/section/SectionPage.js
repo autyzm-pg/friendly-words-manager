@@ -38,7 +38,7 @@ const _SectionPage =
 					{sections.map((section, idx) => {
 						const isActive = activeSectionIdx === idx
 						return <View style={[sectionPageStyle.sectionListItem, isActive && sectionPageStyle.activeSectionListItem]} key={section.name}>
-							<Text style={{fontSize: moderateScale(16), color: isActive ? "black" : "white"}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
+							<Text style={{fontSize: moderateScale(12), color: isActive ? "black" : "white"}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
 						</View>
 						})
 					}

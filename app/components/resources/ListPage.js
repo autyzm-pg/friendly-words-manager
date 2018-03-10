@@ -1,7 +1,7 @@
 import React from "react"
 import {Body, Button, Container, Content, Header, Icon, Left, Right, Title} from "native-base"
 
-export const ListPage = ({onBack, title, children}) =>
+export const ListPage = ({onBack, title, rightContent, children}) =>
     <Container>
         <Header>
             <Left>
@@ -12,7 +12,9 @@ export const ListPage = ({onBack, title, children}) =>
             <Body>
             <Title>{title}</Title>
             </Body>
-            <Right/>
+            <Right>
+                {rightContent}
+            </Right>
         </Header>
 
         <Content keyboardShouldPersistTaps="handled">

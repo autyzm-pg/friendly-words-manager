@@ -62,5 +62,5 @@ const IntegerSlider = ({verbose, value, onChange, min, max, unit, isFocused, isF
         <Slider minimumValue={min} maximumValue={max} onValueChange={onChange} value={value} step={1} />
     </View>
 }
-export const IntegerInput = withLink("isFocused", false)(withLog(IntegerSlider))
+export const IntegerInput = withLink("isFocused", false)(IntegerSlider)
 //export const IntegerInput = withLink("isFocused", false)(withLog(SimpleIntegerInput))

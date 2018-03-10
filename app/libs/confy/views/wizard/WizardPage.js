@@ -14,7 +14,7 @@ import type {Step} from "../steps"
 import type {WizardViewType} from "./wizardView"
 import type {ModelType} from "../../models"
 import {renderField} from "../../fields/fields"
-import {withLink} from "../../libs/withState"
+import {HeaderButtonimport} from "../../components/ui/HeaderButton";
 import {Modal, onConfirm} from "../../../../components/modal/Modal"
 
 

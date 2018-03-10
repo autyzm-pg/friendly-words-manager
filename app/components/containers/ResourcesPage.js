@@ -8,11 +8,16 @@ import withProps from "../../libs/confy/libs/withProps"
 import {connect} from "react-redux"
 import {Modal, onConfirm} from "../modal/Modal"
 import {deleteResource} from "../../redux/resources/actions"
+import {EmptyState} from "../../libs/confy/components/ui/EmptyState";
+import {HeaderButton} from "../../libs/confy/components/ui/HeaderButton";
 
-export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => (
-    <ListPage onBack={() => history.push("/")} title={title}
-              onFabPress={() => history.push(`/creator/resource/${resourceName}`)}>
-        <ResourceList>
+export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => {
+    const goToResourceCreator = () => history.push(`/creator/resource/${resourceName}`)
+
+    return <ListPage onBack={() => history.push("/")} title={title} rightContent={<HeaderButton action={goToResourceCreator} text={"Utwórz"}/>}>
+        {R.isEmpty(resources)
+            ? <EmptyState icon="folder-open" action={goToResourceCreator} description="Lista zasobów jest pusta" actionLabel={"Utwórz zasób"}/>
+            :<ResourceList>
             {resources.map(resource =>
                 <ResourceElem key={resource.id} item={<ResourceBox item={resource}/>}>
                     <ActionsMenu>
@@ -26,8 +31,9 @@ export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, tit
                 </ResourceElem>
             )}
         </ResourceList>
+        }
     </ListPage>
-)
+}
 
 const mapStateToProps = resourceName => ({resources}) => ({
     resources: resources[resourceName].all,

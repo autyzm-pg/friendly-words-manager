@@ -4,7 +4,6 @@ import {
     Button,
     Container,
     Content,
-    Fab,
     Header,
     Icon,
     Left,
@@ -14,6 +13,7 @@ import {
     Tab,
     TabHeading,
     Tabs,
+    Text,
     Title
 } from 'native-base'
 import ConfigList, {ConfigElem} from "../components/configurations/ConfigList"
@@ -25,12 +25,13 @@ import {getNameOfCopy} from "../libs/funcs"
 import {Modal, onConfirm} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
 import {ListPage} from "../components/resources/ListPage"
-import {EmptyState} from "../libs/confy/components/ui/EmptyState";
+import {EmptyState} from "../libs/confy/components/ui/EmptyState"
+import {HeaderAction, HeaderButton} from "../libs/confy/components/ui/HeaderButton"
 
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
     const goToConfigCreator = () => history.push("/creator")
 
-    return <ListPage onBack={() => history.push("/")} title={"Konfiguracje"}>
+    return <ListPage onBack={() => history.push("/")} title={"Konfiguracje"} rightContent={<HeaderButton action={goToConfigCreator} text={"Utwórz"} />}>
         {R.isEmpty(allConfigs)
             ? <EmptyState icon="cogs" description="Lista konfiguracji jest pusta" actionLabel="Utwórz konfiguracje"
                           action={goToConfigCreator}/>
@@ -57,9 +58,6 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                         </ActionsMenu>
                     </ConfigElem>
                 ))}
-                <Fab active={false} onPress={goToConfigCreator} style={{backgroundColor: '#e02161'}}>
-                    <Icon name="add"/>
-                </Fab>
             </ConfigList>
         }
     </ListPage>
