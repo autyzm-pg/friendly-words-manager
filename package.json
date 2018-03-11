@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "expo": "^25.0.0",
-    "native-base": "^2.1.5",
+    "native-base": "^2.3.10",
     "path": "^0.12.7",
     "ramda": "^0.24.1",
     "react": "16.2.0",
