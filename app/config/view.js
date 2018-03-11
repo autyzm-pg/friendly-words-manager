@@ -23,7 +23,13 @@ export const ConfigurationWizardView = WizardView(fields => [
 
     ])),
     WizardStep("Wzmocnienia", ColumnView([
-        Column([])
+        Column([
+            fields.textRewards,
+            fields.isReadingRewards
+        ]),
+        Column([
+            fields.animationRewards
+        ])
     ])),
     WizardStep("Test", ColumnView([
         Column([])

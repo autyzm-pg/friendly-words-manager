@@ -3,10 +3,14 @@ import React from "react"
 import {View} from "native-base"
 import type {ColumnType} from "./columnView"
 import type {StepPageProps} from "../steps"
+import styles from "./styles"
+import {ScrollView} from "react-native"
 
-const Column = ({children}) => (
-    <View>
-        {children}
+const Column = ({children, style}) => (
+    <View style={[styles.columnContainer, style]}>
+        <ScrollView style={styles.column}>
+            {children}
+        </ScrollView>
     </View>
 )
 
@@ -15,9 +19,9 @@ type StepColumnViewProps = {
 } & StepPageProps
 
 const ColumnPage = ({columns, renderField, config}: StepColumnViewProps) => (
-    <View>
+    <View style={styles.columnsContainer}>
         {columns.map((fields, i) => (
-                <Column key={i}>
+                <Column key={i} style={i % 2 ? styles.oddColumn : styles.evenColumn}>
                     {fields.map(renderField)}
                 </Column>
             )
