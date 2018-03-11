@@ -68,7 +68,7 @@ export const ConfigurationModel = MainModel({
             {uri: "http://via.placeholder.com/351x350"}
         ]
     }),
-    testConfig: ObjectField({
+    testConfig: ObjectField("Konfiguracja test", {
         numberOfRepetitions: IntegerField("Ilość powtórzeń", {min: 1, max: 20, def: 1}),
         timeForAnswer: IntegerField("Czas na odpowiedź", {min: 1, max: 10, def: 1, units: "s"})
     })

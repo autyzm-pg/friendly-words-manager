@@ -31,9 +31,7 @@ export const ConfigurationWizardView = WizardView(fields => [
             fields.animationRewards
         ])
     ])),
-    WizardStep("Test", ColumnView([
-        Column([])
-    ]))
+    WizardStep("Test", SingleView(fields.testConfig))
 ], ConfigurationModel)
 
 // export const ConfigurationWizardView = WizardView(fields => [
