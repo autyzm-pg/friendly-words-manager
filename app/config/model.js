@@ -11,7 +11,6 @@ import {IntegerField} from "../libs/confy/fields/integer/IntegerField"
 import {MaterialsArrayField, MaterialsArrayInput} from "../pages/confyViews/materials/MaterialsField"
 import {ForeignField} from "../libs/confy/fields/foreign/foreignField"
 import {SimpleCheckbox} from "../pages/confyViews/materials/SimpleCheckbox"
-import {withLog} from "../libs/confy/libs/debug"
 import {get, getChildProp, getSiblingProp} from "../libs/confy/fields/dynamic/traversing"
 
 export const WordModel = DBModel("words", {
@@ -25,13 +24,13 @@ export const ConfigurationModel = MainModel({
         word: ForeignField("Wybrane słowo", WordModel),
         isInLearningMode: BoolField("W uczeniu", {component: SimpleCheckbox}),
         isInTestMode: BoolField("W teście", {component: SimpleCheckbox}),
-        images: ImageMultiChooserField("Wybierz materiały wizualne", undefined, withLog((obj, path) => ({
+        images: ImageMultiChooserField("Wybierz materiały wizualne", undefined, (obj, path) => ({
                 options: R.pipe(
                     getSiblingProp("word"),
                     getChildProp("images"),
                     get
                 )(path)(obj)
-            }))
+            })
         )
     }),
     hintType: OptionField("Rodzaj podpowiedzi", {options: [

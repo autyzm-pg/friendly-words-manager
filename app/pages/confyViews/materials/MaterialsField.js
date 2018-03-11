@@ -11,8 +11,6 @@ import {Model} from "../../../libs/confy/models"
 import {ActionItem} from "../../../components/containers/ActionsMenu"
 import {Cell, Row, Table} from "../../../components/table/Table"
 import {withLink} from "../../../libs/confy/libs/withState"
-import {withLog} from "../../../libs/confy/libs/debug"
-
 
 const onWordAddClick = (resources, onSubmit) =>
     Modal.show(
@@ -134,7 +132,7 @@ const _MaterialsArrayInput = ({value, onChange, resources, materialModel, select
                 material={value[selectedMaterialIndex]}
                 renderField={material => materialModel.fields.images.renderField(
                     R.always(material.images),
-                    () => onImagesChange(withLog(onChange), material, value),
+                    () => onImagesChange(onChange, material, value),
                     config,
                     [...path, getIndex(material, value), 'images']
                 )}

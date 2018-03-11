@@ -5,13 +5,12 @@ import {FieldProps} from "../fields";
 import {StyleSheet} from "react-native";
 import {MultiOptions, ImageOption} from "../../components/ui/MultiOptions";
 import * as R from "ramda"
-import {withLog} from "../../libs/debug"
 
 type ImageMultiChooserProps = {
 	options: Array<string>
 } & FieldProps<Array<string>>
 
-export const ImageMultiChooser = withLog(({verbose, value, onChange, options}: ImageMultiChooserProps) =>
+export const ImageMultiChooser = ({verbose, value, onChange, options}: ImageMultiChooserProps) =>
 	<View>
 		<Text>{verbose}</Text>
 		<MultiOptions style={styles.container} value={value} onChange={onChange}>
@@ -39,4 +38,4 @@ const styles = StyleSheet.create({
 		zIndex: 1,
 		top: 8,
 	}
-});
+}
