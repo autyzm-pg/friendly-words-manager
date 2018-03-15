@@ -7,7 +7,8 @@ const tableStyles = {
         flexDirection: "column"
     },
     row: {
-        flexDirection: "row"
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     cell: {
         flex: 1,

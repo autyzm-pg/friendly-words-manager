@@ -41,7 +41,6 @@ export class ModalRoot extends React.Component {
                              transparent={true}
                              onRequestClose={() => this.hide()}
                              style={{margin: 20}}
-                             presentationStyle="fullScreen"
                 >
                     <View style={{margin: 10}}>
                         {this.state.children}

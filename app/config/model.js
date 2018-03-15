@@ -39,8 +39,8 @@ const get = R.curry((path, config) =>
 export const ConfigurationModel = MainModel({
     materials: MaterialsArrayField({
         word: ForeignField("Wybrane słowo", WordModel),
-        isInLearningMode: BoolField("W uczeniu", {component: SimpleCheckbox}),
-        isInTestMode: BoolField("W teście", {component: SimpleCheckbox}),
+        isInLearningMode: BoolField("W uczeniu", {component: SimpleCheckbox, def: true}),
+        isInTestMode: BoolField("W teście", {component: SimpleCheckbox, def: true}),
         images: ImageMultiChooserField("Wybierz materiały wizualne", undefined, (obj, path) => ({
             options: R.pipe(
                 getSiblingProp("word"),

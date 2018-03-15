@@ -6,7 +6,7 @@ import {moderateScale} from "../../../scaling";
 
 const sectionPageStyle = {
 	sections: {
-		backgroundColor: "#5e92f3",
+        backgroundColor: "rgba(63, 81, 181, 0.1)",
 		justifyContent: "center"
 	},
 
@@ -17,7 +17,6 @@ const sectionPageStyle = {
 
 	activeSectionListItem: {
 		backgroundColor: "#fff",
-		color: "black"
 	},
 
 	section: {
@@ -38,7 +37,7 @@ const _SectionPage =
 					{sections.map((section, idx) => {
 						const isActive = activeSectionIdx === idx
 						return <View style={[sectionPageStyle.sectionListItem, isActive && sectionPageStyle.activeSectionListItem]} key={section.name}>
-							<Text style={{fontSize: moderateScale(12), color: isActive ? "black" : "white"}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
+							<Text style={{fontSize: moderateScale(12)}} onPress={() => activeSectionIdxChange(idx)}>{section.name}</Text>
 						</View>
 						})
 					}

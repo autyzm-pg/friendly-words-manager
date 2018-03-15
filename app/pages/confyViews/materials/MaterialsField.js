@@ -6,16 +6,17 @@ import {ScrollView} from "react-native"
 import styles from "./styles"
 import {styled} from "../../../libs/styled"
 import {connect} from "react-redux"
-import {Modal} from "../../../components/modal/Modal"
+import {Modal, onConfirm} from "../../../components/modal/Modal"
 import {Model} from "../../../libs/confy/models"
 import {ActionItem} from "../../../components/containers/ActionsMenu"
 import {Cell, Row, Table} from "../../../components/table/Table"
-
+import {ListLabel} from "../../../libs/confy/components/ui/ListLabels";
+import {EmptyState} from "../../../libs/confy/components/ui/EmptyState";
 
 const onWordAddClick = (resources, onSubmit) =>
     Modal.show(
         <View>
-            <Text>Wybierz słowo, które chcesz dodać</Text>
+            <Text>Wybierz słowo, które chcesz dodać do konfiguracji</Text>
             <ScrollView style={{marginTop: 10}}>
                 <List>
                     {resources
@@ -49,59 +50,66 @@ const onFieldChange = R.curry((onChange, currentValue, index, fieldName, newValu
     currentValue
 )))
 
-const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) => (
-    <View style={styles.container}>
-        <View style={styles.listContainer}>
-            <View>
-                <Table>
-                    <Row style={styles.tableHeader}>
-                        <Cell><Text>Słowo</Text></Cell>
-                        <Cell><Text>W uczeniu</Text></Cell>
-                        <Cell><Text>W teście</Text></Cell>
-                        <Cell><Text>Usuń</Text></Cell>
-                    </Row>
-                    {value.map((material, index) => (
-                        <Row key={material.word.name}>
-                            <Cell><Text>{material.word.name}</Text></Cell>
-                            <Cell>
-                                {materialModel.fields.isInLearningMode.renderField(
-                                    R.always(material.isInLearningMode),
-                                    onFieldChange(onChange, value, index)
-                                )}
-                            </Cell>
-                            <Cell>
-                                {materialModel.fields.isInTestMode.renderField(
-                                    R.always(material.isInTestMode),
-                                    onFieldChange(onChange, value, index)
-                                )}
-                            </Cell>
-                            <Cell>
-                                <ActionItem
-                                    onSelect={() => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}>
-                                    <Icon name="trash"/>
-                                </ActionItem>
-                            </Cell>
+const onAddWord = (model, value, onChange, resource) => R.pipe(
+    createNewMaterial(model),
+    R.append(R.__, value),
+    onChange
+)(resource);
+
+
+const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) =>
+    R.isEmpty(value)
+        ? <EmptyState icon="list" actionLabel="Dodaj słowo" action={() => onWordAddClick(resources, (resource) => onAddWord(materialModel, value, onChange, resource))}
+                      description="Konfiguracja jest pusta"/>
+        : <View style={styles.container}>
+            <View style={[styles.listContainer, R.isEmpty(value) && {alignItems: "center"}]}>
+                <View>
+                    <Table>
+                        <Row style={styles.tableHeader}>
+                            <Cell><ListLabel text="Słowo"/></Cell>
+                            <Cell><ListLabel text="W uczeniu"/></Cell>
+                            <Cell><ListLabel text="W teście"/></Cell>
+                            <Cell><ListLabel text="Usuń"/></Cell>
                         </Row>
-                    ))}
-                </Table>
+                        {value.map((material, index) => (
+                            <Row key={material.word.name}>
+                                <Cell><Text>{material.word.name}</Text></Cell>
+                                <Cell>
+                                    {materialModel.fields.isInLearningMode.renderField(
+                                        R.always(material.isInLearningMode),
+                                        onFieldChange(onChange, value, index)
+                                    )}
+                                </Cell>
+                                <Cell>
+                                    {materialModel.fields.isInTestMode.renderField(
+                                        R.always(material.isInTestMode),
+                                        onFieldChange(onChange, value, index)
+                                    )}
+                                </Cell>
+                                <Cell>
+                                    <ActionItem
+                                        onSelect={() => Modal.ask("Usunac slowo z konfiguracji?", false).then(onConfirm(
+                                            () => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))))}>
+                                        <Icon name="trash"/>
+                                    </ActionItem>
+                                </Cell>
+                            </Row>
+                        ))}
+                    </Table>
+                </View>
+                <AddButton onPress={() => onWordAddClick(
+                    resources.filter(({name}) => !R.contains(name, value.map(R.path(['word', 'name'])))),
+                    (resource) => onAddWord(materialModel, value, onChange, resource))}>
+                    <Text>Dodaj słowo</Text>
+                </AddButton>
             </View>
-            <AddButton onPress={() => onWordAddClick(
-                resources.filter(({name}) => !R.contains(name, value.map(R.path(['word', 'name'])))),
-                R.pipe(
-                    createNewMaterial(materialModel),
-                    R.append(R.__, value),
-                    onChange
-                ))}>
-                <Text>Dodaj</Text>
-            </AddButton>
+            <View style={styles.detailsContainer}>
+                <ScrollView styles={styles.scrollView}>
+                    <Text>DUPA2</Text>
+                </ScrollView>
+            </View>
         </View>
-        <View style={styles.detailsContainer}>
-            <ScrollView styles={styles.scrollView}>
-                <Text>DUPA2</Text>
-            </ScrollView>
-        </View>
-    </View>
-)
+
 
 const mapStateToProps = (state, {materialModel}) => ({
     resources: materialModel.fields.word.props.model.mapStateToList(state)

@@ -14,7 +14,7 @@ import type {Step} from "../steps"
 import type {WizardViewType} from "./wizardView"
 import type {ModelType} from "../../models"
 import {renderField} from "../../fields/fields"
-import {HeaderButtonimport} from "../../components/ui/HeaderButton";
+import {HeaderButton} from "../../components/ui/HeaderButton";
 import {Modal, onConfirm} from "../../../../components/modal/Modal"
 
 
@@ -34,10 +34,7 @@ type WizardPageProps<T> = {
 const WizardPage = ({steps, name, config, onFieldChange, onSave, ...props}: WizardPageProps<*>) => (
     <Page>
         <PageHeader onBack={() => props.onBack()} header={name}>
-            <Button transparent
-                    onPress={() => Modal.textAsk("Podaj nazwę kroku", name).then(onConfirm(newName => onSave(config, newName)))}>
-                <Text>Zapisz</Text>
-            </Button>
+            <HeaderButton text="Zapisz" action={() => Modal.textAsk("Podaj nazwę kroku", name).then(onConfirm(newName => onSave(config, newName)))} />
         </PageHeader>
         <WizardStepsContainer>
             {

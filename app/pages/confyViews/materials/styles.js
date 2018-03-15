@@ -7,7 +7,7 @@ export default styles = StyleSheet.create({
     },
     listContainer: {
         flex: 3,
-        backgroundColor: "#e0e0e0",
+        backgroundColor: "rgba(63, 81, 181, 0.1)",
     },
     detailsContainer: {
         flex: 4,
@@ -15,6 +15,6 @@ export default styles = StyleSheet.create({
     scrollView: {
     },
     tableHeader: {
-        backgroundColor: "#a4a4a4"
+        paddingVertical: 8
     }
 })

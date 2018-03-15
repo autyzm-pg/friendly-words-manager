@@ -1,5 +1,6 @@
-import {Modal, View} from "react-native"
+import {Modal, View, Button} from "react-native"
 import * as React from "react"
+import {XButton} from "../../libs/confy/components/ui/XButton";
 
 const styles = {
     wrapper: {
@@ -11,9 +12,8 @@ const styles = {
     internal: {
         backgroundColor: "white",
         padding: 10,
-        marginLeft: 6,
-        marginRight: 6
-    }
+        margin: 10
+    },
 }
 
 export default CustomModal = ({children, visible, onRequestClose}) => (
@@ -21,10 +21,10 @@ export default CustomModal = ({children, visible, onRequestClose}) => (
            visible={visible}
            transparent={true}
            onRequestClose={onRequestClose}
-           presentationStyle="fullScreen"
     >
         <View style={styles.wrapper}>
             <View style={styles.internal}>
+                <XButton onPress={onRequestClose} />
                 {children}
             </View>
         </View>
