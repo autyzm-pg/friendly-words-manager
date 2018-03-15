@@ -11,6 +11,7 @@ export default styles = StyleSheet.create({
     },
     detailsContainer: {
         flex: 4,
+        padding: 10
     },
     scrollView: {
     },

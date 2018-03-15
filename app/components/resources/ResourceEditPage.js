@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import * as R from "ramda"
-import {createWizardPage} from "../../libs/confy/views/wizard/WizardPage"
+import {createWizardPage} from "../../libs/confy/views/wizard/createWizardPage"
 import {editResource} from "../../redux/resources/actions"
 import {Modal, onConfirm} from "../modal/Modal"
 

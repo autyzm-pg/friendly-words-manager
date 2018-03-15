@@ -4,7 +4,6 @@ import {Form, Input, Item} from "native-base"
 import {Text, TouchableOpacity, View, Slider} from "react-native"
 import FieldLabel from "../../components/ui/FieldLabel"
 import R from "ramda"
-import {withLog} from "../../libs/debug"
 import {withLink} from "../../libs/withState"
 import {Containers} from "../../styles/containers"
 
@@ -55,10 +54,10 @@ const SimpleIntegerInput = ({verbose, value, onChange, min, max, unit, isFocused
     )
 }
 
-const IntegerSlider = ({verbose, value, onChange, min, max, unit, isFocused, isFocusedChange}) => {
+const IntegerSlider = ({verbose, value, onChange, min, max, units, isFocused, isFocusedChange}) => {
     return <View style={Containers.formField}>
         <FieldLabel text={verbose}/>
-        <Text>{value}</Text>
+        <Text>{value}{units ? ` ${units}` : ""}</Text>
         <Slider minimumValue={min} maximumValue={max} onValueChange={onChange} value={value} step={1} />
     </View>
 }

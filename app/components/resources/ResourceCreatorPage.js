@@ -3,7 +3,7 @@ import {Container, Content, Header, Body, Title, Button, Text, Tab, Tabs, TabHea
 
 import * as R from "ramda"
 import {connect} from "react-redux"
-import {createWizardPage} from "../../libs/confy/views/wizard/WizardPage"
+import {createWizardPage} from "../../libs/confy/views/wizard/createWizardPage"
 import {Modal, onConfirm} from "../modal/Modal"
 import {addResource} from "../../redux/resources/actions"
 

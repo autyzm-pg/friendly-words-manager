@@ -2,7 +2,7 @@ import React from "react"
 import {Button, Icon, List, ListItem, Text, View} from "native-base"
 import * as R from "ramda"
 import {Field} from "../../../libs/confy/fields/fields"
-import {ScrollView} from "react-native"
+import {ScrollView, TouchableOpacity} from "react-native"
 import styles from "./styles"
 import {styled} from "../../../libs/styled"
 import {connect} from "react-redux"
@@ -10,8 +10,9 @@ import {Modal, onConfirm} from "../../../components/modal/Modal"
 import {Model} from "../../../libs/confy/models"
 import {ActionItem} from "../../../components/containers/ActionsMenu"
 import {Cell, Row, Table} from "../../../components/table/Table"
-import {ListLabel} from "../../../libs/confy/components/ui/ListLabels";
-import {EmptyState} from "../../../libs/confy/components/ui/EmptyState";
+import {ListLabel} from "../../../libs/confy/components/ui/ListLabels"
+import {EmptyState} from "../../../libs/confy/components/ui/EmptyState"
+import {withLink} from "../../../libs/confy/libs/withState"
 
 const onWordAddClick = (resources, onSubmit) =>
     Modal.show(
@@ -54,59 +55,94 @@ const onAddWord = (model, value, onChange, resource) => R.pipe(
     createNewMaterial(model),
     R.append(R.__, value),
     onChange
-)(resource);
+)(resource)
 
+const SelectableRow = styled(Row, ({isSelected}) => ({
+    backgroundColor: isSelected ? 'rgba(0,0,0, 0.2)' : 'transparent'
+}))
 
-const _MaterialsArrayInput = ({value, onChange, resources, materialModel}) =>
-    R.isEmpty(value)
-        ? <EmptyState icon="list" actionLabel="Dodaj słowo" action={() => onWordAddClick(resources, (resource) => onAddWord(materialModel, value, onChange, resource))}
-                      description="Konfiguracja jest pusta"/>
-        : <View style={styles.container}>
-            <View style={[styles.listContainer, R.isEmpty(value) && {alignItems: "center"}]}>
+const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, onSelect}) => (
+    <Table>
+        <Row style={styles.tableHeader}>
+            <Cell><Text>Słowo</Text></Cell>
+            <Cell><Text>W uczeniu</Text></Cell>
+            <Cell><Text>W teście</Text></Cell>
+            <Cell><Text>Usuń</Text></Cell>
+        </Row>
+        {materials.map((material, index) => (
+            <SelectableRow isSelected={index === selected}
+                           key={material.word.name}>
+                <Cell>
+                    <TouchableOpacity onPress={() => onSelect(index)}>
+                        <Text>{material.word.name}</Text>
+                    </TouchableOpacity>
+                </Cell>
+                <Cell>
+                    {fields.isInLearningMode.renderField(
+                        R.always(material.isInLearningMode),
+                        onRowChange(index)
+                    )}
+                </Cell>
+                <Cell>
+                    {fields.isInTestMode.renderField(
+                        R.always(material.isInTestMode),
+                        onRowChange(index)
+                    )}
+                </Cell>
+                <Cell>
+                    <ActionItem
+                        onSelect={() => onRowDelete(material)}>
+                        <Icon name="trash"/>
+                    </ActionItem>
+                </Cell>
+            </SelectableRow>
+        ))}
+    </Table>
+)
+
+const MaterialDetails = ({material = undefined, renderField}) => (
+    <ScrollView>
+        {!material ? <Text>Wybierz materiał w tabeli obok</Text> :
+            <View>
+                {renderField(material)}
+            </View>
+        }
+    </ScrollView>
+)
+
+const getIndex = (selected, all) => R.findIndex(R.pathEq(['word', 'name'], selected.word.name), all)
+const onImagesChange = (onChange, material, all) => (newImages) => onChange(R.assocPath([getIndex(material, all), 'images'], newImages, all))
+
+const _MaterialsArrayInput = ({value, onChange, resources, materialModel, selectedMaterialIndex, selectedMaterialIndexChange, path, config}) =>
+    R.isEmpty(value) ? <EmptyState icon={"list"} description={"Lista jest pusta"}
+                                   action={() => onWordAddClick(resources, resource => onAddWord(materialModel, value, onChange, resource))}/> :
+        <View style={styles.container}>
+            <View style={styles.listContainer}>
                 <View>
-                    <Table>
-                        <Row style={styles.tableHeader}>
-                            <Cell><ListLabel text="Słowo"/></Cell>
-                            <Cell><ListLabel text="W uczeniu"/></Cell>
-                            <Cell><ListLabel text="W teście"/></Cell>
-                            <Cell><ListLabel text="Usuń"/></Cell>
-                        </Row>
-                        {value.map((material, index) => (
-                            <Row key={material.word.name}>
-                                <Cell><Text>{material.word.name}</Text></Cell>
-                                <Cell>
-                                    {materialModel.fields.isInLearningMode.renderField(
-                                        R.always(material.isInLearningMode),
-                                        onFieldChange(onChange, value, index)
-                                    )}
-                                </Cell>
-                                <Cell>
-                                    {materialModel.fields.isInTestMode.renderField(
-                                        R.always(material.isInTestMode),
-                                        onFieldChange(onChange, value, index)
-                                    )}
-                                </Cell>
-                                <Cell>
-                                    <ActionItem
-                                        onSelect={() => Modal.ask("Usunac slowo z konfiguracji?", false).then(onConfirm(
-                                            () => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))))}>
-                                        <Icon name="trash"/>
-                                    </ActionItem>
-                                </Cell>
-                            </Row>
-                        ))}
-                    </Table>
+                    <MaterialsTable
+                        materials={value}
+                        onSelect={selectedMaterialIndexChange}
+                        selected={selectedMaterialIndex}
+                        onRowChange={onFieldChange(onChange, value)}
+                        onRowDelete={material => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}
+                        fields={materialModel.fields}/>
                 </View>
                 <AddButton onPress={() => onWordAddClick(
                     resources.filter(({name}) => !R.contains(name, value.map(R.path(['word', 'name'])))),
-                    (resource) => onAddWord(materialModel, value, onChange, resource))}>
-                    <Text>Dodaj słowo</Text>
+                    resource => onAddWord(materialModel, value, onChange, resource))}>
+                    <Text>Dodaj</Text>
                 </AddButton>
             </View>
             <View style={styles.detailsContainer}>
-                <ScrollView styles={styles.scrollView}>
-                    <Text>DUPA2</Text>
-                </ScrollView>
+                <MaterialDetails
+                    material={value[selectedMaterialIndex]}
+                    renderField={material => materialModel.fields.images.renderField(
+                        R.always(material.images),
+                        () => onImagesChange(onChange, material, value),
+                        config,
+                        [...path, getIndex(material, value), 'images']
+                    )}
+                />
             </View>
         </View>
 
@@ -115,7 +151,10 @@ const mapStateToProps = (state, {materialModel}) => ({
     resources: materialModel.fields.word.props.model.mapStateToList(state)
 })
 
-const MaterialsArrayInput = connect(mapStateToProps)(_MaterialsArrayInput)
+const MaterialsArrayInput = R.compose(
+    connect(mapStateToProps),
+    withLink("selectedMaterialIndex", undefined)
+)(_MaterialsArrayInput)
 
 export const MaterialsArrayField = (materialModel) => Field(MaterialsArrayInput, {
     def: [],
