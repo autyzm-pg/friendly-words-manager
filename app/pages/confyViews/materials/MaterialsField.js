@@ -91,7 +91,7 @@ const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, 
                 </Cell>
                 <Cell>
                     <ActionItem
-                        onSelect={() => onRowDelete(material)}>
+                        onSelect={() => Modal.ask("Usunac slowo z konfiguracji?", false).then(onConfirm(() => onRowDelete(material)))}>
                         <Icon name="trash"/>
                     </ActionItem>
                 </Cell>
@@ -114,7 +114,7 @@ const getIndex = (selected, all) => R.findIndex(R.pathEq(['word', 'name'], selec
 const onImagesChange = (onChange, material, all) => (newImages) => onChange(R.assocPath([getIndex(material, all), 'images'], newImages, all))
 
 const _MaterialsArrayInput = ({value, onChange, resources, materialModel, selectedMaterialIndex, selectedMaterialIndexChange, path, config}) =>
-    R.isEmpty(value) ? <EmptyState icon={"list"} description={"Lista jest pusta"}
+    R.isEmpty(value) ? <EmptyState icon={"list"} description={"Lista jest pusta"} actionLabel={"Dodaj materiał"}
                                    action={() => onWordAddClick(resources, resource => onAddWord(materialModel, value, onChange, resource))}/> :
         <View style={styles.container}>
             <View style={styles.listContainer}>
