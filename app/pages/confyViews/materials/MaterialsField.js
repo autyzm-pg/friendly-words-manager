@@ -58,16 +58,16 @@ const onAddWord = (model, value, onChange, resource) => R.pipe(
 )(resource)
 
 const SelectableRow = styled(Row, ({isSelected}) => ({
-    backgroundColor: isSelected ? 'rgba(0,0,0, 0.2)' : 'transparent'
+    backgroundColor: isSelected ? 'white' : 'transparent'
 }))
 
 const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, onSelect}) => (
     <Table>
         <Row style={styles.tableHeader}>
-            <Cell><Text>Słowo</Text></Cell>
-            <Cell><Text>W uczeniu</Text></Cell>
-            <Cell><Text>W teście</Text></Cell>
-            <Cell><Text>Usuń</Text></Cell>
+            <Cell><ListLabel text={"Słowo"}/></Cell>
+            <Cell><ListLabel text={"W uczeniu"}/></Cell>
+            <Cell><ListLabel text={"W teście"}/></Cell>
+            <Cell><ListLabel text={"Usuń"}/></Cell>
         </Row>
         {materials.map((material, index) => (
             <SelectableRow isSelected={index === selected}

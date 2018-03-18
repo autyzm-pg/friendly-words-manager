@@ -21,7 +21,6 @@ export const MultiChooser = ({value, onChange, options, verbose}: MultiChooserPr
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        justifyContent: "space-between",
         flexWrap: "wrap",
     }
 });

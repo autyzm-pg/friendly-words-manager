@@ -61,18 +61,19 @@ const styles = StyleSheet.create({
 
     simpleOption: {
         padding: 10,
-		borderRadius: 8,
+		borderRadius: 4,
 		overflow: "hidden",
-		borderWidth: 2,
+		borderWidth: 1,
 		backgroundColor: "white",
 		borderColor: "gray",
 		minWidth: 48,
-		alignItems: "center"
+		alignItems: "center",
+		marginHorizontal: 3
     },
 
 	checkedOption: {
-    	backgroundColor: "pink",
-		borderColor: "red"
+    	backgroundColor: "rgba(63, 81, 181, 0.1)",
+		borderColor: "#007aff",
 	},
 
     checkbox: {
