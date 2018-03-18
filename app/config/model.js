@@ -12,6 +12,7 @@ import {MaterialsArrayField, MaterialsArrayInput} from "../pages/confyViews/mate
 import {ForeignField} from "../libs/confy/fields/foreign/foreignField"
 import {SimpleCheckbox} from "../pages/confyViews/materials/SimpleCheckbox"
 import {get, getChildProp, getSiblingProp} from "../libs/confy/fields/dynamic/traversing"
+import TestObjectInput from "../pages/confyViews/testObjectPage/TestObjectInput"
 
 export const WordModel = DBModel("words", {
     name: TextField("Slowo"),
@@ -71,7 +72,7 @@ export const ConfigurationModel = MainModel({
     testConfig: ObjectField("Konfiguracja test", {
         numberOfRepetitions: IntegerField("Ilość powtórzeń", {min: 1, max: 20, def: 1}),
         timeForAnswer: IntegerField("Czas na odpowiedź", {min: 1, max: 10, def: 1, units: "s"})
-    })
+    }, undefined, TestObjectInput)
 })
 
 //     someText: TextField("Some text"),
