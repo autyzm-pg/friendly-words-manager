@@ -29,6 +29,7 @@ Thumbs.db
 
 # Android Studio
 *.iml
+.idea
 .gradle
 build/
 .navigation
