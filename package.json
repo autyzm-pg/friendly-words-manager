@@ -25,6 +25,7 @@
     "ramda": "^0.24.1",
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
+    "react-native-fs": "^2.9.11",
     "react-native-menu": "^0.21.0",
     "react-redux": "^5.0.5",
     "react-router-native": "^4.1.1",
