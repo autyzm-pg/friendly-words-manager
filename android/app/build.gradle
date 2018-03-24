@@ -96,6 +96,7 @@ task exponentPrebuildStep(type: Exec) {
     commandLine './detach-scripts/prepare-detached-build.sh'
   }
 }
+exponentPrebuildStep.onlyIf { "${System.env.API_KEY}" == "" }
 preBuild.dependsOn exponentPrebuildStep
 
 dependencies {
