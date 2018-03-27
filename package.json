@@ -19,12 +19,17 @@
     "remote-redux-devtools": "^0.5.12"
   },
   "dependencies": {
+    "appcenter": "^1.4.0",
+    "appcenter-analytics": "^1.4.0",
+    "appcenter-crashes": "^1.4.0",
+    "appcenter-link-scripts": "^1.4.0",
     "expo": "^25.0.0",
     "native-base": "^2.3.10",
     "path": "^0.12.7",
     "ramda": "^0.24.1",
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
+    "react-native-fs": "^2.9.11",
     "react-native-menu": "^0.21.0",
     "react-redux": "^5.0.5",
     "react-router-native": "^4.1.1",
