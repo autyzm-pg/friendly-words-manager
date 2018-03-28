@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+echo "Starting post clone script..."
 #yarn global add exp
 
 SOURCE=`dirname $0`
@@ -15,3 +16,5 @@ if [[ ! -z "${EXPO_DEV_URL}" ]]; then
     echo "Setting development host: $EXPO_DEV_URL"
     sed -i -e "s@://.*:@://$EXPO_DEV_URL:@g" $SOURCE/android/app/src/main/java/host/exp/exponent/generated/DetachBuildConstants.java
 fi
+
+echo "Post clone script finished."
