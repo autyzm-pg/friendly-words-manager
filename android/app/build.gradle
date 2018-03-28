@@ -89,6 +89,7 @@ android {
 // }
 
 task exponentPrebuildStep(type: Exec) {
+  logger.quiet("Exectuing expo prebuild step")
   workingDir '../'
   if (System.getProperty('os.name').toLowerCase().contains('windows')) {
     commandLine 'cmd', '/c', '.\\detach-scripts\\prepare-detached-build.bat'
@@ -96,7 +97,8 @@ task exponentPrebuildStep(type: Exec) {
     commandLine './detach-scripts/prepare-detached-build.sh'
   }
 }
-exponentPrebuildStep.onlyIf { "${System.env.API_KEY}" == "" }
+logger.quiet("API_KEY='${System.env.API_KEY}'")
+exponentPrebuildStep.onlyIf { "${System.env.API_KEY}" == "" || "${System.env.API_KEY}" == "null" }
 preBuild.dependsOn exponentPrebuildStep
 
 dependencies {
