@@ -10,8 +10,6 @@ import {connect} from "react-redux"
 import {startApp} from "./redux/app/actions"
 import withCycle from "./libs/withCycle"
 import {ModalRoot} from "./components/modal/ModalRoot"
-import {NativeModules} from "react-native"
-import RNFS from "react-native-fs"
 
 const InternalApp = ({isReady}) => (
     !isReady ?

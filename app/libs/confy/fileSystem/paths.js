@@ -1,4 +1,10 @@
-import {FileSystem} from "expo"
+import {ExternalStorageDirectoryPath} from "react-native-fs"
 
-export const configsDatabase = FileSystem.documentDirectory + "db-test112.json"
-export const uploadAssetsDirectory = FileSystem.documentDirectory + "/assets/"
+const path = ExternalStorageDirectoryPath;
+const appDirectory = "friendly-words-app";
+const dbName = "db.json";
+const assetsDirectory = "assets";
+
+export const appDataPath = `${path}/${appDirectory}`
+export const configsDatabase = `${appDataPath}/${dbName}`
+export const uploadAssetsDirectory = `${appDataPath}/${assetsDirectory}`

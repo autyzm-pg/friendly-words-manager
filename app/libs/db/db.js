@@ -1,9 +1,11 @@
 import * as R from "ramda"
 import {_addRecord, _createTable, _deleteRecord, _readTable, _updateRecord} from "./tables"
 import Mutex from "../mutex"
+import {readFileAsync, writeFileAsync} from "../confy/fileSystem/file"
 
-const readFile = fileName => Expo.FileSystem.readAsStringAsync(fileName)
-const writeToFile = (fileName, data) => Expo.FileSystem.writeAsStringAsync(fileName, data)
+const readFile = fileName => readFileAsync(fileName)
+const writeToFile = (fileName, data) => writeFileAsync(fileName, data)
+
 const readDbFile = (fileName, defaultDb = {}) => () => readFile(fileName)
     .catch(R.always(JSON.stringify(defaultDb)))
     .then(configsStr => JSON.parse(configsStr))
