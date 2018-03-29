@@ -90,7 +90,8 @@ const ImageUploader = ({verbose, value, onChange, options}) => (
             {value.length === 0 && <Text style={imagePickerStyles.emptyText}>Brak obrazków</Text>}
             {value.map(({uri, width, height}) =>
                 <ImageContainer key={uri} onDelete={onImageDelete(() => onChange(removeUriFromList(uri, value)))}>
-                    <Image source={{uri}} style={imagePickerStyles.image}/>
+                    {console.log("URI:", uri, width, height) && null}
+                    <Image source={{uri: `file://${uri}`}} style={imagePickerStyles.image}/>
                 </ImageContainer>
             )}
         </View>

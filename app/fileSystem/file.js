@@ -6,4 +6,4 @@ const makeParentsBefore = func => (filename, ...args) => mkdir(path.dirname(file
 
 export const readFileAsync = file => readFile(file).then(tap(test => console.log(" LOADED", test)))
 export const writeFileAsync = makeParentsBefore(writeFile)
-export const copyAsync = makeParentsBefore(copyFile)
+export const copyAsync = (from, to) => makeParentsBefore(() => copyFile(from, to))(to)

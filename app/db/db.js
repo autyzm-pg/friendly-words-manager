@@ -1,6 +1,6 @@
 import {emptyDb} from "./format"
-import {configsDatabase} from "../libs/confy/fileSystem/paths"
-import {getDatabase} from "../libs/db/db"
+import {configsDatabase} from "../fileSystem/paths"
+import {getDatabase} from "./dbHandler"
 
 const db = getDatabase(configsDatabase, emptyDb)
 

@@ -1,7 +1,7 @@
 import * as R from "ramda"
 import {_addRecord, _createTable, _deleteRecord, _readTable, _updateRecord} from "./tables"
-import Mutex from "../mutex"
-import {readFileAsync, writeFileAsync} from "../confy/fileSystem/file"
+import Mutex from "../libs/mutex"
+import {readFileAsync, writeFileAsync} from "../fileSystem/file"
 
 const readFile = fileName => readFileAsync(fileName)
 const writeToFile = (fileName, data) => writeFileAsync(fileName, data)

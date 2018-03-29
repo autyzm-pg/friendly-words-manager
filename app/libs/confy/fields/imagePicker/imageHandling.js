@@ -1,9 +1,9 @@
 import {catchError} from "../../libs/errors"
-import {uploadAssetsDirectory} from "../../fileSystem/paths"
+import {uploadAssetsDirectory} from "../../../../fileSystem/paths"
 import path from "path"
 import R from "ramda"
 import Expo from "expo"
-import {copyAsync} from "../../fileSystem/file"
+import {copyAsync} from "../../../../fileSystem/file"
 
 export const CanceledError = "Cancelled image picking"
 
