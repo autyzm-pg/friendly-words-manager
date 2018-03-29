@@ -56,7 +56,7 @@ const onImageAddPress = addImage => () => Modal.custom(SourceChooser)
     ))
     .then(R.when(
         result => !result.cancelled,
-        addImage
+        ({uri, width, height}) => addImage({width, height, uri: `file://${uri}`})
     ))
 
 const removeUriFromList = (uri, all) => R.pipe(
@@ -91,7 +91,7 @@ const ImageUploader = ({verbose, value, onChange, options}) => (
             {value.map(({uri, width, height}) =>
                 <ImageContainer key={uri} onDelete={onImageDelete(() => onChange(removeUriFromList(uri, value)))}>
                     {console.log("URI:", uri, width, height) && null}
-                    <Image source={{uri: `file://${uri}`}} style={imagePickerStyles.image}/>
+                    <Image source={{uri}} style={imagePickerStyles.image}/>
                 </ImageContainer>
             )}
         </View>

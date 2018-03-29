@@ -42,7 +42,7 @@ export const SimpleOption = (props) => {
 
 export const ImageOption = ({src, size, ...rest}) => {
 	const {isChecked} = rest
-	const label = <Image source={{uri: `file://${src}`}} style={[{width: size, height: size}, isChecked && {transform: [{scale: 0.8}]}]}/>
+	const label = <Image source={{uri: src}} style={[{width: size, height: size}, isChecked && {transform: [{scale: 0.8}]}]}/>
 
 	return <Option {...rest} label={label} />
 };
