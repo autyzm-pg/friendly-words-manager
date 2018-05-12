@@ -1,5 +1,5 @@
 import React from "react"
-import {Text, View} from "native-base"
+import {Icon, Text, View} from "native-base"
 import {ScrollView} from "react-native"
 import * as R from "ramda"
 import styles from "./styles"
@@ -13,7 +13,7 @@ export default TestObjectInput = ({verbose, value, model, childRenderer, config}
     ])(finalRepetitionsNumber)
 
     return (
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.outerContainer}>
             <View style={styles.container}>
                 {R.values(model.fields).map(field => (
                     <View key={field.name}>
@@ -23,14 +23,20 @@ export default TestObjectInput = ({verbose, value, model, childRenderer, config}
                 <View>
                     <Text>Łącznie: {finalRepetitionsNumber} {repetitions}</Text>
                 </View>
-                <View>
-                    <Text>
-                        W trybie testu dziecko pracuje na materiałach zaznaczonych w zakładce Materiał.
-                    </Text>
-                    <Text>
-                        W Trybie Testu aplikacja nie korzysta z ustawień z zakładki Uczenie oraz Wzmocnienia, a
-                        terapeuta powinien powstrzymać się od interwencji w interakcje dziecka aż do zakończenia testu.
-                    </Text>
+                <View style={styles.informationContainer}>
+                    <View style={styles.informationIcon}>
+                        <Icon color="#fff" name={"information-circle"}/>
+                    </View>
+                    <View style={styles.informationText}>
+                        <Text style={{marginBottom: 10}}>
+                            W trybie testu dziecko pracuje na materiałach zaznaczonych w zakładce Materiał.
+                        </Text>
+                        <Text>
+                            W Trybie Testu aplikacja nie korzysta z ustawień z zakładki Uczenie oraz Wzmocnienia, a
+                            terapeuta powinien powstrzymać się od interwencji w interakcje dziecka aż do zakończenia
+                            testu.
+                        </Text>
+                    </View>
                 </View>
             </View>
         </ScrollView>
