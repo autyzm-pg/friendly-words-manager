@@ -3,13 +3,13 @@ import {
 	CheckBox
 } from 'native-base'
 import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native"
-import R from "ramda"
+import R, {contains} from "ramda"
 
 export const MultiOptions = ({value, onChange, children, style}) => {
 
 	const onChangeHandler = (changedVal) => {
-		const newValue = value.includes(changedVal)
-			? R.without(changedVal, value)
+		const newValue = contains(changedVal, value)
+			? R.without([changedVal], value)
 			: R.append(changedVal, value);
 		onChange(newValue);
 	};
@@ -18,7 +18,7 @@ export const MultiOptions = ({value, onChange, children, style}) => {
 		<View style={style}>
 			{React.Children.map(children, child =>
 					React.cloneElement(child, {
-						isChecked: value.includes(child.props.value),
+						isChecked: contains(child.props.value, value),
 						onPress: () => onChangeHandler(child.props.value)
 					})
 			)}
@@ -42,7 +42,7 @@ export const SimpleOption = (props) => {
 
 export const ImageOption = ({src, size, ...rest}) => {
 	const {isChecked} = rest
-	const label = <Image source={{uri: src}} style={[{width: size, height: size}, isChecked && {transform: [{scale: 0.8}]}]}/>
+	const label = <Image source={src} style={[{width: size, height: size}, isChecked && {transform: [{scale: 0.8}]}]}/>
 
 	return <Option {...rest} label={label} />
 };
