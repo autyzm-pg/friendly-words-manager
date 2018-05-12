@@ -6,7 +6,7 @@ import {
     Header,
     Body,
     Title,
-    Button,
+    Button as NativeBaseButton,
     Text,
     Tab,
     Tabs,
@@ -15,7 +15,7 @@ import {
     Left,
     Right,
     Footer,
-    FooterTab
+    FooterTab, View
 } from 'native-base'
 
 import {connect} from "react-redux"
@@ -24,7 +24,19 @@ import {Modal} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
 import {WordModel} from "../config/model"
 import * as R from "ramda"
+import styles from "./mainPageStyles"
+import {withStyle} from "../libs/withStyle"
 
+const buttonStyles = {
+    height: 60,
+    marginBottom: 5,
+}
+const Button = withStyle(buttonStyles)(NativeBaseButton)
+
+const StatusContainer = withStyle({
+    flexDirection: "row",
+    justifyContent: "space-between"
+})(View)
 
 const MainPage = ({history, location, activeConfig}) => (
     <Container>
@@ -33,29 +45,31 @@ const MainPage = ({history, location, activeConfig}) => (
             <Title>Przyjazne Linie - Menadzer</Title>
             </Body>
         </Header>
-        <Content>
-            <Button block light onPress={() => {
-                history.push("/configurations")
-            }}>
-                <Text>Konfiguracje</Text>
-            </Button>
-            <Button block light onPress={() => {
-                history.push(`/resources/${WordModel.name}`)
-            }}>
-                <Text>Zasoby</Text>
-            </Button>
-        </Content>
-        <Footer>
-            <Text>Aktywna konfiguracja: {activeConfig.name} ({activeConfig.mode === ModeTypes.learning ? "uczenie" : "test"})</Text>
-            <Body>
-            <Button full light  onPress={() =>{
-                // Modal.textAsk("Huehe?", "TEST").then(resp => console.log("response!!", resp))
-            }}>
-                <Body><Text>Przejdz do aplikacji</Text></Body>
-                <Right><Icon name="arrow-round-forward"/></Right>
-            </Button>
-            </Body>
-        </Footer>
+        <View style={styles.content}>
+            <View style={styles.buttonsContainer}>
+                <StatusContainer>
+                    <Text>Aktywna konfiguracja: </Text>
+                    <Text>{activeConfig.name} ({activeConfig.mode === ModeTypes.learning ? "uczenie" : "test"})</Text>
+                </StatusContainer>
+                <View>
+                    <Button block light onPress={() => {
+                        history.push("/configurations")
+                    }}>
+                        <Text>Konfiguracje</Text>
+                    </Button>
+                    <Button block light onPress={() => {
+                        history.push(`/resources/${WordModel.name}`)
+                    }}>
+                        <Text>Zasoby</Text>
+                    </Button>
+                </View>
+                <Button full light onPress={() => {
+                }}>
+                    <Text>Przejdź do aplikacji</Text>
+                    <Icon name="arrow-round-forward"/>
+                </Button>
+            </View>
+        </View>
     </Container>
 )
 
