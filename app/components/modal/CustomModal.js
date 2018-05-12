@@ -1,6 +1,7 @@
-import {Modal, View, Button} from "react-native"
+import {Modal, View, Button, TouchableWithoutFeedback} from "react-native"
 import * as React from "react"
-import {XButton} from "../../libs/confy/components/ui/XButton";
+import {XButton} from "../../libs/confy/components/ui/XButton"
+import {withStyle} from "../../libs/withStyle"
 
 const styles = {
     wrapper: {
@@ -12,9 +13,17 @@ const styles = {
     internal: {
         backgroundColor: "white",
         padding: 10,
-        margin: 10
+        margin: 14
     },
 }
+
+const CloseButton = withStyle({
+    position: "absolute",
+    top: 0,
+    right: 0,
+})(XButton)
+
+const ExtraContainer = View
 
 export default CustomModal = ({children, visible, onRequestClose}) => (
     <Modal animationType={"slide"}
@@ -22,12 +31,18 @@ export default CustomModal = ({children, visible, onRequestClose}) => (
            transparent={true}
            onRequestClose={onRequestClose}
     >
-        <View style={styles.wrapper}>
-            <View style={styles.internal}>
-                <XButton onPress={onRequestClose} />
-                {children}
+        <TouchableWithoutFeedback onPress={onRequestClose}>
+            <View style={styles.wrapper}>
+                <TouchableWithoutFeedback onPress={() => undefined}>
+                    <ExtraContainer>
+                        <View style={styles.internal}>
+                            {children}
+                        </View>
+                        <CloseButton onPress={onRequestClose}/>
+                    </ExtraContainer>
+                </TouchableWithoutFeedback>
             </View>
-        </View>
+        </TouchableWithoutFeedback>
     </Modal>
 )
 
