@@ -11,7 +11,7 @@ export default styles = StyleSheet.create({
         justifyContent: "center",
     },
     column: {
-        width:300,
+        flex:1,
         padding: 10,
     },
     oddColumn: {

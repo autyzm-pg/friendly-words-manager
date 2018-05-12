@@ -27,9 +27,10 @@ export const ConfigurationWizardView = WizardView(fields => [
             fields.textRewards,
             fields.isReadingRewards
         ]),
-        Column([
-            fields.animationRewards
-        ])
+        // No animation implemented
+        // Column([
+        //     fields.animationRewards
+        // ])
     ])),
     WizardStep("Test", SingleView(fields.testConfig))
 ], ConfigurationModel)

@@ -8,9 +8,11 @@ import {ScrollView} from "react-native"
 
 const Column = ({children, style}) => (
     <View style={[styles.columnContainer, style]}>
-        <ScrollView style={styles.column}>
-            {children}
-        </ScrollView>
+        <View style={{maxWidth:500, flex:1}}>
+            <ScrollView style={styles.column}>
+                {children}
+            </ScrollView>
+        </View>
     </View>
 )
 
