@@ -10,7 +10,7 @@ import {ListView} from "../libs/confy/views/list/listView"
 // const CustomTestView = notImplementedFunc
 
 export const WordsWizardView = WizardSingleView(fields =>
-    ListView([fields.images, fields.tags]),
+    ListView([fields.images]),
     WordModel
 )
 

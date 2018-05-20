@@ -2,6 +2,8 @@ import * as React from "react"
 
 export default withState = (initialState = {}, stateToProps = () => ({}), setStateToProps = () => ({})) => Component => (
     class StateWrapper extends React.Component {
+        displayName = `withState(${Component.displayName || Component.name})`
+
         constructor() {
             super()
             this.state = initialState
