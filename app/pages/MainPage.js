@@ -26,6 +26,7 @@ import {WordModel} from "../config/model"
 import * as R from "ramda"
 import styles from "./mainPageStyles"
 import {withStyle} from "../libs/withStyle"
+import {Linking} from "react-native"
 
 const buttonStyles = {
     height: 60,
@@ -63,8 +64,7 @@ const MainPage = ({history, location, activeConfig}) => (
                         <Text>Zasoby</Text>
                     </Button>
                 </View>
-                <Button full light onPress={() => {
-                }}>
+                <Button full light onPress={() => Linking.openURL("expd16bca44a7e84f759fcce334a17cc6ea://")}>
                     <Text>Przejdź do aplikacji</Text>
                     <Icon name="arrow-round-forward"/>
                 </Button>
