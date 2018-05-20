@@ -39,7 +39,7 @@ const StatusContainer = withStyle({
     justifyContent: "space-between"
 })(View)
 
-const MainPage = ({history, location, activeConfig}) => (
+const MainPage = ({history, location, activeConfig, hasAnyConfig}) => (
     <Container>
         <Header>
             <Body>
@@ -50,7 +50,14 @@ const MainPage = ({history, location, activeConfig}) => (
             <View style={styles.buttonsContainer}>
                 <StatusContainer>
                     <Text>Aktywna konfiguracja: </Text>
-                    <Text>{activeConfig.name} ({activeConfig.mode === ModeTypes.learning ? "uczenie" : "test"})</Text>
+                    {
+                        hasAnyConfig ? (
+                            <Text>
+                                {activeConfig.name} ({activeConfig.mode === ModeTypes.learning ? "uczenie" : "test"})
+                            </Text>
+                        ) : <Text>Brak</Text>
+                    }
+
                 </StatusContainer>
                 <View>
                     <Button block light onPress={() => {
@@ -78,7 +85,8 @@ const stateToProps = ({configurations}) => ({
         id: configurations.active.id,
         mode: configurations.active.mode,
         name: R.propOr('Brak', "name", configurations.all.find(config => config.id === configurations.active.id))
-    }
+    },
+    hasAnyConfig: configurations.all.length > 0
 })
 
 export default connect(stateToProps)(MainPage)
