@@ -87,9 +87,9 @@ const SourceChooser = enhanceSourceChooser(function SourceChooser({onConfirm, on
                 </ListItem>
             </List>
             <ButtonsContainer>
-                <Button light onPress={onCancel}><Text>Anuluj</Text></Button>
+                <Button transparent onPress={onCancel}><Text>Anuluj</Text></Button>
                 <Button style={{marginLeft: 25}} primary onPress={() => onConfirm(chosenOption)}
-                        disabled={!chosenOption}><Text>Ok</Text></Button>
+                        disabled={!chosenOption}><Text>Wybierz</Text></Button>
             </ButtonsContainer>
         </View>
     )

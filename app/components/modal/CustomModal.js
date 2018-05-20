@@ -38,7 +38,7 @@ export default CustomModal = ({children, visible, onRequestClose}) => (
                         <View style={styles.internal}>
                             {children}
                         </View>
-                        <CloseButton onPress={onRequestClose}/>
+                        {/*<CloseButton onPress={onRequestClose}/>*/}
                     </ExtraContainer>
                 </TouchableWithoutFeedback>
             </View>
