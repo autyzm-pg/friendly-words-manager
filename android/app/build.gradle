@@ -20,7 +20,7 @@ android {
   buildToolsVersion '26.0.1'
 
   defaultConfig {
-    applicationId 'com.autyzmpg.friendlylinesmanager'
+    applicationId 'com.autyzmpg.friendlywordsmanager'
     targetSdkVersion 25
     versionCode 1
     versionName '1.0.0'

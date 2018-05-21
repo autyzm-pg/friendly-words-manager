@@ -15,7 +15,7 @@ public class MainActivity extends DetachActivity {
 
   @Override
   public String publishedUrl() {
-    return "exp://exp.host/@hyster/friendly-lines-manager";
+    return "exp://exp.host/@hyster/friendly-words-manager";
   }
 
   @Override

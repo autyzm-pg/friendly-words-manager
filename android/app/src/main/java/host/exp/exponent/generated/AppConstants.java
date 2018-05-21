@@ -12,7 +12,7 @@ import host.exp.exponent.Constants;
 public class AppConstants {
 
   public static final String VERSION_NAME = "2.3.0";
-  public static String INITIAL_URL = "exp://exp.host/@hyster/friendly-lines-manager";
+  public static String INITIAL_URL = "exp://exp.host/@hyster/friendly-words-manager";
   public static final boolean IS_DETACHED = true;
   public static final String SHELL_APP_SCHEME = "exp6d76f4ee07e14ac099e9c911bdb3ee0f";
   public static final String RELEASE_CHANNEL = "default";

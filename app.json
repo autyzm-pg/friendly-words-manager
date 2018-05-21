@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "friendly-lines-manager",
-    "description": "An empty new project",
-    "slug": "friendly-lines-manager",
+    "name": "Przyjazne Słowa - Menadżer",
+    "description": "Friendly Words Manager",
+    "slug": "friendly-words-manager",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "version": "1.0.0",
@@ -23,7 +23,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.autyzmpg.friendlylinesmanager"
+      "package": "com.autyzmpg.friendlywordsmanager"
     },
     "isDetached": true,
     "detach": {
