@@ -40,6 +40,9 @@ export const ConfigurationModel = MainModel({
             "TAK",
             "Powieksz",
             "Brak"
+        ],
+        def: [
+            "Wyszarz"
         ]
     }),
     commandText: OptionField("Rodzaj polecenia", {
@@ -48,15 +51,19 @@ export const ConfigurationModel = MainModel({
             "{slowo}",
         ]
     }),
-    picturesNumber: IntegerField("Ilość obrazków", {min: 1, max: 6, def: 1}),
+    picturesNumber: IntegerField("Ilość obrazków", {min: 1, max: 6, def: 3}),
     showPicturesLabels: BoolField("Pokazuj podpisy pod obrazkami", {def: true}),
     isReadingCommands: BoolField("Czytanie poleceń"),
     showHintAfter: IntegerField("Czas do pokazania podpowiedzi", {min: 1, max: 20, def: 5, units: "s"}),
-    numberOfRepetitions: IntegerField("Ilość powtórzeń", {min: 1, max: 20, def: 1}),
+    numberOfRepetitions: IntegerField("Ilość powtórzeń", {min: 1, max: 20, def: 3}),
     textRewards: MultiChooserField("Wybierz pochwały słowne", {
         options: [
             "Super",
             "TAK",
+            "ŚWIETNIE",
+            "Dobrze"
+        ],
+        def: [
             "ŚWIETNIE",
             "Dobrze"
         ]
@@ -70,8 +77,8 @@ export const ConfigurationModel = MainModel({
         ]
     }),
     testConfig: ObjectField("Konfiguracja test", {
-        numberOfRepetitions: IntegerField("Ilość powtórzeń", {min: 1, max: 20, def: 1}),
-        timeForAnswer: IntegerField("Czas na odpowiedź", {min: 1, max: 10, def: 1, units: "s"})
+        numberOfRepetitions: IntegerField("Ilość powtórzeń", {min: 1, max: 20, def: 3}),
+        timeForAnswer: IntegerField("Czas na odpowiedź", {min: 1, max: 10, def: 5, units: "s"})
     }, undefined, TestObjectInput)
 })
 
