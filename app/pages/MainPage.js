@@ -43,7 +43,7 @@ const MainPage = ({history, location, activeConfig, hasAnyConfig}) => (
     <Container>
         <Header>
             <Body>
-            <Title>Przyjazne Linie - Menadzer</Title>
+            <Title>Przyjazne Słowa - Menadżer</Title>
             </Body>
         </Header>
         <View style={styles.content}>
