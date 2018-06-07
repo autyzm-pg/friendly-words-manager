@@ -71,10 +71,10 @@ const MainPage = ({history, location, activeConfig, hasAnyConfig}) => (
                         <Text>Zasoby</Text>
                     </Button>
                 </View>
-                <Button full light onPress={() => Linking.openURL("expd16bca44a7e84f759fcce334a17cc6ea://")}>
-                    <Text>Przejdź do aplikacji</Text>
-                    <Icon name="arrow-round-forward"/>
-                </Button>
+                {/*<Button full light onPress={() => Linking.openURL("expd16bca44a7e84f759fcce334a17cc6ea://")}>*/}
+                    {/*<Text>Przejdź do aplikacji</Text>*/}
+                    {/*<Icon name="arrow-round-forward"/>*/}
+                {/*</Button>*/}
             </View>
         </View>
     </Container>

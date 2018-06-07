@@ -10,7 +10,7 @@ export default StyleSheet.create({
     buttonsContainer: {
         maxWidth: 500,
         flex: 1,
-        height: 300,
+        height: 200,
         justifyContent: "space-between"
     }
 });
