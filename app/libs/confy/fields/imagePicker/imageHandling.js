@@ -3,14 +3,24 @@ import {uploadAssetsDirectory} from "../../../../fileSystem/paths"
 import path from "path"
 import R from "ramda"
 import {copyAsync} from "../../../../fileSystem/file"
+import ImagePicker from 'react-native-image-picker'
 
 export const CanceledError = "Cancelled image picking"
 
-export const addImage = asyncPicker => () => asyncPicker({allowsEditing: true})
+export const addImage = asyncPicker => () => asyncPicker()
     .then(R.when(
-        result => result.cancelled,
+        result => result.didCancel,
         () => {
             throw CanceledError
+        }
+    ))
+    .then(R.when(
+        result => result.error,
+        result => {
+            throw {
+                name: "Unexpected error",
+                data: result.error
+            }
         }
     ))
     .then(({uri, width, height}) => ({
@@ -25,5 +35,5 @@ export const addImage = asyncPicker => () => asyncPicker({allowsEditing: true})
     )
     .catch(catchError(CanceledError))
 
-export const addImageFromLibrary = addImage(() => Promise.reject("NO IMAGE PICKER FROM LIBRARY"))
-export const addImageFromCamera = addImage(() => Promise.reject("NO IMAGE PICKER FROM CAMERA"))
+export const addImageFromLibrary = addImage(() => new Promise(resolve => ImagePicker.launchImageLibrary({allowsEditing: true}, resolve)))
+export const addImageFromCamera = addImage(() => new Promise(resolve => ImagePicker.launchCamera({allowsEditing: true}, resolve)))
