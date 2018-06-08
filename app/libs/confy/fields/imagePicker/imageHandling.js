@@ -2,7 +2,6 @@ import {catchError} from "../../libs/errors"
 import {uploadAssetsDirectory} from "../../../../fileSystem/paths"
 import path from "path"
 import R from "ramda"
-import Expo from "expo"
 import {copyAsync} from "../../../../fileSystem/file"
 
 export const CanceledError = "Cancelled image picking"
@@ -26,5 +25,5 @@ export const addImage = asyncPicker => () => asyncPicker({allowsEditing: true})
     )
     .catch(catchError(CanceledError))
 
-export const addImageFromLibrary = addImage(Expo.ImagePicker.launchImageLibraryAsync)
-export const addImageFromCamera = addImage(Expo.ImagePicker.launchCameraAsync)
+export const addImageFromLibrary = addImage(() => Promise.reject("NO IMAGE PICKER FROM LIBRARY"))
+export const addImageFromCamera = addImage(() => Promise.reject("NO IMAGE PICKER FROM CAMERA"))

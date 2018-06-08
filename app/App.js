@@ -3,7 +3,7 @@ import Provider from "react-redux/src/components/Provider"
 import store from "./config/store"
 import Layout from "./components/containers/Layout"
 import Router from "./config/routes"
-import {Root} from "native-base"
+import {Root, Text} from "native-base"
 import * as R from "ramda"
 import {connect} from "react-redux"
 import {startApp} from "./redux/app/actions"
@@ -11,11 +11,11 @@ import withCycle from "./libs/withCycle"
 import {ModalRoot} from "./components/modal/ModalRoot"
 
 const InternalApp = ({isReady}) => (
-    !isReady ?
-        <Expo.AppLoading/> :
-        <Layout>
-            <Router/>
-        </Layout>
+    <Layout>
+        {!isReady ?
+            <Text>Loading</Text> :
+            <Router/>}
+    </Layout>
 )
 
 const mapDispatchToProp = dispatch => ({
