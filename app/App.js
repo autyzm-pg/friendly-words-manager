@@ -3,7 +3,6 @@ import Provider from "react-redux/src/components/Provider"
 import store from "./config/store"
 import Layout from "./components/containers/Layout"
 import Router from "./config/routes"
-import Expo from 'expo'
 import {Root} from "native-base"
 import * as R from "ramda"
 import {connect} from "react-redux"
