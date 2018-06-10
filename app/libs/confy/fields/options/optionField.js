@@ -2,4 +2,7 @@
 import PickerInput from "./PickerInput"
 import {Field} from "../fields"
 
-export const OptionField = Field(PickerInput, {def: 0, options: []})
+export const OptionField = (title, settings, ...args) => Field(PickerInput, {
+    def: settings.options[0],
+    options: []
+})(title, settings, ...args)

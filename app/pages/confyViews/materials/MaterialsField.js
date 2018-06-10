@@ -14,7 +14,7 @@ import {ListLabel} from "../../../libs/confy/components/ui/ListLabels"
 import {EmptyState} from "../../../libs/confy/components/ui/EmptyState"
 import {withLink} from "../../../libs/confy/libs/withState"
 
-const onWordAddClick = (resources, onSubmit) =>
+const chooseResource = resources => new Promise(resolve => (
     Modal.show(
         <View>
             <Text>Wybierz słowo, które chcesz dodać do konfiguracji</Text>
@@ -22,9 +22,9 @@ const onWordAddClick = (resources, onSubmit) =>
                 <List>
                     {resources
                         .map(resource => (
-                            <ListItem onPress={() => {
+                            <ListItem key={resource.id} onPress={() => {
                                 Modal.hide()
-                                onSubmit(resource)
+                                resolve(resource)
                             }}>
                                 <Text>{resource.name}</Text>
                             </ListItem>
@@ -33,6 +33,7 @@ const onWordAddClick = (resources, onSubmit) =>
             </ScrollView>
         </View>
     )
+))
 
 const AddButton = styled(Button, {
     position: "absolute",
@@ -51,8 +52,19 @@ const onFieldChange = R.curry((onChange, currentValue, index, fieldName, newValu
     currentValue
 )))
 
+const selectFirstImage = material => ({
+    ...material,
+    images: material.word.images.length > 0 ? [
+        ...material.images,
+        R.pick(['uri'], material.word.images[0])
+    ] : material.images,
+})
+
 const onAddWord = (model, value, onChange, resource) => R.pipe(
     createNewMaterial(model),
+    R.tap((...args) => console.log(...args)),
+    selectFirstImage,
+    R.tap((...args) => console.log(...args)),
     R.append(R.__, value),
     onChange
 )(resource)
@@ -113,38 +125,43 @@ const MaterialDetails = ({material = undefined, renderField}) => (
 const getIndex = (selected, all) => R.findIndex(R.pathEq(['word', 'name'], selected.word.name), all)
 const onImagesChange = (onChange, material, all) => (newImages) => onChange(R.assocPath([getIndex(material, all), 'images'], newImages, all))
 
-const _MaterialsArrayInput = ({value, onChange, resources, materialModel, selectedMaterialIndex, selectedMaterialIndexChange, path, config}) =>
-    R.isEmpty(value) ? <EmptyState icon={"list"} description={"Lista jest pusta"} actionLabel={"Dodaj materiał"}
-                                   action={() => onWordAddClick(resources, resource => onAddWord(materialModel, value, onChange, resource))}/> :
-        <View style={styles.container}>
-            <View style={styles.listContainer}>
-                <View>
-                    <MaterialsTable
-                        materials={value}
-                        onSelect={selectedMaterialIndexChange}
-                        selected={selectedMaterialIndex}
-                        onRowChange={onFieldChange(onChange, value)}
-                        onRowDelete={material => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}
-                        fields={materialModel.fields}/>
+const _MaterialsArrayInput = ({value, onChange, resources, materialModel, selectedMaterialIndex, selectedMaterialIndexChange, path, config}) => {
+    const onAdd = () => chooseResource(resources.filter(({name}) => !R.contains(name, value.map(R.path(['word', 'name'])))))
+        .then(resource => onAddWord(materialModel, value, onChange, resource))
+        .then(() => selectedMaterialIndexChange(value.length))
+
+    return (
+        R.isEmpty(value) ? <EmptyState icon={"list"} description={"Lista jest pusta"} actionLabel={"Dodaj materiał"}
+                                       action={onAdd}/> :
+            <View style={styles.container}>
+                <View style={styles.listContainer}>
+                    <View>
+                        <MaterialsTable
+                            materials={value}
+                            onSelect={selectedMaterialIndexChange}
+                            selected={selectedMaterialIndex}
+                            onRowChange={onFieldChange(onChange, value)}
+                            onRowDelete={material => onChange(value.filter(materialInArray => materialInArray.word.name !== material.word.name))}
+                            fields={materialModel.fields}/>
+                    </View>
+                    <AddButton onPress={onAdd}>
+                        <Text>Dodaj</Text>
+                    </AddButton>
                 </View>
-                <AddButton onPress={() => onWordAddClick(
-                    resources.filter(({name}) => !R.contains(name, value.map(R.path(['word', 'name'])))),
-                    resource => onAddWord(materialModel, value, onChange, resource))}>
-                    <Text>Dodaj</Text>
-                </AddButton>
+                <View style={styles.detailsContainer}>
+                    <MaterialDetails
+                        material={value[selectedMaterialIndex]}
+                        renderField={material => materialModel.fields.images.renderField(
+                            R.always(material.images),
+                            () => onImagesChange(onChange, material, value),
+                            config,
+                            [...path, getIndex(material, value), 'images']
+                        )}
+                    />
+                </View>
             </View>
-            <View style={styles.detailsContainer}>
-                <MaterialDetails
-                    material={value[selectedMaterialIndex]}
-                    renderField={material => materialModel.fields.images.renderField(
-                        R.always(material.images),
-                        () => onImagesChange(onChange, material, value),
-                        config,
-                        [...path, getIndex(material, value), 'images']
-                    )}
-                />
-            </View>
-        </View>
+    )
+}
 
 
 const mapStateToProps = (state, {materialModel}) => ({
@@ -153,7 +170,7 @@ const mapStateToProps = (state, {materialModel}) => ({
 
 const MaterialsArrayInput = R.compose(
     connect(mapStateToProps),
-    withLink("selectedMaterialIndex", undefined)
+    withLink("selectedMaterialIndex", undefined),
 )(_MaterialsArrayInput)
 
 export const MaterialsArrayField = (materialModel) => Field(MaterialsArrayInput, {
