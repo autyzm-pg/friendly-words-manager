@@ -1,6 +1,7 @@
 import React from "react"
 import {StyleSheet, TouchableOpacity} from "react-native"
-import {FontAwesome as Icon} from '@expo/vector-icons'
+import {Text} from "native-base"
+import Icon from "react-native-vector-icons/FontAwesome"
 
 const styles = StyleSheet.create({
     button: {

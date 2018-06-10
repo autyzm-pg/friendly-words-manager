@@ -1,49 +1,38 @@
 {
-  "name": "FriendlyWordsMenager",
-  "version": "0.1.0",
-  "description": "Hello Expo!",
-  "author": null,
+  "name": "FriendlyWordsManager",
+  "version": "0.0.1",
   "private": true,
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "test": "node node_modules/jest/bin/jest.js --watch"
-  },
-  "devDependencies": {
-    "babel-jest": "^20.0.3",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "enzyme": "^2.9.1",
-    "flow-bin": "^0.42.0",
-    "jest-expo": "^25.0.0",
-    "react-native-mock": "^0.3.1",
-    "react-native-scripts": "0.0.31",
-    "remote-redux-devtools": "^0.5.12"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
   },
   "dependencies": {
     "appcenter": "^1.4.0",
     "appcenter-analytics": "^1.4.0",
     "appcenter-crashes": "^1.4.0",
     "appcenter-link-scripts": "^1.4.0",
-    "expo": "^25.0.0",
     "native-base": "^2.3.10",
     "path": "^0.12.7",
     "ramda": "^0.24.1",
-    "react": "16.2.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
+    "react": "16.3.1",
+    "react-native": "0.55.4",
     "react-native-fs": "^2.9.11",
-    "react-native-menu": "^0.21.0",
+    "react-native-image-picker": "^0.26.10",
+    "react-native-vector-icons": "^4.6.0",
     "react-redux": "^5.0.5",
     "react-router-native": "^4.1.1",
     "redux": "^3.6.0",
     "redux-observable": "^0.14.1",
+    "remote-redux-devtools": "^0.5.12",
     "rxjs": "^5.4.2"
   },
+  "devDependencies": {
+    "babel-jest": "23.0.1",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "23.1.0",
+    "react-test-renderer": "16.3.1"
+  },
   "jest": {
-    "preset": "jest-expo",
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!react|@expo|expo|native-base|@shoutem)"
-    ]
+    "preset": "react-native"
   }
 }

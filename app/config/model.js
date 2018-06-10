@@ -47,7 +47,7 @@ export const ConfigurationModel = MainModel({
     }),
     commandText: OptionField("Rodzaj polecenia", {
         options: [
-            "Pokaz gdzie jest {slowo}",
+            "Pokaż gdzie jest {slowo}",
             "{slowo}",
         ]
     }),
