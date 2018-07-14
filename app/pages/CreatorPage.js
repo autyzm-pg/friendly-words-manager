@@ -10,7 +10,7 @@ import {Modal, onConfirm} from "../components/modal/Modal"
 
 const createSave = (history, handler, name, config) => {
     handler(name, config)
-    history.push("/configurations")
+    history.goBack()
 }
 const onCreateSave = R.curry((allConfigNames, handler, history, config, name) => R.ifElse(
     R.any(R.equals(name)),

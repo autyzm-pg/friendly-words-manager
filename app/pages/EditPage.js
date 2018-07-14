@@ -9,7 +9,7 @@ import {Modal, onConfirm} from "../components/modal/Modal"
 
 const editSave = (history, handler, id, name, config) => {
     handler({id, name, config})
-    history.push('/configurations')
+    history.goBack()
 }
 const isNameCollision = (name, previousName, allNames) => previousName !== name && R.any(R.equals(name), allNames)
 const onEditSave = R.curry((id, previousName, allConfigNames, handler, history, config, name) => {
