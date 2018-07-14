@@ -45,10 +45,6 @@ const BackButtonHandler = withRouter(class BackButtonHandler extends React.Compo
         })
     }
 
-    componentDidUpdate() {
-        console.log(this.props.history);
-    }
-
     render() {
         return this.props.children
     }

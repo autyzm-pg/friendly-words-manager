@@ -40,7 +40,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                     <ConfigElem key={config.id}
                                 item={config}
                                 active={activeMessage(config)}
-                                onSetActive={actions.changeActiveConfig}
+                                onOpen={() => history.push(`/creator/${config.id}`)}
                     >
                         <ActionsMenu>
                             <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
