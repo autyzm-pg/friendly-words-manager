@@ -11,7 +11,7 @@ import {addResource} from "../../redux/resources/actions"
 const ResourceCreatorPage = (ResourceView, resourceName) => ({history, saveResource, allNames}) => {
     const WizardPage = createWizardPage(ResourceView)
 
-    const goBack = () => history.push(`/resources/${resourceName}`)
+    const goBack = () => history.goBack();
 
     const createSave = (name, data) => {
         saveResource({...data, name})

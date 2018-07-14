@@ -14,7 +14,7 @@ import {HeaderButton} from "../../libs/confy/components/ui/HeaderButton";
 export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => {
     const goToResourceCreator = () => history.push(`/creator/resource/${resourceName}`)
 
-    return <ListPage onBack={() => history.push("/")} title={title} rightContent={<HeaderButton action={goToResourceCreator} text={"Utwórz"}/>}>
+    return <ListPage onBack={() => history.goBack()} title={title} rightContent={<HeaderButton action={goToResourceCreator} text={"Utwórz"}/>}>
         {R.isEmpty(resources)
             ? <EmptyState icon="folder-open" action={goToResourceCreator} description="Lista zasobów jest pusta" actionLabel={"Utwórz zasób"}/>
             :<ResourceList>

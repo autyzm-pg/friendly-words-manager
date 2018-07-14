@@ -31,7 +31,7 @@ import {HeaderAction, HeaderButton} from "../libs/confy/components/ui/HeaderButt
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
     const goToConfigCreator = () => history.push("/creator")
 
-    return <ListPage onBack={() => history.push("/")} title={"Konfiguracje"} rightContent={<HeaderButton action={goToConfigCreator} text={"Utwórz"} />}>
+    return <ListPage onBack={() => history.goBack()} title={"Konfiguracje"} rightContent={<HeaderButton action={goToConfigCreator} text={"Utwórz"} />}>
         {R.isEmpty(allConfigs)
             ? <EmptyState icon="cogs" description="Lista konfiguracji jest pusta" actionLabel="Utwórz konfiguracje"
                           action={goToConfigCreator}/>

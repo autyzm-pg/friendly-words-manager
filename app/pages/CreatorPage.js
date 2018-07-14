@@ -20,7 +20,7 @@ const onCreateSave = R.curry((allConfigNames, handler, history, config, name) =>
 
 const WizardPage = createWizardPage(ConfigurationWizardView)
 
-export const goBack = (history) => () => history.push("/configurations")
+export const goBack = (history) => () => history.goBack()
 
 const CreatorPage = ({history, saveConfig, allConfigNames}) => (
     <WizardPage name="Nowa konfiguracja" onBack={goBack(history)}
