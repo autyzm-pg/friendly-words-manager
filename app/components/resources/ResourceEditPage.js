@@ -8,7 +8,7 @@ import {Modal, onConfirm} from "../modal/Modal"
 const _EditPage = (wizardView, resourceName) => ({history, editResource, fullResource, allResourcesNames}) => {
     const EditWizardPage = createWizardPage(wizardView, fullResource)
 
-    const goBack = () => history.push(`/resources/${resourceName}`)
+    const goBack = () => history.goBack()
 
     const editSave = (id, name, data) => {
         editResource(id,{...data, name})

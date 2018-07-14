@@ -6,8 +6,11 @@ echo "Starting post clone script..."
 SOURCE=`dirname $0`
 
 # Add ms appcenter api key
-if [[ ! -z "${API_KEY}" ]]; then
-    echo "Injecting APPCENTER_API_KEY"
-    echo "{ \"app_secret\": \"$API_KEY\" }" > $SOURCE/android/app/src/main/assets/appcenter-config.json
-fi
+sed -i .bak -e "s/{APPCENTER_API_KEY}/$APPCENTER_API_KEY/g" $SOURCE/android/app/src/main/assets/appcenter-config.json
+#sed -i "" "s/{APPCENTER_API_KEY}/$APPCENTER_API_KEY/g" *.json
+cat $SOURCE/android/app/src/main/assets/appcenter-config.json
+#if [[ ! -z "${API_KEY}" ]]; then
+#    echo "Injecting APPCENTER_API_KEY"
+#    echo "{ \"app_secret\": \"$API_KEY\" }" > $SOURCE/android/app/src/main/assets/appcenter-config.json
+#fi
 echo "Post clone script finished."

@@ -28,7 +28,7 @@ export class ModalRoot extends React.Component {
         custom: (Component) => this.askFactory(Component)()
     }
 
-    componentWillMount() {
+    componentDidMount() {
         initializeModal(this.actions)
     }
 

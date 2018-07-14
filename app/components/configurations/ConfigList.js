@@ -8,10 +8,10 @@ const activeTextStyle = ({
     color: "#11a42f",
 })
 
-export const ConfigElem = ({item, active, onSetActive, children}) => (
+export const ConfigElem = ({item, active, children, onOpen}) => (
     <ListItem>
         <Body>
-        <TouchableOpacity onPress={() => onSetActive(item.id)}>
+        <TouchableOpacity onPress={() => onOpen(item.id)}>
             <View style={{flex: 1}}>
                 <Text style={active ? activeTextStyle : {}}>{item.name}</Text>
                 {active && <Text style={{...activeTextStyle, fontStyle: 'italic'}}> ({active})</Text>}

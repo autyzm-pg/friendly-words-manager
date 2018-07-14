@@ -21,4 +21,4 @@ export const ifConfirmOrElse = (onConfirm, onCancel) => R.ifElse(
     ({value}) => onCancel(value)
 )
 
-export const initializeModal = R.once(actions => Object.assign(Modal, actions))
+export const initializeModal = actions => Object.assign(Modal, actions)

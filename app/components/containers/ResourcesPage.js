@@ -14,23 +14,27 @@ import {HeaderButton} from "../../libs/confy/components/ui/HeaderButton";
 export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => {
     const goToResourceCreator = () => history.push(`/creator/resource/${resourceName}`)
 
-    return <ListPage onBack={() => history.push("/")} title={title} rightContent={<HeaderButton action={goToResourceCreator} text={"Utwórz"}/>}>
+    return <ListPage onBack={() => history.goBack()} title={title}
+                     rightContent={<HeaderButton action={goToResourceCreator} text={"Utwórz"}/>}>
         {R.isEmpty(resources)
-            ? <EmptyState icon="folder-open" action={goToResourceCreator} description="Lista zasobów jest pusta" actionLabel={"Utwórz zasób"}/>
-            :<ResourceList>
-            {resources.map(resource =>
-                <ResourceElem key={resource.id} item={<ResourceBox item={resource}/>}>
-                    <ActionsMenu>
-                        <ActionItem onSelect={() => history.push(`/creator/resource/${resourceName}/${resource.id}`)}>
-                            <Icon name="create"/>
-                        </ActionItem>
-                        <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(resource)}>
-                            <Icon name="trash"/>
-                        </ActionItem>
-                    </ActionsMenu>
-                </ResourceElem>
-            )}
-        </ResourceList>
+            ? <EmptyState icon="folder-open" action={goToResourceCreator} description="Lista zasobów jest pusta"
+                          actionLabel={"Utwórz zasób"}/>
+            : <ResourceList>
+                {resources.map(resource =>
+                    <ResourceElem key={resource.id} item={<ResourceBox item={resource}/>}
+                                  onElemClick={() => history.push(`/creator/resource/${resourceName}/${resource.id}`)}>
+                        <ActionsMenu>
+                            <ActionItem
+                                onSelect={() => history.push(`/creator/resource/${resourceName}/${resource.id}`)}>
+                                <Icon name="create"/>
+                            </ActionItem>
+                            <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(resource)}>
+                                <Icon name="trash"/>
+                            </ActionItem>
+                        </ActionsMenu>
+                    </ResourceElem>
+                )}
+            </ResourceList>
         }
     </ListPage>
 }
