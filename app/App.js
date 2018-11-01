@@ -31,14 +31,14 @@ const EnhancedApp = R.compose(
 )(InternalApp)
 
 const App = () => (
-    <Root>
-        <ModalRoot>
-            <Provider store={store}>
-                <EnhancedApp/>
-            </Provider>
-        </ModalRoot>
-    </Root>
-)
+            <Root>
+                <ModalRoot>
+                        <Provider store={store}>
+                            <EnhancedApp/>
+                        </Provider>
+                </ModalRoot>
+            </Root>
+        )
 
 
 export default App
