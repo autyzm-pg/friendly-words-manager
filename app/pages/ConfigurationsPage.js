@@ -27,9 +27,17 @@ import {ModeTypes} from "../db/format"
 import {ListPage} from "../components/resources/ListPage"
 import {EmptyState} from "../libs/confy/components/ui/EmptyState"
 import {HeaderAction, HeaderButton} from "../libs/confy/components/ui/HeaderButton"
+import firebase from 'react-native-firebase';
+import {events} from "../components/firebase/Events";
 
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
-    const goToConfigCreator = () => history.push("/creator")
+    firebase.analytics().setCurrentScreen("Menu konfiguracji");
+
+    const goToConfigCreator = () => {
+        firebase.analytics().logEvent(events.create_configuration);
+        history.push("/creator");
+        firebase.analytics().setCurrentScreen("Tworzenie konfiguracji");
+    }
 
     return <ListPage onBack={() => history.goBack()} title={"Konfiguracje"} rightContent={<HeaderButton action={goToConfigCreator} text={"Utwórz"} />}>
         {R.isEmpty(allConfigs)
@@ -40,13 +48,15 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                     <ConfigElem key={config.id}
                                 item={config}
                                 active={activeMessage(config)}
-                                onOpen={() => history.push(`/creator/${config.id}`)}
-                    >
+                                onOpen={() => history.push(`/creator/${config.id}`)}>
                         <ActionsMenu>
                             <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
                                 <Icon name="copy"/>
                             </ActionItem>
-                            <ActionItem onSelect={() => history.push(`/creator/${config.id}`)}>
+                            <ActionItem onSelect={() => {
+                                firebase.analytics().setCurrentScreen("Edytowanie konfiguracji");
+                                history.push(`/creator/${config.id}`)
+                            }}>
                                 <Icon name="create"/>
                             </ActionItem>
                             <ActionItem onSelect={() => actions.changeActiveConfig(config.id)}>

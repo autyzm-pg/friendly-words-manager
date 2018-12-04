@@ -6,6 +6,8 @@ import {connect} from "react-redux"
 import {createWizardPage} from "../../libs/confy/views/wizard/createWizardPage"
 import {Modal, onConfirm} from "../modal/Modal"
 import {addResource} from "../../redux/resources/actions"
+import firebase from "react-native-firebase";
+import {events} from "../firebase/Events";
 
 
 const ResourceCreatorPage = (ResourceView, resourceName) => ({history, saveResource, allNames}) => {
@@ -15,6 +17,7 @@ const ResourceCreatorPage = (ResourceView, resourceName) => ({history, saveResou
 
     const createSave = (name, data) => {
         saveResource({...data, name})
+        firebase.analytics().logEvent(events.save_word);
         goBack()
     }
     const onCreateSave = R.curry((data, name) => R.ifElse(
@@ -22,7 +25,7 @@ const ResourceCreatorPage = (ResourceView, resourceName) => ({history, saveResou
         () => Modal.ask(`Zasób o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false).then(onConfirm(() => createSave(name, data))),
         () => createSave(name, data)
     )(allNames))
-
+    firebase.analytics().setCurrentScreen("Tworzenie zasobu");
     return <WizardPage name="Nowy zasób" onBack={goBack}
                        onSave={onCreateSave}/>
 }

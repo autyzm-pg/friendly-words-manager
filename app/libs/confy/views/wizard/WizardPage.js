@@ -7,6 +7,8 @@ import type {Step} from "../steps"
 import {renderField} from "../../fields/fields"
 import {HeaderButton} from "../../components/ui/HeaderButton";
 import {Modal, onConfirm} from "../../../../components/modal/Modal"
+import firebase from 'react-native-firebase';
+import {events} from "../../../../components/firebase/Events"
 
 
 type WizardPagePropsFromUser = {
