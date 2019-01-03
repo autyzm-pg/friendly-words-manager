@@ -28,6 +28,7 @@ import styles from "./mainPageStyles"
 import {withStyle} from "../libs/withStyle"
 import {Linking} from "react-native"
 import firebase from "react-native-firebase";
+import * as constants from "../../android/app/src/main/res/constantStrings";
 
 const buttonStyles = {
     height: 60,
@@ -45,19 +46,19 @@ const MainPage = ({history, location, activeConfig, hasAnyConfig}) => {
     return (<Container>
         <Header>
             <Body>
-            <Title>Przyjazne Słowa - Menadżer</Title>
+            <Title>{constants.AppTitle}</Title>
             </Body>
         </Header>
         <View style={styles.content}>
             <View style={styles.buttonsContainer}>
                 <StatusContainer>
-                    <Text>Aktywna konfiguracja: </Text>
+                    <Text>{constants.ActiveConfiguration}</Text>
                     {
                         hasAnyConfig ? (
                             <Text>
-                                {activeConfig.name} ({activeConfig.mode === ModeTypes.learning ? "uczenie" : "test"})
+                                {activeConfig.name} ({activeConfig.mode === ModeTypes.learning ? constants.Learning : constants.Test})
                             </Text>
-                        ) : <Text>Brak</Text>
+                        ) : <Text>{constants.Lack}</Text>
                     }
 
                 </StatusContainer>
@@ -65,12 +66,12 @@ const MainPage = ({history, location, activeConfig, hasAnyConfig}) => {
                     <Button block light onPress={() => {
                         history.push("/configurations")
                     }}>
-                        <Text>Konfiguracje</Text>
+                        <Text>{constants.Configurations}</Text>
                     </Button>
                     <Button block light onPress={() => {
                         history.push(`/resources/${WordModel.name}`)
                     }}>
-                        <Text>Zasoby</Text>
+                        <Text>{constants.Resources}</Text>
                     </Button>
                 </View>
                 {/*<Button full light onPress={() => Linking.openURL("expd16bca44a7e84f759fcce334a17cc6ea://")}>*/}

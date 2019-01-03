@@ -29,6 +29,7 @@ import {EmptyState} from "../libs/confy/components/ui/EmptyState"
 import {HeaderAction, HeaderButton} from "../libs/confy/components/ui/HeaderButton"
 import firebase from 'react-native-firebase';
 import {events} from "../components/firebase/Events";
+import * as constants from "../../android/app/src/main/res/constantStrings";
 
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
     firebase.analytics().setCurrentScreen("Menu konfiguracji");
@@ -39,9 +40,9 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
         firebase.analytics().setCurrentScreen("Tworzenie konfiguracji");
     }
 
-    return <ListPage onBack={() => history.goBack()} title={"Konfiguracje"} rightContent={<HeaderButton action={goToConfigCreator} text={"Utwórz"} />}>
+    return <ListPage onBack={() => history.goBack()} title={constants.Configurations} rightContent={<HeaderButton action={goToConfigCreator} text={constants.Create} />}>
         {R.isEmpty(allConfigs)
-            ? <EmptyState icon="cogs" description="Lista konfiguracji jest pusta" actionLabel="Utwórz konfiguracje"
+            ? <EmptyState icon="cogs" description={constants.ListOfConfigurationsIsEmpty} actionLabel={constants.CreateConfiguration}
                           action={goToConfigCreator}/>
             : <ConfigList onSearchChange={onSearchChange} searchQuery={searchQuery}>
                 {configurations.map(config => (
@@ -79,15 +80,15 @@ const stateToProps = ({configurations}) => ({
     searchQuery: configurations.searchQuery,
     activeMessage: R.ifElse(
         config => config.id === configurations.active.id,
-        () => configurations.active.mode === ModeTypes.learning ? "aktywne uczenie" : "aktywny test",
+        () => configurations.active.mode === ModeTypes.learning ? constants.ActiveLearning : constants.ActiveTest,
         R.always(undefined)
     ),
     isDeleteEnabled: configurations.all.length > 1
 })
 
-const askForMode = () => Modal.optionAsk("W jakim trybie chcesz aktywować krok?", [
-    {verbose: "Uczenie", value: ModeTypes.learning, primary: true},
-    {verbose: "Test", value: ModeTypes.test}
+const askForMode = () => Modal.optionAsk(constants.InWhatModeDoYouWantToActivateTheStep, [
+    {verbose: constants.Learning, value: ModeTypes.learning, primary: true},
+    {verbose: constants.Test, value: ModeTypes.test}
 ]).then(R.prop('value'))
 
 const dispatchToProps = (dispatch, ownProps) => ({
@@ -102,7 +103,7 @@ const dispatchToProps = (dispatch, ownProps) => ({
                 config.config
             ]
         ),
-        delete: (config) => Modal.ask(`Czy napewno chcesz usunąć '${config.name}'?`, false)
+        delete: (config) => Modal.ask(constants.AreYouSureYouWantToDelete + config.name + "?" , false)
             .then(onConfirm(() => dispatch(deleteConfig.start(config))))
     }
 })
