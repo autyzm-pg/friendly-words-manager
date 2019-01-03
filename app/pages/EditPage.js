@@ -6,6 +6,7 @@ import {createWizardPage} from "../libs/confy/views/wizard/createWizardPage"
 import {ConfigurationWizardView} from "../config/view"
 import {goBack} from "./CreatorPage"
 import {Modal, onConfirm} from "../components/modal/Modal"
+import * as constants from "../../android/app/src/main/res/constantStrings";
 
 const editSave = (history, handler, id, name, config) => {
     handler({id, name, config})
@@ -14,7 +15,7 @@ const editSave = (history, handler, id, name, config) => {
 const isNameCollision = (name, previousName, allNames) => previousName !== name && R.any(R.equals(name), allNames)
 const onEditSave = R.curry((id, previousName, allConfigNames, handler, history, config, name) => {
     if(isNameCollision(name, previousName, allConfigNames)) {
-        return Modal.ask(`Krok o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false)
+        return Modal.ask(constants.StepNamed + name + constants.AlreadyExists + constants.DoYouWantToOverwriteIt, false)
             .then(onConfirm(() => editSave(history, handler, id, name, config)))
     }
     editSave(history, handler, id, name, config)
