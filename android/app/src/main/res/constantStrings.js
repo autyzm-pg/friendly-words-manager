@@ -29,4 +29,31 @@ export const Cancel = "Anuluj 2";
 export const ResourceNamed = "Zasób o nazwie  2";
 export const NewResource = "Nowy zasób 2";
 export const ResourceName = "nazwa zasobu 2";
-//export const  = ;
+
+export const Word = "Słowo 2";
+export const Images = "Obrazy 2";
+export const Categories = "Kategorie 2" ;
+export const SelectedWord = "Wybrane słowo 2" ;
+export const InLearning = "W uczeniu 2";
+export const InTest = "W teście 2" ;
+export const ChooseVisualMaterials = "Wybierz materiały wizualne 2";
+export const TypeOfHint = "Rodzaj podpowiedzi 2";
+export const GrayedOut = "Wyszarz 2" ;
+export const Enlarge = "Powiększ 2";
+export const TypeOfCommand = "Rodzaj polecenia 2";
+export const ShowWhereIs = "Pokaż gdzie jest  2";
+export const NumberOfPictures = "Ilość obrazków 2" ;
+export const ShowLabelUnderPictures = "Pokazuj podpisy pod obrazkami 2";
+export const ReadingCommands = "Czytanie poleceń 2";
+export const TimeToShowTheHints = "Czas do pokazania podpowiedzi 2";
+export const NumberOfRepetitions = "Ilość powtórzeń 2";
+export const ChooseVerbalPraise = "Wybierz pochwały słowne 2";
+export const Good = "Dobrze 2";
+export const Great = "ŚWIETNIE 2";
+export const Cool = "Super 2";
+export const VoiceReadingOfRewards = "Odczytywanie głosowe wzmocnień 2";
+export const ChooseAnimatedRewards = "Wybierz animowane motywy nagród 2";
+export const TestConfiguration = "Konfiguracja testu 2";
+export const TimeForAnswer= "Czas na odpowiedź 2";
+
+

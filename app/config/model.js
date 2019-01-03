@@ -13,19 +13,20 @@ import {ForeignField} from "../libs/confy/fields/foreign/foreignField"
 import {SimpleCheckbox} from "../pages/confyViews/materials/SimpleCheckbox"
 import {get, getChildProp, getSiblingProp} from "../libs/confy/fields/dynamic/traversing"
 import TestObjectInput from "../pages/confyViews/testObjectPage/TestObjectInput"
+import * as constants from "../../android/app/src/main/res/constantStrings";
 
 export const WordModel = DBModel("words", {
-    name: TextField("Slowo"),
-    tags: TextField("Kategorie"),
-    images: ImagePickerField("Obrazy")
+    name: TextField(constants.Word),
+    tags: TextField(constants.Categories),
+    images: ImagePickerField(constants.Images)
 })
 
 export const ConfigurationModel = MainModel({
     materials: MaterialsArrayField({
-        word: ForeignField("Wybrane słowo", WordModel),
-        isInLearningMode: BoolField("W uczeniu", {component: SimpleCheckbox, def: true}),
-        isInTestMode: BoolField("W teście", {component: SimpleCheckbox, def: true}),
-        images: ImageMultiChooserField("Wybierz materiały wizualne", undefined, (obj, path) => ({
+        word: ForeignField(constants.SelectedWord, WordModel),
+        isInLearningMode: BoolField(constants.InLearning, {component: SimpleCheckbox, def: true}),
+        isInTestMode: BoolField(constants.InTest, {component: SimpleCheckbox, def: true}),
+        images: ImageMultiChooserField(constants.ChooseVisualMaterials, undefined, (obj, path) => ({
                 options: R.pipe(
                     getSiblingProp("word"),
                     getChildProp("images"),
@@ -34,48 +35,48 @@ export const ConfigurationModel = MainModel({
             })
         )
     }),
-    hintType: MultiChooserField("Rodzaj podpowiedzi", {
+    hintType: MultiChooserField(constants.TypeOfHint, {
         options: [
-            "Wyszarz",
-            "Powieksz",
-            "Brak"
+            constants.GrayedOut,
+            constants.Enlarge,
+            constants.Lack
         ],
         def: [
-            "Wyszarz"
+            constants.GrayedOut
         ]
     }),
-    commandText: OptionField("Rodzaj polecenia", {
+    commandText: OptionField(constants.TypeOfCommand, {
         options: [
-            "Pokaż gdzie jest {slowo}",
-            "{slowo}",
+            constants.ShowWhereIs + "{" + constants.Word + "}",
+            "{" + constants.Word + "}",
         ]
     }),
-    picturesNumber: IntegerField("Ilość obrazków", {min: 1, max: 6, def: 3}),
-    showPicturesLabels: BoolField("Pokazuj podpisy pod obrazkami", {def: true}),
-    isReadingCommands: BoolField("Czytanie poleceń", {def: true}),
-    showHintAfter: IntegerField("Czas do pokazania podpowiedzi", {min: 1, max: 20, def: 5, units: "s"}),
-    numberOfRepetitions: IntegerField("Ilość powtórzeń", {min: 1, max: 20, def: 3}),
-    textRewards: MultiChooserField("Wybierz pochwały słowne", {
+    picturesNumber: IntegerField(constants.NumberOfPictures, {min: 1, max: 6, def: 3}),
+    showPicturesLabels: BoolField(constants.ShowLabelUnderPictures, {def: true}),
+    isReadingCommands: BoolField(constants.ReadingCommands, {def: true}),
+    showHintAfter: IntegerField(constants.TimeToShowTheHints, {min: 1, max: 20, def: 5, units: "s"}),
+    numberOfRepetitions: IntegerField(constants.NumberOfRepetitions, {min: 1, max: 20, def: 3}),
+    textRewards: MultiChooserField(constants.ChooseVerbalPraise, {
         options: [
-            "Super",
-            "ŚWIETNIE",
-            "Dobrze"
+            constants.Cool,
+            constants.Great,
+            constants.Good
         ],
         def: [
-            "ŚWIETNIE",
-            "Dobrze"
+            constants.Great,
+            constants.Good
         ]
     }),
-    isReadingRewards: BoolField("Odczytywanie głosowe wzmocnień"),
-    animationRewards: ImageMultiChooserField("Wybierz animowane motywy nagród", {
+    isReadingRewards: BoolField(constants.VoiceReadingOfRewards),
+    animationRewards: ImageMultiChooserField(constants.ChooseAnimatedRewards, {
         options: [
             {uri: "http://via.placeholder.com/350x350"},
             {uri: "http://via.placeholder.com/350x351"},
             {uri: "http://via.placeholder.com/351x350"}
         ]
     }),
-    testConfig: ObjectField("Konfiguracja test", {
-        numberOfRepetitions: IntegerField("Ilość powtórzeń", {min: 1, max: 20, def: 3}),
-        timeForAnswer: IntegerField("Czas na odpowiedź", {min: 1, max: 10, def: 5, units: "s"})
+    testConfig: ObjectField(constants.TestConfiguration, {
+        numberOfRepetitions: IntegerField(constants.NumberOfRepetitions, {min: 1, max: 20, def: 3}),
+        timeForAnswer: IntegerField(constants.TimeForAnswer, {min: 1, max: 10, def: 5, units: "s"})
     }, undefined, TestObjectInput)
 })
