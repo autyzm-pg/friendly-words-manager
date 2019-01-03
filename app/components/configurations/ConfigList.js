@@ -3,6 +3,7 @@ import {Button, Icon, List, ListItem, Right, Left, Body, Text} from 'native-base
 import {TouchableOpacity, View} from "react-native"
 import SearchBar from "../lists/SearchBar"
 import {ListLabelsContainer, ListLabel} from "../../libs/confy/components/ui/ListLabels";
+import * as constants from "../../../android/app/src/main/res/constantStrings";
 
 const activeTextStyle = ({
     color: "#11a42f",
@@ -29,8 +30,8 @@ export default ConfigList = ({children, onSearchChange, searchQuery}) => (
         <SearchBar onSearchChange={onSearchChange} searchQuery={searchQuery}/>
         <List>
             <ListLabelsContainer>
-                <Left><ListLabel text={"nazwa konfiguracji"}/></Left>
-                <Right><ListLabel text={"akcje"}/></Right>
+                <Left><ListLabel text={constants.ConfigurationName}/></Left>
+                <Right><ListLabel text={constants.Actions}/></Right>
             </ListLabelsContainer>
             {children}
         </List>

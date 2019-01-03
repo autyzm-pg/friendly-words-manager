@@ -8,6 +8,7 @@ import {Modal, onConfirm} from "../modal/Modal"
 import {addResource} from "../../redux/resources/actions"
 import firebase from "react-native-firebase";
 import {events} from "../firebase/Events";
+import * as constants from "../../../android/app/src/main/res/constantStrings";
 
 
 const ResourceCreatorPage = (ResourceView, resourceName) => ({history, saveResource, allNames}) => {
@@ -22,11 +23,11 @@ const ResourceCreatorPage = (ResourceView, resourceName) => ({history, saveResou
     }
     const onCreateSave = R.curry((data, name) => R.ifElse(
         R.any(R.equals(name)),
-        () => Modal.ask(`Zasób o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false).then(onConfirm(() => createSave(name, data))),
+        () => Modal.ask(constants.ResourceNamed + name + constants.AlreadyExists + constants.DoYouWantToOverwriteIt, false).then(onConfirm(() => createSave(name, data))),
         () => createSave(name, data)
     )(allNames))
     firebase.analytics().setCurrentScreen("Tworzenie zasobu");
-    return <WizardPage name="Nowy zasób" onBack={goBack}
+    return <WizardPage name={constants.NewResource} onBack={goBack}
                        onSave={onCreateSave}/>
 }
 

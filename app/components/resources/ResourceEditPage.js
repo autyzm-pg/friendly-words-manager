@@ -4,6 +4,7 @@ import * as R from "ramda"
 import {createWizardPage} from "../../libs/confy/views/wizard/createWizardPage"
 import {editResource} from "../../redux/resources/actions"
 import {Modal, onConfirm} from "../modal/Modal"
+import * as constants from "../../../android/app/src/main/res/constantStrings";
 
 const _EditPage = (wizardView, resourceName) => ({history, editResource, fullResource, allResourcesNames}) => {
     const EditWizardPage = createWizardPage(wizardView, fullResource)
@@ -17,7 +18,7 @@ const _EditPage = (wizardView, resourceName) => ({history, editResource, fullRes
     const isNameCollision = (name, previousName) => previousName !== name && R.any(R.equals(name), allResourcesNames)
     const onEditSave = R.curry((id, previousName, config, name) => {
         if(isNameCollision(name, previousName)) {
-            return Modal.ask(`Krok o nazwie '${name}' już istnieje. Czy napewno chcesz go nadpisać?`, false).then(onConfirm(() => editSave(id, name, config)))
+            return Modal.ask(constants.StepNamed +  name + constants.AlreadyExists + constants.DoYouWantToOverwriteIt, false).then(onConfirm(() => editSave(id, name, config)))
         }
         editSave(id, name, config)
     })

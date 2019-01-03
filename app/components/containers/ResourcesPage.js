@@ -12,6 +12,7 @@ import {EmptyState} from "../../libs/confy/components/ui/EmptyState";
 import {HeaderButton} from "../../libs/confy/components/ui/HeaderButton";
 import firebase from "react-native-firebase";
 import {events} from "../firebase/Events";
+import * as constants from "../../../android/app/src/main/res/constantStrings";
 
 export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => {
     const goToResourceCreator = () => {
@@ -20,10 +21,10 @@ export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, tit
     }
 
     return <ListPage onBack={() => history.goBack()} title={title}
-                     rightContent={<HeaderButton action={goToResourceCreator} text={"Utwórz"}/>}>
+                     rightContent={<HeaderButton action={goToResourceCreator} text={constants.Create}/>}>
         {R.isEmpty(resources)
-            ? <EmptyState icon="folder-open" action={goToResourceCreator} description="Lista zasobów jest pusta"
-                          actionLabel={"Utwórz zasób"}/>
+            ? <EmptyState icon="folder-open" action={goToResourceCreator} description={constants.ResourceListIsEmpty}
+                          actionLabel={constants.CreateResource}/>
             : <ResourceList>
                 {resources.map(resource =>
                     <ResourceElem key={resource.id} item={<ResourceBox item={resource}/>}
@@ -57,7 +58,7 @@ const mapStateToProps = resourceName => ({resources}) => ({
 
 const mapDispatchToProps = (resourceName, toString) => dispatch => ({
     actions: {
-        delete: (resource) => Modal.ask(`Czy napewno chcesz usunąć '${toString(resource)}'?`, false)
+        delete: (resource) => Modal.ask(constants.AreYouSureYouWantToDelete + toString(resource) + "?", false)
             .then(onConfirm(() => dispatch(deleteResource.start(resourceName, resource.id))))
     }
 })
