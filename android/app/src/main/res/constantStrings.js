@@ -1,3 +1,6 @@
+import {Text} from "native-base";
+import React from "react";
+
 export const AppTitle = "Przyjazne Słowa - Menadżer 2";
 export const ActiveConfiguration = "Aktywna konfiguracja: 2";
 export const Learning = "uczenie 2";
@@ -55,5 +58,20 @@ export const VoiceReadingOfRewards = "Odczytywanie głosowe wzmocnień 2";
 export const ChooseAnimatedRewards = "Wybierz animowane motywy nagród 2";
 export const TestConfiguration = "Konfiguracja testu 2";
 export const TimeForAnswer= "Czas na odpowiedź 2";
-
-
+export const Rewards= "Wzmocnienia 2";
+export const Material= "Materiał 2";
+export const LearningMethod= "Sposób uczenia 2";
+export const StepSettings= "Ustawienia kroku 2";
+export const SampleSettings = "Ustawienia próby 2";
+export const HintsSettings = "Ustawienia podpowiedzi 2";
+export const Delete = "Usuń 2";
+export const RemoveWordFromConfiguration = "Usunac slowo z konfiguracji? 2";
+export const SelectMaterialInNextTable = "Wybierz materiał w tabeli obok 2";
+export const ListIsEmpty = "Lista jest pusta 2";
+export const AddMaterial = "Dodaj materiał 2";
+export const SelectWordToAddToConfiguration = "Wybierz słowo, które chcesz dodać do konfiguracji 2";
+export const TestSource = "W trybie testu dziecko pracuje na materiałach zaznaczonych w zakładce Materiał. 2";
+export const TestExplanation= "W Trybie Testu aplikacja nie korzysta z ustawień z zakładki Uczenie oraz Wzmocnienia, a\n" +
+    "                            terapeuta powinien powstrzymać się od interwencji w interakcje dziecka aż do zakończenia\n" +
+    "                            testu. 2";
+export const EnterTheStepName = "Podaj nazwę kroku 2";

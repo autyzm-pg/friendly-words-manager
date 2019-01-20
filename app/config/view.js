@@ -5,6 +5,7 @@ import {Column, ColumnView} from "../libs/confy/views/column/columnView"
 import {Section, SectionView} from "../libs/confy/views/section/sectionView"
 import {SingleView} from "../libs/confy/views/single/singleView"
 import {ListView} from "../libs/confy/views/list/listView"
+import * as constants from "../../android/app/src/main/res/constantStrings";
 
 // const DetailedListView = notImplementedFunc
 // const CustomTestView = notImplementedFunc
@@ -15,14 +16,14 @@ export const WordsWizardView = WizardSingleView(fields =>
 )
 
 export const ConfigurationWizardView = WizardView(fields => [
-    WizardStep("Materiał", SingleView(fields.materials)),
-    WizardStep("Sposób uczenia", SectionView([
-        Section("Ustawienia kroku", [fields.commandText, fields.picturesNumber, fields.showPicturesLabels, fields.isReadingCommands]),
-        Section("Ustawienia próby", [fields.numberOfRepetitions]),
-        Section("Ustawienia podpowiedzi", [fields.showHintAfter])
+    WizardStep(constants.Material, SingleView(fields.materials)),
+    WizardStep(constants.LearningMethod, SectionView([
+        Section(constants.StepSettings, [fields.commandText, fields.picturesNumber, fields.showPicturesLabels, fields.isReadingCommands]),
+        Section(constants.SampleSettings, [fields.numberOfRepetitions]),
+        Section(constants.HintsSettings, [fields.showHintAfter])
 
     ])),
-    WizardStep("Wzmocnienia", ColumnView([
+    WizardStep(constants.Rewards, ColumnView([
         Column([
             fields.textRewards,
             fields.isReadingRewards
@@ -32,5 +33,5 @@ export const ConfigurationWizardView = WizardView(fields => [
         //     fields.animationRewards
         // ])
     ])),
-    WizardStep("Test", SingleView(fields.testConfig))
+    WizardStep(constants.Test, SingleView(fields.testConfig))
 ], ConfigurationModel)

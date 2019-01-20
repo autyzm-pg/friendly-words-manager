@@ -9,6 +9,7 @@ import {HeaderButton} from "../../components/ui/HeaderButton";
 import {Modal, onConfirm} from "../../../../components/modal/Modal"
 import firebase from 'react-native-firebase';
 import {events} from "../../../../components/firebase/Events"
+import * as constants from "../../../../../android/app/src/main/res/constantStrings";
 
 
 type WizardPagePropsFromUser = {
@@ -27,7 +28,7 @@ type WizardPageProps<T> = {
 const BaseWizardPage = ({name, onBack, children, onSave, config}) => (
     <Page>
         <PageHeader onBack={() => onBack()} header={name}>
-            <HeaderButton text="Zapisz" action={() => Modal.textAsk("Podaj nazwę kroku", name).then(onConfirm(newName => onSave(config, newName)))} />
+            <HeaderButton text={constants.Save} action={() => Modal.textAsk(constants.EnterTheStepName, name).then(onConfirm(newName => onSave(config, newName)))} />
         </PageHeader>
         {children}
     </Page>

@@ -11,6 +11,7 @@ import {WordsWizardView} from "./view"
 import {Text, View} from "native-base"
 import {EnhancedResourceEditPage} from "../components/resources/ResourceEditPage"
 import {BackHandler} from "react-native"
+import * as constants from "../../android/app/src/main/res/constantStrings";
 
 
 const WordLabel = ({item}) => (
@@ -32,7 +33,7 @@ const createResourcePages = (model, WizardView, listPageTitle, ListElementCompon
 }
 
 
-const WordsRoutes = createResourcePages(WordModel, WordsWizardView, "Zasoby", WordLabel, res => res.name)
+const WordsRoutes = createResourcePages(WordModel, WordsWizardView, constants.Resources, WordLabel, res => res.name)
 
 const BackButtonHandler = withRouter(class BackButtonHandler extends React.Component {
     componentDidMount() {

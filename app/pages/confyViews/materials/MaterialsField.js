@@ -13,11 +13,12 @@ import {Cell, Row, Table} from "../../../components/table/Table"
 import {ListLabel} from "../../../libs/confy/components/ui/ListLabels"
 import {EmptyState} from "../../../libs/confy/components/ui/EmptyState"
 import {withLink} from "../../../libs/confy/libs/withState"
+import * as constants from "../../../../android/app/src/main/res/constantStrings";
 
 const chooseResource = resources => new Promise(resolve => (
     Modal.show(
         <View>
-            <Text>Wybierz słowo, które chcesz dodać do konfiguracji</Text>
+            <Text>{constants.SelectWordToAddToConfiguration}</Text>
             <ScrollView style={{marginTop: 10}}>
                 <List>
                     {resources
@@ -76,10 +77,10 @@ const SelectableRow = styled(Row, ({isSelected}) => ({
 const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, onSelect}) => (
     <Table>
         <Row style={styles.tableHeader}>
-            <Cell><ListLabel text={"Słowo"}/></Cell>
-            <Cell><ListLabel text={"W uczeniu"}/></Cell>
-            <Cell><ListLabel text={"W teście"}/></Cell>
-            <Cell><ListLabel text={"Usuń"}/></Cell>
+            <Cell><ListLabel text={constants.Word}/></Cell>
+            <Cell><ListLabel text={constants.InLearning}/></Cell>
+            <Cell><ListLabel text={constants.InTest}/></Cell>
+            <Cell><ListLabel text={constants.Delete}/></Cell>
         </Row>
         {materials.map((material, index) => (
             <SelectableRow isSelected={index === selected}
@@ -103,7 +104,7 @@ const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, 
                 </Cell>
                 <Cell>
                     <ActionItem
-                        onSelect={() => Modal.ask("Usunac slowo z konfiguracji?", false).then(onConfirm(() => onRowDelete(material)))}>
+                        onSelect={() => Modal.ask(constants.RemoveWordFromConfiguration, false).then(onConfirm(() => onRowDelete(material)))}>
                         <Icon name="trash"/>
                     </ActionItem>
                 </Cell>
@@ -114,7 +115,7 @@ const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, 
 
 const MaterialDetails = ({material = undefined, renderField}) => (
     <ScrollView>
-        {!material ? <Text>Wybierz materiał w tabeli obok</Text> :
+        {!material ? <Text>{constants.SelectMaterialInNextTable}</Text> :
             <View>
                 {renderField(material)}
             </View>
@@ -131,7 +132,7 @@ const _MaterialsArrayInput = ({value, onChange, resources, materialModel, select
         .then(() => selectedMaterialIndexChange(value.length))
 
     return (
-        R.isEmpty(value) ? <EmptyState icon={"list"} description={"Lista jest pusta"} actionLabel={"Dodaj materiał"}
+        R.isEmpty(value) ? <EmptyState icon={"list"} description={constants.ListIsEmpty} actionLabel={constants.AddMaterial}
                                        action={onAdd}/> :
             <View style={styles.container}>
                 <View style={styles.listContainer}>
@@ -175,6 +176,6 @@ const MaterialsArrayInput = R.compose(
 
 export const MaterialsArrayField = (materialModel) => Field(MaterialsArrayInput, {
     def: [],
-    materialModel: Model("Material", materialModel)
+    materialModel: Model(constants.Material, materialModel)
 })()
 

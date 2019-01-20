@@ -3,6 +3,7 @@ import {Icon, Text, View} from "native-base"
 import {ScrollView} from "react-native"
 import * as R from "ramda"
 import styles from "./styles"
+import  * as constants from "../../../../android/app/src/main/res/constantStrings";
 
 export default TestObjectInput = ({verbose, value, model, childRenderer, config}) => {
     const finalRepetitionsNumber = value.numberOfRepetitions * config.materials.length
@@ -29,12 +30,10 @@ export default TestObjectInput = ({verbose, value, model, childRenderer, config}
                     </View>
                     <View style={styles.informationText}>
                         <Text style={{marginBottom: 10}}>
-                            W trybie testu dziecko pracuje na materiałach zaznaczonych w zakładce Materiał.
+                            {constants.TestSource}
                         </Text>
                         <Text>
-                            W Trybie Testu aplikacja nie korzysta z ustawień z zakładki Uczenie oraz Wzmocnienia, a
-                            terapeuta powinien powstrzymać się od interwencji w interakcje dziecka aż do zakończenia
-                            testu.
+                            {constants.TestExplanation}
                         </Text>
                     </View>
                 </View>
