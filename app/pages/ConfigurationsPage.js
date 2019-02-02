@@ -1,21 +1,6 @@
 import React from "react"
 
-import {
-    Button,
-    Container,
-    Content,
-    Header,
-    Icon,
-    Left,
-    List,
-    ListItem,
-    Right,
-    Tab,
-    TabHeading,
-    Tabs,
-    Text,
-    Title
-} from 'native-base'
+import {Icon} from 'native-base'
 import ConfigList, {ConfigElem} from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
 import * as R from "ramda"
@@ -28,8 +13,16 @@ import {ListPage} from "../components/resources/ListPage"
 import {EmptyState} from "../libs/confy/components/ui/EmptyState"
 import {HeaderAction, HeaderButton} from "../libs/confy/components/ui/HeaderButton"
 
+import {events, logCurrentScreen, logEvent} from "../events"
+
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
-    const goToConfigCreator = () => history.push("/creator")
+    logCurrentScreen("Menu konfiguracji");
+
+    const goToConfigCreator = () => {
+        logEvent(events.create_configuration);
+        history.push("/creator");
+        logCurrentScreen("Tworzenie konfiguracji");
+    }
 
     return <ListPage onBack={() => history.goBack()} title={"Konfiguracje"} rightContent={<HeaderButton action={goToConfigCreator} text={"Utwórz"} />}>
         {R.isEmpty(allConfigs)
@@ -40,13 +33,15 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                     <ConfigElem key={config.id}
                                 item={config}
                                 active={activeMessage(config)}
-                                onOpen={() => history.push(`/creator/${config.id}`)}
-                    >
+                                onOpen={() => history.push(`/creator/${config.id}`)}>
                         <ActionsMenu>
                             <ActionItem onSelect={() => actions.duplicate(allConfigs, config)}>
                                 <Icon name="copy"/>
                             </ActionItem>
-                            <ActionItem onSelect={() => history.push(`/creator/${config.id}`)}>
+                            <ActionItem onSelect={() => {
+                                logCurrentScreen("Edytowanie konfiguracji");
+                                history.push(`/creator/${config.id}`)
+                            }}>
                                 <Icon name="create"/>
                             </ActionItem>
                             <ActionItem onSelect={() => actions.changeActiveConfig(config.id)}>

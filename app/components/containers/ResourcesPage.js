@@ -11,8 +11,13 @@ import {deleteResource} from "../../redux/resources/actions"
 import {EmptyState} from "../../libs/confy/components/ui/EmptyState";
 import {HeaderButton} from "../../libs/confy/components/ui/HeaderButton";
 
+import {events, logEvent, logCurrentScreen} from "../../events";
+
 export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => {
-    const goToResourceCreator = () => history.push(`/creator/resource/${resourceName}`)
+    const goToResourceCreator = () => {
+        logEvent(events.create_word);
+        history.push(`/creator/resource/${resourceName}`)
+    }
 
     return <ListPage onBack={() => history.goBack()} title={title}
                      rightContent={<HeaderButton action={goToResourceCreator} text={"Utwórz"}/>}>
@@ -22,10 +27,16 @@ export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, tit
             : <ResourceList>
                 {resources.map(resource =>
                     <ResourceElem key={resource.id} item={<ResourceBox item={resource}/>}
-                                  onElemClick={() => history.push(`/creator/resource/${resourceName}/${resource.id}`)}>
+                                  onElemClick={() => {
+                                      history.push(`/creator/resource/${resourceName}/${resource.id}`)
+                                      logCurrentScreen("Edytowanie zasobu");
+                                  }}>
                         <ActionsMenu>
                             <ActionItem
-                                onSelect={() => history.push(`/creator/resource/${resourceName}/${resource.id}`)}>
+                                onSelect={() => {
+                                    history.push(`/creator/resource/${resourceName}/${resource.id}`)
+                                    logCurrentScreen("Edytowanie zasobu");
+                                }}>
                                 <Icon name="create"/>
                             </ActionItem>
                             <ActionItem isEnabled={isDeleteEnabled} onSelect={() => actions.delete(resource)}>

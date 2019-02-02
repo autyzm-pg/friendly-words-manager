@@ -1,11 +1,10 @@
 // @flow
 import React from "react"
-import {Button, Text} from "native-base"
 import Page, {PageHeader} from "../../components/layout/Page"
 import {WizardStepsContainer, WizardStepView} from "./WizardSteps"
 import type {Step} from "../steps"
 import {renderField} from "../../fields/fields"
-import {HeaderButton} from "../../components/ui/HeaderButton";
+import {HeaderButton} from "../../components/ui/HeaderButton"
 import {Modal, onConfirm} from "../../../../components/modal/Modal"
 
 
@@ -25,7 +24,8 @@ type WizardPageProps<T> = {
 const BaseWizardPage = ({name, onBack, children, onSave, config}) => (
     <Page>
         <PageHeader onBack={() => onBack()} header={name}>
-            <HeaderButton text="Zapisz" action={() => Modal.textAsk("Podaj nazwę kroku", name).then(onConfirm(newName => onSave(config, newName)))} />
+            <HeaderButton text="Zapisz"
+                          action={() => Modal.textAsk("Podaj nazwę kroku", name).then(onConfirm(newName => onSave(config, newName)))}/>
         </PageHeader>
         {children}
     </Page>
