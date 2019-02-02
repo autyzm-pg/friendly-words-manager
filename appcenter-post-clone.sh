@@ -4,7 +4,7 @@ echo "Starting post clone script..."
 #yarn global add exp
 
 echo "Accepting Android SDK"
-yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+./accept-licenses.sh
 
 SOURCE=`dirname $0`
 
