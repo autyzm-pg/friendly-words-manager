@@ -16,8 +16,6 @@
     "ramda": "^0.24.1",
     "react": "16.3.1",
     "react-native": "0.55.4",
-    "react-native-firebase": "^5.1.0",
-    "react-native-firebase-analytics": "^4.0.3",
     "react-native-fs": "^2.9.11",
     "react-native-image-picker": "^0.26.10",
     "react-native-vector-icons": "^4.6.0",
@@ -38,8 +36,6 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": [
-      "./app/packages"
-    ]
+    "assets": ["./app/packages"]
   }
 }
