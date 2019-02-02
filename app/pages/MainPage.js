@@ -27,6 +27,7 @@ import * as R from "ramda"
 import styles from "./mainPageStyles"
 import {withStyle} from "../libs/withStyle"
 import {Linking} from "react-native"
+import firebase from "react-native-firebase";
 
 const buttonStyles = {
     height: 60,
@@ -39,8 +40,9 @@ const StatusContainer = withStyle({
     justifyContent: "space-between"
 })(View)
 
-const MainPage = ({history, location, activeConfig, hasAnyConfig}) => (
-    <Container>
+const MainPage = ({history, location, activeConfig, hasAnyConfig}) => {
+    firebase.analytics().setCurrentScreen("Glowne menu");
+    return (<Container>
         <Header>
             <Body>
             <Title>Przyjazne Słowa - Menadżer</Title>
@@ -72,13 +74,13 @@ const MainPage = ({history, location, activeConfig, hasAnyConfig}) => (
                     </Button>
                 </View>
                 {/*<Button full light onPress={() => Linking.openURL("expd16bca44a7e84f759fcce334a17cc6ea://")}>*/}
-                    {/*<Text>Przejdź do aplikacji</Text>*/}
-                    {/*<Icon name="arrow-round-forward"/>*/}
+                {/*<Text>Przejdź do aplikacji</Text>*/}
+                {/*<Icon name="arrow-round-forward"/>*/}
                 {/*</Button>*/}
             </View>
         </View>
-    </Container>
-)
+    </Container>);
+}
 
 const stateToProps = ({configurations}) => ({
     activeConfig: {
