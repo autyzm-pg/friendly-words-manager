@@ -2,7 +2,8 @@ import React from "react"
 import {Body, Left, List, ListItem, Right, View} from "native-base"
 import {TouchableOpacity} from "react-native"
 import {ListLabel, ListLabelsContainer} from "../../libs/confy/components/ui/ListLabels"
-import firebase from "react-native-firebase";
+import {logCurrentScreen} from "../../events"
+
 
 export const ResourceElem = ({item, onElemClick = () => null, children}) => (
     <ListItem>
@@ -19,7 +20,7 @@ export const ResourceElem = ({item, onElemClick = () => null, children}) => (
     </ListItem>
 )
 export const ResourceList = ({children, onSearchChange, searchQuery}) => {
-    firebase.analytics().setCurrentScreen("Menu zasobow");
+    logCurrentScreen("Menu zasobow");
     return (<View>
         <ListLabelsContainer>
             <Left><ListLabel text={"nazwa zasobu"}/></Left>

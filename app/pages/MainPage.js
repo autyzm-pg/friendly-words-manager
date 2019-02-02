@@ -1,33 +1,15 @@
 import React from "react"
 
-import {
-    Container,
-    Content,
-    Header,
-    Body,
-    Title,
-    Button as NativeBaseButton,
-    Text,
-    Tab,
-    Tabs,
-    TabHeading,
-    Icon,
-    Left,
-    Right,
-    Footer,
-    FooterTab, View
-} from 'native-base'
+import {Body, Button as NativeBaseButton, Container, Header, Text, Title, View} from 'native-base'
 
 import {connect} from "react-redux"
-import ToastExt from "../libs/ToastExt"
-import {Modal} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
 import {WordModel} from "../config/model"
 import * as R from "ramda"
 import styles from "./mainPageStyles"
 import {withStyle} from "../libs/withStyle"
-import {Linking} from "react-native"
-import firebase from "react-native-firebase";
+import {logCurrentScreen} from "../events"
+
 
 const buttonStyles = {
     height: 60,
@@ -41,7 +23,7 @@ const StatusContainer = withStyle({
 })(View)
 
 const MainPage = ({history, location, activeConfig, hasAnyConfig}) => {
-    firebase.analytics().setCurrentScreen("Glowne menu");
+    logCurrentScreen("Glowne menu")
     return (<Container>
         <Header>
             <Body>
@@ -79,7 +61,7 @@ const MainPage = ({history, location, activeConfig, hasAnyConfig}) => {
                 {/*</Button>*/}
             </View>
         </View>
-    </Container>);
+    </Container>)
 }
 
 const stateToProps = ({configurations}) => ({

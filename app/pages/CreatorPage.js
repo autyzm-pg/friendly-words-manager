@@ -1,18 +1,17 @@
 import React from "react"
-import {Container, Content, Header, Body, Title, Button, Text, Tab, Tabs, TabHeading, Icon, Left} from 'native-base'
 import {createWizardPage} from "../libs/confy/views/wizard/createWizardPage"
 
 import {ConfigurationWizardView} from "../config/view"
 import * as R from "ramda"
 import {connect} from "react-redux"
-import {saveConfig, editConfig} from "../redux/configurations/actions"
+import {saveConfig} from "../redux/configurations/actions"
 import {Modal, onConfirm} from "../components/modal/Modal"
-import firebase from "react-native-firebase";
-import {events} from "../components/firebase/Events";
+
+import {events, logEvent} from "../events"
 
 const createSave = (history, handler, name, config) => {
     handler(name, config)
-    firebase.analytics().logEvent(events.save_configuration)
+    logEvent(events.save_configuration)
     history.goBack()
 }
 const onCreateSave = R.curry((allConfigNames, handler, history, config, name) => R.ifElse(

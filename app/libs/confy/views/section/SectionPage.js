@@ -1,10 +1,10 @@
 import React from "react"
-import {View, Content, Text} from "native-base"
+import {Content, Text, View} from "native-base"
 import {withLink} from "../../libs/withState"
-import {Col, Row, Grid} from 'react-native-easy-grid';
-import {moderateScale} from "../../../scaling";
-import firebase from "react-native-firebase";
-import {events} from "../../../../components/firebase/Events";
+import {Col, Grid} from 'react-native-easy-grid'
+import {moderateScale} from "../../../scaling"
+
+import {events, logEvent} from "../../../../events"
 
 const sectionPageStyle = {
     sections: {
@@ -30,14 +30,14 @@ const Section = ({children}) => {
 
     switch (children.length) {
         case 4:
-            firebase.analytics().logEvent(events.change_tab_step_option);
-            break;
+            logEvent(events.change_tab_step_option)
+            break
         case 1:
-            firebase.analytics().logEvent(events.change_tab_try_option);
-            break;
+            logEvent(events.change_tab_try_option)
+            break
         case 2:
-            firebase.analytics().logEvent(events.change_tab_tip_option);
-            break;
+            logEvent(events.change_tab_tip_option)
+            break
     }
     return (
         <Content contentContainerStyle={sectionPageStyle.section}>
@@ -54,7 +54,7 @@ const _SectionPage =
                     return <View
                         style={[sectionPageStyle.sectionListItem, isActive && sectionPageStyle.activeSectionListItem]}
                         key={section.name}>
-                        <Text style={{fontSize: moderateScale(12)}} onPress={() =>activeSectionIdxChange(idx)}>
+                        <Text style={{fontSize: moderateScale(12)}} onPress={() => activeSectionIdxChange(idx)}>
                             {section.name}
                         </Text>
                     </View>
@@ -69,5 +69,5 @@ const _SectionPage =
         </Grid>
 
 
-export const SectionPage = withLink("activeSectionIdx", 0)(_SectionPage);
+export const SectionPage = withLink("activeSectionIdx", 0)(_SectionPage)
 

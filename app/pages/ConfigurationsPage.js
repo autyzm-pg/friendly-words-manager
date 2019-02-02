@@ -1,21 +1,6 @@
 import React from "react"
 
-import {
-    Button,
-    Container,
-    Content,
-    Header,
-    Icon,
-    Left,
-    List,
-    ListItem,
-    Right,
-    Tab,
-    TabHeading,
-    Tabs,
-    Text,
-    Title
-} from 'native-base'
+import {Icon} from 'native-base'
 import ConfigList, {ConfigElem} from "../components/configurations/ConfigList"
 import {connect} from "react-redux"
 import * as R from "ramda"
@@ -27,16 +12,16 @@ import {ModeTypes} from "../db/format"
 import {ListPage} from "../components/resources/ListPage"
 import {EmptyState} from "../libs/confy/components/ui/EmptyState"
 import {HeaderAction, HeaderButton} from "../libs/confy/components/ui/HeaderButton"
-import firebase from 'react-native-firebase';
-import {events} from "../components/firebase/Events";
+
+import {events, logCurrentScreen, logEvent} from "../events"
 
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
-    firebase.analytics().setCurrentScreen("Menu konfiguracji");
+    logCurrentScreen("Menu konfiguracji");
 
     const goToConfigCreator = () => {
-        firebase.analytics().logEvent(events.create_configuration);
+        logEvent(events.create_configuration);
         history.push("/creator");
-        firebase.analytics().setCurrentScreen("Tworzenie konfiguracji");
+        logCurrentScreen("Tworzenie konfiguracji");
     }
 
     return <ListPage onBack={() => history.goBack()} title={"Konfiguracje"} rightContent={<HeaderButton action={goToConfigCreator} text={"Utwórz"} />}>
@@ -54,7 +39,7 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                                 <Icon name="copy"/>
                             </ActionItem>
                             <ActionItem onSelect={() => {
-                                firebase.analytics().setCurrentScreen("Edytowanie konfiguracji");
+                                logCurrentScreen("Edytowanie konfiguracji");
                                 history.push(`/creator/${config.id}`)
                             }}>
                                 <Icon name="create"/>
