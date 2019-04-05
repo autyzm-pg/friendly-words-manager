@@ -27,17 +27,12 @@ import {ModeTypes} from "../db/format"
 import {ListPage} from "../components/resources/ListPage"
 import {EmptyState} from "../libs/confy/components/ui/EmptyState"
 import {HeaderAction, HeaderButton} from "../libs/confy/components/ui/HeaderButton"
-import firebase from 'react-native-firebase';
-import {events} from "../components/firebase/Events";
 import * as constants from "../../android/app/src/main/res/constantStrings";
 
 const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage, searchQuery, onSearchChange, actions, isDeleteEnabled}) => {
-    firebase.analytics().setCurrentScreen("Menu konfiguracji");
 
     const goToConfigCreator = () => {
-        firebase.analytics().logEvent(events.create_configuration);
         history.push("/creator");
-        firebase.analytics().setCurrentScreen("Tworzenie konfiguracji");
     }
 
     return <ListPage onBack={() => history.goBack()} title={constants.Configurations} rightContent={<HeaderButton action={goToConfigCreator} text={constants.Create} />}>
@@ -55,7 +50,6 @@ const ConfigurationsPage = ({history, configurations, allConfigs, activeMessage,
                                 <Icon name="copy"/>
                             </ActionItem>
                             <ActionItem onSelect={() => {
-                                firebase.analytics().setCurrentScreen("Edytowanie konfiguracji");
                                 history.push(`/creator/${config.id}`)
                             }}>
                                 <Icon name="create"/>

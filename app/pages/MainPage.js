@@ -27,7 +27,6 @@ import * as R from "ramda"
 import styles from "./mainPageStyles"
 import {withStyle} from "../libs/withStyle"
 import {Linking} from "react-native"
-import firebase from "react-native-firebase";
 import * as constants from "../../android/app/src/main/res/constantStrings";
 
 const buttonStyles = {
@@ -42,7 +41,6 @@ const StatusContainer = withStyle({
 })(View)
 
 const MainPage = ({history, location, activeConfig, hasAnyConfig}) => {
-    firebase.analytics().setCurrentScreen("Glowne menu");
     return (<Container>
         <Header>
             <Body>

@@ -5,8 +5,6 @@ import type {ColumnType} from "./columnView"
 import type {StepPageProps} from "../steps"
 import styles from "./styles"
 import {ScrollView} from "react-native"
-import firebase from "react-native-firebase";
-import {events} from "../../../../components/firebase/Events";
 
 const Column = ({children, style}) => (
     <View style={[styles.columnContainer, style]}>
@@ -23,7 +21,6 @@ type StepColumnViewProps = {
 } & StepPageProps
 
 const ColumnPage = ({columns, renderField, config}: StepColumnViewProps) => {
-    firebase.analytics().logEvent(events.change_tab_strengthen)
     return (<View style={styles.columnsContainer}>
         {columns.map((fields, i) => (
                 <Column key={i} style={i % 2 ? styles.oddColumn : styles.evenColumn}>

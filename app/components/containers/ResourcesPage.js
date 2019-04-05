@@ -10,13 +10,10 @@ import {Modal, onConfirm} from "../modal/Modal"
 import {deleteResource} from "../../redux/resources/actions"
 import {EmptyState} from "../../libs/confy/components/ui/EmptyState";
 import {HeaderButton} from "../../libs/confy/components/ui/HeaderButton";
-import firebase from "react-native-firebase";
-import {events} from "../firebase/Events";
 import * as constants from "../../../android/app/src/main/res/constantStrings";
 
 export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => {
     const goToResourceCreator = () => {
-        firebase.analytics().logEvent(events.create_word);
         history.push(`/creator/resource/${resourceName}`)
     }
 
@@ -30,13 +27,11 @@ export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, tit
                     <ResourceElem key={resource.id} item={<ResourceBox item={resource}/>}
                                   onElemClick={() => {
                                       history.push(`/creator/resource/${resourceName}/${resource.id}`)
-                                      firebase.analytics().setCurrentScreen("Edytowanie zasobu");
                                   }}>
                         <ActionsMenu>
                             <ActionItem
                                 onSelect={() => {
                                     history.push(`/creator/resource/${resourceName}/${resource.id}`)
-                                    firebase.analytics().setCurrentScreen("Edytowanie zasobu");
                                 }}>
                                 <Icon name="create"/>
                             </ActionItem>

@@ -3,8 +3,6 @@ import {View, Content, Text} from "native-base"
 import {withLink} from "../../libs/withState"
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {moderateScale} from "../../../scaling";
-import firebase from "react-native-firebase";
-import {events} from "../../../../components/firebase/Events";
 
 const sectionPageStyle = {
     sections: {
@@ -27,18 +25,6 @@ const sectionPageStyle = {
 }
 
 const Section = ({children}) => {
-
-    switch (children.length) {
-        case 4:
-            firebase.analytics().logEvent(events.change_tab_step_option);
-            break;
-        case 1:
-            firebase.analytics().logEvent(events.change_tab_try_option);
-            break;
-        case 2:
-            firebase.analytics().logEvent(events.change_tab_tip_option);
-            break;
-    }
     return (
         <Content contentContainerStyle={sectionPageStyle.section}>
             {children}

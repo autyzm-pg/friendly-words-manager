@@ -7,13 +7,10 @@ import * as R from "ramda"
 import {connect} from "react-redux"
 import {saveConfig, editConfig} from "../redux/configurations/actions"
 import {Modal, onConfirm} from "../components/modal/Modal"
-import firebase from "react-native-firebase";
-import {events} from "../components/firebase/Events";
 import * as constants from "../../android/app/src/main/res/constantStrings";
 
 const createSave = (history, handler, name, config) => {
     handler(name, config)
-    firebase.analytics().logEvent(events.save_configuration)
     history.goBack()
 }
 const onCreateSave = R.curry((allConfigNames, handler, history, config, name) => R.ifElse(
