@@ -41,5 +41,9 @@ export const fontStyles = StyleSheet.create({
         color: 'red',
         fontSize: 30,
     },
+    askerLabel: {
+        color: 'red',
+        fontSize: 30,
+    },
 
 });

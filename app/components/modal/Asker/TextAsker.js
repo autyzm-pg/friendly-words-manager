@@ -2,6 +2,7 @@ import React from "react"
 import {withLink} from "../../../libs/confy/libs/withState"
 import {Form, Input, Item, Text} from "native-base"
 import {SaveButtons} from "../askFactory"
+import {fontStyles} from "../../../../android/app/src/main/res/fontStyle";
 
 const textAskerStyles = {
     form: {
@@ -15,7 +16,7 @@ export const TextAsker = defaultText =>
     withLink("text", defaultText)(
         ({children, onConfirm, onCancel, positive, text, textChange}) => (
             <Form style={textAskerStyles.form}>
-                <Text style={textAskerStyles.question}>{children}</Text>
+                <Text style={[textAskerStyles.question, fontStyles.askerLabel]}>{children}</Text>
                 <Item regular>
                     <Input value={text} onChangeText={textChange}/>
                 </Item>
