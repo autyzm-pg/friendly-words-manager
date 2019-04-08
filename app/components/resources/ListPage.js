@@ -2,6 +2,7 @@ import React from "react"
 import {Body, Button, Container, Content, Header, Icon, Left, Right, Title, View} from "native-base"
 import {withStyle} from "../../libs/withStyle"
 import {StyleSheet} from "react-native"
+import {fontStyles} from "../../../android/app/src/main/res/fontStyle";
 
 const scrollStyles = StyleSheet.create({
     scrollContainer: {
@@ -13,7 +14,7 @@ const scrollStyles = StyleSheet.create({
 const ContentContainer = withStyle({
     maxWidth: 800,
     marginTop: 20,
-    flex: 1,
+    flex: 1
 })(View)
 
 export const ListPage = ({onBack, title, rightContent, children}) =>
@@ -25,7 +26,7 @@ export const ListPage = ({onBack, title, rightContent, children}) =>
                 </Button>
             </Left>
             <Body>
-            <Title>{title}</Title>
+            <Title style = {fontStyles.title} >{title}</Title>
             </Body>
             <Right>
                 {rightContent}

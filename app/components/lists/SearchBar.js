@@ -2,6 +2,7 @@ import React from "react"
 import {Form, Icon, Input, Item, Button} from "native-base"
 import {emptyFunc} from "../../libs/funcs"
 import {Search} from "../../../android/app/src/main/res/constantStrings";
+import {fontStyles} from "../../../android/app/src/main/res/fontStyle";
 
 export default SearchBar = ({onSearchChange = emptyFunc, searchQuery}) => {
     let textInput = null
@@ -17,6 +18,7 @@ export default SearchBar = ({onSearchChange = emptyFunc, searchQuery}) => {
                 <Icon name="search"/>
                 <Input placeholder={Search}
                        value={searchQuery}
+                       style={fontStyles.search}
                        onChangeText={text => onSearchChange(text)}
                        ref={input => {
                            textInput = input

@@ -4,6 +4,8 @@ import {TouchableOpacity, View} from "react-native"
 import SearchBar from "../lists/SearchBar"
 import {ListLabelsContainer, ListLabel} from "../../libs/confy/components/ui/ListLabels";
 import * as constants from "../../../android/app/src/main/res/constantStrings";
+import {fontStyles} from "../../../android/app/src/main/res/fontStyle";
+
 
 const activeTextStyle = ({
     color: "#11a42f",
@@ -14,8 +16,8 @@ export const ConfigElem = ({item, active, children, onOpen}) => (
         <Body>
         <TouchableOpacity onPress={() => onOpen(item.id)}>
             <View style={{flex: 1}}>
-                <Text style={active ? activeTextStyle : {}}>{item.name}</Text>
-                {active && <Text style={{...activeTextStyle, fontStyle: 'italic'}}> ({active})</Text>}
+                <Text style={[active ? activeTextStyle : {}, fontStyles.listElement] }>{item.name}</Text>
+                {active && <Text style={[{...activeTextStyle, fontStyle: 'italic'},fontStyles.listElement]}> ({active})</Text>}
             </View>
         </TouchableOpacity>
         </Body>
