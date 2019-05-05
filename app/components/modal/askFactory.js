@@ -2,6 +2,7 @@ import React from "react"
 import {View} from "react-native"
 import {Button, Form, Input, Item, Text} from "native-base"
 import * as constants from "../../../android/app/src/main/res/constantStrings";
+import {fontStyles} from "../../../android/app/src/main/res/fontStyle";
 
 const askerStyles = {
     buttonsWrapper: {
@@ -21,9 +22,9 @@ const askerStyles = {
 export const Buttons = (positiveText, negativeText) => ({onCancel, onConfirm, positive}) =>
     <View style={askerStyles.buttonsWrapper}>
         <Button transparent={positive} style={{...askerStyles.buttons, ...askerStyles.buttonNo}}
-                onPress={onCancel}><Text>{negativeText}</Text></Button>
+                onPress={onCancel}><Text style={fontStyles.button}>{negativeText}</Text></Button>
         <Button transparent={!positive} style={{...askerStyles.buttons, ...askerStyles.buttonYes}}
-                onPress={onConfirm}><Text>{positiveText}</Text></Button>
+                onPress={onConfirm}><Text style={fontStyles.button}>{positiveText}</Text></Button>
     </View>
 
 export const YesNoButtons = Buttons(constants.Yes, constants.No)

@@ -19,7 +19,7 @@ import {fontStyles} from "../../../../android/app/src/main/res/fontStyle";
 const chooseResource = resources => new Promise(resolve => (
     Modal.show(
         <View>
-            <Text>{constants.SelectWordToAddToConfiguration}</Text>
+            <Text style={fontStyles.selectWordHeader}>{constants.SelectWordToAddToConfiguration}</Text>
             <ScrollView style={{marginTop: 10}}>
                 <List>
                     {resources
@@ -28,7 +28,7 @@ const chooseResource = resources => new Promise(resolve => (
                                 Modal.hide()
                                 resolve(resource)
                             }}>
-                                <Text>{resource.name}</Text>
+                                <Text style={fontStyles.selectWordElement}>{resource.name}</Text>
                             </ListItem>
                         ))}
                 </List>
@@ -88,7 +88,7 @@ const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, 
                            key={material.word.name}>
                 <Cell>
                     <TouchableOpacity onPress={() => onSelect(index)}>
-                        <Text>{material.word.name}</Text>
+                        <Text style={fontStyles.wordOnList}>{material.word.name}</Text>
                     </TouchableOpacity>
                 </Cell>
                 <Cell>
@@ -147,7 +147,7 @@ const _MaterialsArrayInput = ({value, onChange, resources, materialModel, select
                             fields={materialModel.fields}/>
                     </View>
                     <AddButton onPress={onAdd}>
-                        <Text>Dodaj</Text>
+                        <Text style={fontStyles.button}>{constants.Add}</Text>
                     </AddButton>
                 </View>
                 <View style={styles.detailsContainer}>

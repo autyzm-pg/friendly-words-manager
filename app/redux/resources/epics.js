@@ -9,6 +9,7 @@ import * as R from "ramda"
 import {combineEpics} from 'redux-observable'
 import ToastExt from "../../libs/ToastExt"
 import {addRecord, deleteRecord, readTable, updateRecord} from "../../db/db"
+import * as constants from "../../../android/app/src/main/res/constantStrings";
 
 const deleteExistingWithName = (state) => ({payload}) => R.pipe(
     payload => ({
@@ -36,7 +37,7 @@ export const addResourceEpic = (action$, state) =>
         .flatMap(data => Rx.Observable.fromPromise(
             addRecord(data.resourceName, data.data).then(R.always(data))
         ))
-        .do(() => ToastExt.success("Zapisano!"))
+        .do(() => ToastExt.success(constants.Saved))
         .flatMap(({resourceName, data}) => Rx.Observable.of(
             addResource.finish(resourceName, data),
             loadResources.start(resourceName)
@@ -49,7 +50,7 @@ export const deleteResourceEpic = action$ =>
         .flatMap(({id, resourceName}) => Rx.Observable.fromPromise(
             deleteRecord(resourceName, id).then(R.always(resourceName))
         ))
-        .do(() => ToastExt.success(`Usunięto zasób`))
+        .do(() => ToastExt.success(constants.DeletedResource))
         .flatMap(resourceName => Rx.Observable.of(
             deleteResource.finish(resourceName),
             loadResources.start(resourceName)
@@ -71,7 +72,7 @@ export const editConfigEpic = (action$, state) =>
             updateRecord(resourceName, id, data)
                 .then(R.always({id, resourceName, data}))
         ))
-        .do(() => ToastExt.success("Zapisano!"))
+        .do(() => ToastExt.success(constants.Saved))
         .flatMap(({resourceName, id, data}) => Rx.Observable.of(
             editResource.finish(resourceName, id, data),
             loadResources.start(resourceName)

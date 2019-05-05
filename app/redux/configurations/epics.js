@@ -14,6 +14,7 @@ import {addConfig, readActiveConfig, updateConfig} from "../../db/configs"
 import * as R from "ramda"
 import ToastExt from "../../libs/ToastExt"
 import {changeActiveConfig, deleteConfig, readConfigs} from "../../db/configs"
+import * as constants from "../../../android/app/src/main/res/constantStrings";
 
 const deleteExistingWithName = (state) => ({payload}) => R.pipe(
     payload => ({
@@ -41,7 +42,7 @@ export const saveConfigEpic = (action$, state) =>
         .flatMap((data) => Rx.Observable.fromPromise(
             addConfig(data).then(R.always(data))
         ))
-        .do(() => ToastExt.success("Zapisano!"))
+        .do(() => ToastExt.success(constants.Saved))
         .flatMap(({name, config}) => Rx.Observable.of(
             saveConfigFinish(name, config),
             loadConfigs()
@@ -75,7 +76,7 @@ export const deleteConfigEpic = (action$, store) =>
                 ))
                 .then(R.always(name)),
         ))
-        .do(name => ToastExt.success(`Usunięto ${name}`))
+        .do(name => ToastExt.success(`${constants.Deleted} ${name}`))
         .flatMap(name => Rx.Observable.of(
             deleteConfigAction.finish(name),
             loadConfigs(),
@@ -104,7 +105,7 @@ export const editConfigEpic = (action$, state) =>
             updateConfig(id, {name, config})
                 .then(R.always({id, name, config}))
         ))
-        .do(() => ToastExt.success("Zapisano!"))
+        .do(() => ToastExt.success(constants.Saved))
         .flatMap((payload) => Rx.Observable.of(
             editConfig.finish(payload),
             loadConfigs()

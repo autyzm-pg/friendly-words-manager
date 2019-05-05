@@ -72,8 +72,8 @@ export const AddMaterial = "Dodaj materiał";
 export const SelectWordToAddToConfiguration = "Wybierz słowo, które chcesz dodać do konfiguracji";
 export const TestSource = "W trybie testu dziecko pracuje na materiałach zaznaczonych w zakładce Materiał.";
 export const TestExplanation= "W Trybie Testu aplikacja nie korzysta z ustawień z zakładki Uczenie oraz Wzmocnienia, a " +
-    "terapeuta powinien powstrzymać się od interwencji w interakcje dziecka aż do zakończenia " +
-    "testu.";
+                              "terapeuta powinien powstrzymać się od interwencji w interakcje dziecka aż do zakończenia " +
+                              "testu.";
 export const EnterTheStepName = "Podaj nazwę kroku";
 export const Together = "Łącznie:";
 export const Repetition = "powtórzenie";

@@ -1,3 +1,4 @@
+import * as constants from "../../android/app/src/main/res/constantStrings";
 export const emptyFunc = () => {
 }
 
@@ -5,7 +6,7 @@ export const notImplementedFunc = () => {throw "Not implemented"}
 
 function *copyOfCopy(name) {
     while(true) {
-        name += " (kopia)"
+        name += ` (${constants.Copy})`
         yield name
     }
 }
