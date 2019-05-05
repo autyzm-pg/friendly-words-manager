@@ -14,6 +14,7 @@ import {SimpleCheckbox} from "../pages/confyViews/materials/SimpleCheckbox"
 import {get, getChildProp, getSiblingProp} from "../libs/confy/fields/dynamic/traversing"
 import TestObjectInput from "../pages/confyViews/testObjectPage/TestObjectInput"
 import * as constants from "../../android/app/src/main/res/constantStrings";
+import {fontStyles as fontStyle} from "../../android/app/src/main/res/fontStyle";
 
 export const WordModel = DBModel("words", {
     name: TextField(constants.Word),

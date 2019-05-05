@@ -10,6 +10,8 @@ import {imagePickerStyles} from "./styles"
 import {PlusButton} from "../../components/ui/PlusButton"
 import {XButton} from "../../components/ui/XButton"
 import withState from "../../libs/withState"
+import * as constants from "../../../../../android/app/src/main/res/constantStrings";
+import {DoYouReallyWantDeleteThisImage} from "../../../../../android/app/src/main/res/constantStrings";
 
 const styles = {
     buttonsContainer: {
@@ -69,27 +71,27 @@ export const Radio = ({children, selected, onChange}) => (
 const SourceChooser = enhanceSourceChooser(function SourceChooser({onConfirm, onCancel, chosenOption, chooseOption}) {
     return (
         <View>
-            <Text>Dodaj obraz:</Text>
+            <Text>{constants.AddImage}</Text>
             <List>
                 <ListItem>
                     <Radio selected={chosenOption === SourceOptions.camera}
                            onChange={() => chooseOption(SourceOptions.camera)}>
                         <Icon name="camera"/>
-                        <SourceText>Zrób zdjęcie</SourceText>
+                        <SourceText>{constants.TakePhoto}</SourceText>
                     </Radio>
                 </ListItem>
                 <ListItem>
                     <Radio selected={chosenOption === SourceOptions.device}
                            onChange={() => chooseOption(SourceOptions.device)}>
                         <Icon name="folder"/>
-                        <SourceText>Dodaj z urządzenia</SourceText>
+                        <SourceText>{constants.AddFromDevice}</SourceText>
                     </Radio>
                 </ListItem>
             </List>
             <ButtonsContainer>
-                <Button transparent onPress={onCancel}><Text>Anuluj</Text></Button>
+                <Button transparent onPress={onCancel}><Text>{constants.Cancel}</Text></Button>
                 <Button style={{marginLeft: 25}} primary onPress={() => onConfirm(chosenOption)}
-                        disabled={!chosenOption}><Text>Wybierz</Text></Button>
+                        disabled={!chosenOption}><Text>{constants.Choose}</Text></Button>
             </ButtonsContainer>
         </View>
     )
@@ -125,7 +127,7 @@ const ImageContainer = ({children, onDelete}) => (
 )
 
 const onImageDelete = onDeleteConfirmed => () =>
-    Modal.ask("Czy napewno chcesz usunąć ten obrazek?", false)
+    Modal.ask(constants.DoYouReallyWantDeleteThisImage, false)
         .then(onConfirm(onDeleteConfirmed))
 
 const ImageUploader = ({verbose, value, onChange, options}) => (
@@ -133,11 +135,11 @@ const ImageUploader = ({verbose, value, onChange, options}) => (
         <View style={{flexDirection: "row"}}>
             <Text>{verbose}</Text>
             <Button style={imagePickerStyles.addButton} onPress={onImageAddPress(image => onChange([...value, image]))}>
-                <Text>Dodaj</Text>
+                <Text>{constants.Add}</Text>
             </Button>
         </View>
         <View style={[imagePickerStyles.imagesContainer, value.length === 0 && {justifyContent: "center"}]}>
-            {value.length === 0 && <Text style={imagePickerStyles.emptyText}>Brak obrazków</Text>}
+            {value.length === 0 && <Text style={imagePickerStyles.emptyText}>{constants.NoImages}</Text>}
             {value.map(({uri, width, height}) =>
                 <ImageContainer key={uri} onDelete={onImageDelete(() => onChange(removeUriFromList(uri, value)))}>
                     {console.log("URI:", uri, width, height) && null}

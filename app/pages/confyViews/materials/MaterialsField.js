@@ -14,6 +14,7 @@ import {ListLabel} from "../../../libs/confy/components/ui/ListLabels"
 import {EmptyState} from "../../../libs/confy/components/ui/EmptyState"
 import {withLink} from "../../../libs/confy/libs/withState"
 import * as constants from "../../../../android/app/src/main/res/constantStrings";
+import {fontStyles} from "../../../../android/app/src/main/res/fontStyle";
 
 const chooseResource = resources => new Promise(resolve => (
     Modal.show(
@@ -115,7 +116,7 @@ const MaterialsTable = ({materials, fields, onRowChange, onRowDelete, selected, 
 
 const MaterialDetails = ({material = undefined, renderField}) => (
     <ScrollView>
-        {!material ? <Text>{constants.SelectMaterialInNextTable}</Text> :
+        {!material ? <Text style={fontStyles.choseTekst}>{constants.SelectMaterialInNextTable}</Text> :
             <View>
                 {renderField(material)}
             </View>

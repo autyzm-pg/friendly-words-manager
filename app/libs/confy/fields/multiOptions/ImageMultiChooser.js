@@ -6,6 +6,7 @@ import {StyleSheet} from "react-native"
 import {MultiOptions, ImageOption} from "../../components/ui/MultiOptions"
 import * as R from "ramda"
 import {pick} from "ramda"
+import {fontStyles} from "../../../../../android/app/src/main/res/fontStyle";
 
 type ImageMultiChooserProps = {
     options: Array<string>
@@ -13,7 +14,7 @@ type ImageMultiChooserProps = {
 
 export const ImageMultiChooser = ({verbose, value, onChange, options}: ImageMultiChooserProps) =>
     <View>
-        <Text>{verbose}</Text>
+        <Text style={fontStyles.choseTekst}>{verbose}</Text>
         <MultiOptions style={styles.container} value={value} onChange={onChange}>
             {options.map(pick(['uri'])).map((option, idx) => <ImageOption style={styles.imageOption} size={150} key={idx}
                                                                    src={option} value={option}

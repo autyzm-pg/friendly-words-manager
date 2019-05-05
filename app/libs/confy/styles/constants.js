@@ -1,5 +1,5 @@
 
 export const FontSize = {
-        base: 18,
-        label: 16
+        base: 32,
+        label: 28
     }

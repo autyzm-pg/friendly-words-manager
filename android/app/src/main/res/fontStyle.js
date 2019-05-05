@@ -45,5 +45,28 @@ export const fontStyles = StyleSheet.create({
         color: 'red',
         fontSize: 30,
     },
-
+    headerButton: {
+        color: 'red',
+        fontSize: 30,
+    },
+    headerPage: {
+        color: 'red',
+        fontSize: 30,
+    },
+    testExplanation: {
+        color: 'red',
+        fontSize: 20,
+    },
+    repetitionSummary: {
+        color: 'red',
+        fontSize: 20,
+    },
+    choseTekst: {
+        color: 'red',
+        fontSize: 20,
+    },
+    button: {
+        color: 'red',
+        fontSize: 30,
+    },
 });
