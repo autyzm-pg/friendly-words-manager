@@ -12,6 +12,7 @@ import {XButton} from "../../components/ui/XButton"
 import withState from "../../libs/withState"
 import * as constants from "../../../../../android/app/src/main/res/constantStrings";
 import {DoYouReallyWantDeleteThisImage} from "../../../../../android/app/src/main/res/constantStrings";
+import {fontStyles} from "../../../../../android/app/src/main/res/fontStyle";
 
 const styles = {
     buttonsContainer: {
@@ -133,8 +134,8 @@ const onImageDelete = onDeleteConfirmed => () =>
 const ImageUploader = ({verbose, value, onChange, options}) => (
     <View style={imagePickerStyles.container}>
         <View style={{flexDirection: "row"}}>
-            <Text>{verbose}</Text>
-            <Button style={imagePickerStyles.addButton} onPress={onImageAddPress(image => onChange([...value, image]))}>
+            <Text style={fontStyles.text}>{verbose}</Text>
+            <Button style={[imagePickerStyles.addButton, fontStyles.button]} onPress={onImageAddPress(image => onChange([...value, image]))}>
                 <Text>{constants.Add}</Text>
             </Button>
         </View>

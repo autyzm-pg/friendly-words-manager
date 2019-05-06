@@ -69,4 +69,7 @@ export const fontStyles = StyleSheet.create({
     bottomInformation :{
         fontSize: 20,
     },
+    text :{
+        fontSize: 20,
+    },
 });
