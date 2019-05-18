@@ -91,3 +91,4 @@ export const Saved = "Zapisano!";
 export const DeletedResource = "Usunięto zasób";
 export const Deleted = "Usunięto";
 export const Copy = "kopia";
+export const TestCapitalLetter = "Test";
