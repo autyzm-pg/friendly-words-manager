@@ -1,8 +1,9 @@
 import React from "react"
 import {
-	CheckBox
+	CheckBox,
+	Text
 } from 'native-base'
-import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native"
+import {View, Image, TouchableOpacity, StyleSheet} from "react-native"
 import R, {contains} from "ramda"
 
 export const MultiOptions = ({value, onChange, children, style}) => {

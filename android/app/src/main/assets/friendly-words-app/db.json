@@ -17,17 +17,17 @@
                   {
                     "width": 600,
                     "height": 595,
-                    "uri": "file:///storage/emulated/0/friendly-words-app/assets/b0c0d89b-4a86-4cbf-b649-f9aeb2d50ddd.jpg"
+                    "uri": "${{assetsPath}}/b0c0d89b-4a86-4cbf-b649-f9aeb2d50ddd.jpg"
                   },
                   {
                     "width": 382,
                     "height": 500,
-                    "uri": "file:///storage/emulated/0/friendly-words-app/assets/bec00a59-42d2-4a43-8fe9-4bdd2b64ceb9.jpg"
+                    "uri": "${{assetsPath}}/bec00a59-42d2-4a43-8fe9-4bdd2b64ceb9.jpg"
                   },
                   {
                     "width": 696,
                     "height": 700,
-                    "uri": "file:///storage/emulated/0/friendly-words-app/assets/90082e2e-b652-4559-a3e6-64b897924258.jpg"
+                    "uri": "${{assetsPath}}/90082e2e-b652-4559-a3e6-64b897924258.jpg"
                   }
                 ],
                 "id": 1004
@@ -36,13 +36,13 @@
               "isInTestMode": true,
               "images": [
                 {
-                  "uri": "file:///storage/emulated/0/friendly-words-app/assets/b0c0d89b-4a86-4cbf-b649-f9aeb2d50ddd.jpg"
+                  "uri": "${{assetsPath}}/b0c0d89b-4a86-4cbf-b649-f9aeb2d50ddd.jpg"
                 },
                 {
-                  "uri": "file:///storage/emulated/0/friendly-words-app/assets/bec00a59-42d2-4a43-8fe9-4bdd2b64ceb9.jpg"
+                  "uri": "${{assetsPath}}/bec00a59-42d2-4a43-8fe9-4bdd2b64ceb9.jpg"
                 },
                 {
-                  "uri": "file:///storage/emulated/0/friendly-words-app/assets/90082e2e-b652-4559-a3e6-64b897924258.jpg"
+                  "uri": "${{assetsPath}}/90082e2e-b652-4559-a3e6-64b897924258.jpg"
                 }
               ]
             },
@@ -54,12 +54,12 @@
                   {
                     "width": 438,
                     "height": 438,
-                    "uri": "file:///storage/emulated/0/friendly-words-app/assets/344a9870-433a-425c-86bb-2d1a9b960d29.png"
+                    "uri": "${{assetsPath}}/344a9870-433a-425c-86bb-2d1a9b960d29.png"
                   },
                   {
                     "width": 1500,
                     "height": 1500,
-                    "uri": "file:///storage/emulated/0/friendly-words-app/assets/a94773dd-f43d-4fe0-9343-a1a80d91145b.jpg"
+                    "uri": "${{assetsPath}}/a94773dd-f43d-4fe0-9343-a1a80d91145b.jpg"
                   }
                 ],
                 "id": 1005
@@ -68,10 +68,10 @@
               "isInTestMode": true,
               "images": [
                 {
-                  "uri": "file:///storage/emulated/0/friendly-words-app/assets/344a9870-433a-425c-86bb-2d1a9b960d29.png"
+                  "uri": "${{assetsPath}}/344a9870-433a-425c-86bb-2d1a9b960d29.png"
                 },
                 {
-                  "uri": "file:///storage/emulated/0/friendly-words-app/assets/a94773dd-f43d-4fe0-9343-a1a80d91145b.jpg"
+                  "uri": "${{assetsPath}}/a94773dd-f43d-4fe0-9343-a1a80d91145b.jpg"
                 }
               ]
             },
@@ -83,17 +83,17 @@
                   {
                     "width": 395,
                     "height": 236,
-                    "uri": "file:///storage/emulated/0/friendly-words-app/assets/8d051bec-272a-4914-857e-8b4fa9868c3f.jpg"
+                    "uri": "${{assetsPath}}/8d051bec-272a-4914-857e-8b4fa9868c3f.jpg"
                   },
                   {
                     "width": 381,
                     "height": 375,
-                    "uri": "file:///storage/emulated/0/friendly-words-app/assets/79c83968-8e54-49fb-985c-7e57e18d893b.jpg"
+                    "uri": "${{assetsPath}}/79c83968-8e54-49fb-985c-7e57e18d893b.jpg"
                   },
                   {
                     "width": 264,
                     "height": 225,
-                    "uri": "file:///storage/emulated/0/friendly-words-app/assets/d7ce71af-3af4-4587-911d-fbe674dcf666.jpg"
+                    "uri": "${{assetsPath}}/d7ce71af-3af4-4587-911d-fbe674dcf666.jpg"
                   }
                 ],
                 "id": 1002
@@ -102,13 +102,13 @@
               "isInTestMode": true,
               "images": [
                 {
-                  "uri": "file:///storage/emulated/0/friendly-words-app/assets/79c83968-8e54-49fb-985c-7e57e18d893b.jpg"
+                  "uri": "${{assetsPath}}/79c83968-8e54-49fb-985c-7e57e18d893b.jpg"
                 },
                 {
-                  "uri": "file:///storage/emulated/0/friendly-words-app/assets/8d051bec-272a-4914-857e-8b4fa9868c3f.jpg"
+                  "uri": "${{assetsPath}}/8d051bec-272a-4914-857e-8b4fa9868c3f.jpg"
                 },
                 {
-                  "uri": "file:///storage/emulated/0/friendly-words-app/assets/d7ce71af-3af4-4587-911d-fbe674dcf666.jpg"
+                  "uri": "${{assetsPath}}/d7ce71af-3af4-4587-911d-fbe674dcf666.jpg"
                 }
               ]
             }
@@ -144,17 +144,17 @@
           {
             "width": 520,
             "height": 343,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/2b5008c1-b40f-4f41-b678-58716ac99d71.jpg"
+            "uri": "${{assetsPath}}/2b5008c1-b40f-4f41-b678-58716ac99d71.jpg"
           },
           {
             "width": 456,
             "height": 595,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/11b60157-6ece-47d3-a902-a112fa34e208.jpg"
+            "uri": "${{assetsPath}}/11b60157-6ece-47d3-a902-a112fa34e208.jpg"
           },
           {
             "width": 389,
             "height": 400,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/3b6b901c-cc87-4299-8150-d390d968ecb6.jpg"
+            "uri": "${{assetsPath}}/3b6b901c-cc87-4299-8150-d390d968ecb6.jpg"
           }
         ],
         "id": 1001
@@ -166,17 +166,17 @@
           {
             "width": 395,
             "height": 236,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/8d051bec-272a-4914-857e-8b4fa9868c3f.jpg"
+            "uri": "${{assetsPath}}/8d051bec-272a-4914-857e-8b4fa9868c3f.jpg"
           },
           {
             "width": 381,
             "height": 375,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/79c83968-8e54-49fb-985c-7e57e18d893b.jpg"
+            "uri": "${{assetsPath}}/79c83968-8e54-49fb-985c-7e57e18d893b.jpg"
           },
           {
             "width": 264,
             "height": 225,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/d7ce71af-3af4-4587-911d-fbe674dcf666.jpg"
+            "uri": "${{assetsPath}}/d7ce71af-3af4-4587-911d-fbe674dcf666.jpg"
           }
         ],
         "id": 1002
@@ -188,17 +188,17 @@
           {
             "width": 1200,
             "height": 1081,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/eb92aec0-e467-4f11-a4f4-97998c9c4fe0.jpg"
+            "uri": "${{assetsPath}}/eb92aec0-e467-4f11-a4f4-97998c9c4fe0.jpg"
           },
           {
             "width": 688,
             "height": 700,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/b74c1ba5-b992-4c82-949d-de0058663eae.jpg"
+            "uri": "${{assetsPath}}/b74c1ba5-b992-4c82-949d-de0058663eae.jpg"
           },
           {
             "width": 341,
             "height": 350,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/5129132f-8866-48e3-949a-6b31b5697058.jpg"
+            "uri": "${{assetsPath}}/5129132f-8866-48e3-949a-6b31b5697058.jpg"
           }
         ],
         "id": 1003
@@ -210,17 +210,17 @@
           {
             "width": 600,
             "height": 595,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/b0c0d89b-4a86-4cbf-b649-f9aeb2d50ddd.jpg"
+            "uri": "${{assetsPath}}/b0c0d89b-4a86-4cbf-b649-f9aeb2d50ddd.jpg"
           },
           {
             "width": 382,
             "height": 500,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/bec00a59-42d2-4a43-8fe9-4bdd2b64ceb9.jpg"
+            "uri": "${{assetsPath}}/bec00a59-42d2-4a43-8fe9-4bdd2b64ceb9.jpg"
           },
           {
             "width": 696,
             "height": 700,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/90082e2e-b652-4559-a3e6-64b897924258.jpg"
+            "uri": "${{assetsPath}}/90082e2e-b652-4559-a3e6-64b897924258.jpg"
           }
         ],
         "id": 1004
@@ -232,12 +232,12 @@
           {
             "width": 438,
             "height": 438,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/344a9870-433a-425c-86bb-2d1a9b960d29.png"
+            "uri": "${{assetsPath}}/344a9870-433a-425c-86bb-2d1a9b960d29.png"
           },
           {
             "width": 1500,
             "height": 1500,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/a94773dd-f43d-4fe0-9343-a1a80d91145b.jpg"
+            "uri": "${{assetsPath}}/a94773dd-f43d-4fe0-9343-a1a80d91145b.jpg"
           }
         ],
         "id": 1005
@@ -249,7 +249,7 @@
           {
             "width": 717,
             "height": 717,
-            "uri": "file:///storage/emulated/0/friendly-words-app/assets/fd40286a-a57f-4071-8b00-73ae262de493.jpg"
+            "uri": "${{assetsPath}}/fd40286a-a57f-4071-8b00-73ae262de493.jpg"
           }
         ],
         "id": 1006

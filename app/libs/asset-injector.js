@@ -1,4 +1,4 @@
-import {copyFileAssets, exists, mkdir, readDirAssets, unlink} from "react-native-fs"
+import {copyFileAssets, exists, mkdir, readDirAssets, readFile, unlink, writeFile} from "react-native-fs"
 
 const copyDir = async (assetPath, destPath) => {
     if (await exists(destPath)) {
@@ -6,7 +6,7 @@ const copyDir = async (assetPath, destPath) => {
     }
     await mkdir(destPath)
 
-    const copiedDir = await readDirAssets(assetPath);
+    const copiedDir = await readDirAssets(assetPath)
 
     const internalDirsCopy = Promise.all(
         copiedDir
@@ -31,13 +31,12 @@ export const injectAsset = async (assetPath, destPath) => {
 
     if (!assetStat) {
         console.error(`Could not find '${assetPath}' in Android's assets folder`)
-        return;
+        return
     }
 
     if (assetStat.isFile()) {
         await copyFileAssets(assetPath, destPath)
-    }
-    else if (assetStat.isDirectory()) {
+    } else if (assetStat.isDirectory()) {
         await copyDir(assetPath, destPath)
     }
 
@@ -45,4 +44,12 @@ export const injectAsset = async (assetPath, destPath) => {
 }
 
 export const injectIfDoesntExist = (assetPath, destPath) => exists(destPath)
-    .then(isExisting => isExisting ? true : injectAsset(assetPath, destPath));
+    .then(isExisting => isExisting ? true : injectAsset(assetPath, destPath))
+
+export const replaceVariables = async (file, variables) => {
+    const fileContent = await readFile(file)
+
+    const newContent = variables.reduce((content, [variable, value]) => content.replace(new RegExp('\\${{' + variable + '}}', 'g'), value), fileContent)
+
+    await writeFile(file, newContent)
+}
