@@ -113,9 +113,9 @@ export default {
   datePickerBg: "transparent",
 
   // Font
-  DefaultFontSize: 16,
+  DefaultFontSize: 20,
   fontFamily: "Roboto",
-  fontSizeBase: 15,
+  fontSizeBase: 18,
   get fontSizeH1() {
     return this.fontSizeBase * 1.8;
   },
@@ -133,7 +133,7 @@ export default {
 
   // FooterTab
   tabBarTextColor: "#bfc6ea",
-  tabBarTextSize: 11,
+  tabBarTextSize: 15,
   activeTab: "#fff",
   sTabBarActiveTextColor: "#007aff",
   tabBarActiveTextColor: "#fff",
@@ -163,7 +163,7 @@ export default {
 
   // Icon
   iconFamily: "Ionicons",
-  iconFontSize: 28,
+  iconFontSize: 32,
   iconHeaderSize: 24,
 
   // InputGroup
@@ -234,15 +234,15 @@ export default {
   // Text
   textColor: "#000",
   inverseTextColor: "#fff",
-  noteFontSize: 14,
+  noteFontSize: 18,
   get defaultTextColor() {
     return this.textColor;
   },
 
   // Title
   titleFontfamily: "Roboto",
-  titleFontSize: 19,
-  subTitleFontSize: 14,
+  titleFontSize: 23,
+  subTitleFontSize: 17,
   subtitleColor: "#FFF",
   titleFontColor: "#FFF",
 
