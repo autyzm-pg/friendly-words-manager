@@ -2,8 +2,8 @@ import * as R from "ramda"
 import {_addRecord, _createTable, _deleteRecord, _readTable, _updateRecord} from "./tables"
 import Mutex from "../libs/mutex"
 import {readFileAsync, writeFileAsync} from "../fileSystem/file"
-import {appDataPath, appDirectory} from "../fileSystem/paths";
-import {injectIfDoesntExist} from "../libs/asset-injector";
+import {appDataPath, appDirectory, configsDatabase, uploadAssetsDirectory} from "../fileSystem/paths";
+import {injectIfDoesntExist, replaceVariables} from "../libs/asset-injector"
 
 const readFile = fileName => readFileAsync(fileName)
 const writeToFile = (fileName, data) => writeFileAsync(fileName, data)
@@ -11,6 +11,9 @@ const writeToFile = (fileName, data) => writeFileAsync(fileName, data)
 const readDbFile = (fileName, defaultDb = {}) => () => readFile(fileName)
     .catch(async () => {
         await injectIfDoesntExist(appDirectory, appDataPath)
+        await replaceVariables(configsDatabase, [
+            ['assetsPath', `file://${uploadAssetsDirectory}`]
+        ])
         return readFile(fileName)
     })
     .then(configsStr => JSON.parse(configsStr))
