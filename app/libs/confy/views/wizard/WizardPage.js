@@ -1,11 +1,10 @@
 // @flow
 import React from "react"
-import {Button, Text} from "native-base"
 import Page, {PageHeader} from "../../components/layout/Page"
 import {WizardStepsContainer, WizardStepView} from "./WizardSteps"
 import type {Step} from "../steps"
 import {renderField} from "../../fields/fields"
-import {HeaderButton} from "../../components/ui/HeaderButton";
+import {HeaderButton} from "../../components/ui/HeaderButton"
 import {Modal, onConfirm} from "../../../../components/modal/Modal"
 import * as constants from "../../../../../android/app/src/main/res/constantStrings";
 

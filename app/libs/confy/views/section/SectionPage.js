@@ -1,8 +1,10 @@
 import React from "react"
-import {View, Content, Text} from "native-base"
+import {Content, Text, View} from "native-base"
 import {withLink} from "../../libs/withState"
-import {Col, Row, Grid} from 'react-native-easy-grid';
-import {moderateScale} from "../../../scaling";
+import {Col, Grid} from 'react-native-easy-grid'
+import {moderateScale} from "../../../scaling"
+import {events, logEvent} from "../../../../events"
+
 
 const sectionPageStyle = {
     sections: {
@@ -25,6 +27,21 @@ const sectionPageStyle = {
 }
 
 const Section = ({children}) => {
+<<<<<<< HEAD
+=======
+
+    switch (children.length) {
+        case 4:
+            logEvent(events.change_tab_step_option)
+            break
+        case 1:
+            logEvent(events.change_tab_try_option)
+            break
+        case 2:
+            logEvent(events.change_tab_tip_option)
+            break
+    }
+>>>>>>> pr/3
     return (
         <Content contentContainerStyle={sectionPageStyle.section}>
             {children}
@@ -40,7 +57,11 @@ const _SectionPage =
                     return <View
                         style={[sectionPageStyle.sectionListItem, isActive && sectionPageStyle.activeSectionListItem]}
                         key={section.name}>
+<<<<<<< HEAD
                         <Text style={{fontSize: moderateScale(12)}} onPress={() =>activeSectionIdxChange(idx)}>
+=======
+                        <Text style={{fontSize: moderateScale(12)}} onPress={() => activeSectionIdxChange(idx)}>
+>>>>>>> pr/3
                             {section.name}
                         </Text>
                     </View>
@@ -55,5 +76,9 @@ const _SectionPage =
         </Grid>
 
 
+<<<<<<< HEAD
 export const SectionPage = withLink("activeSectionIdx", 0)(_SectionPage);
+=======
+export const SectionPage = withLink("activeSectionIdx", 0)(_SectionPage)
+>>>>>>> pr/3
 

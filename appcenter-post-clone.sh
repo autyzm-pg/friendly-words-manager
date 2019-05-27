@@ -3,6 +3,9 @@
 echo "Starting post clone script..."
 #yarn global add exp
 
+echo "Accepting Android SDK"
+./accept-licenses.sh
+
 SOURCE=`dirname $0`
 
 # Add ms appcenter api key

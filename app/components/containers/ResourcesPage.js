@@ -12,8 +12,11 @@ import {EmptyState} from "../../libs/confy/components/ui/EmptyState";
 import {HeaderButton} from "../../libs/confy/components/ui/HeaderButton";
 import * as constants from "../../../android/app/src/main/res/constantStrings";
 
+import {events, logEvent, logCurrentScreen} from "../../events";
+
 export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, title, resourceName, ResourceBox}) => {
     const goToResourceCreator = () => {
+        logEvent(events.create_word);
         history.push(`/creator/resource/${resourceName}`)
     }
 
@@ -27,11 +30,13 @@ export const ResourcesPage = ({history, resources, isDeleteEnabled, actions, tit
                     <ResourceElem key={resource.id} item={<ResourceBox item={resource}/>}
                                   onElemClick={() => {
                                       history.push(`/creator/resource/${resourceName}/${resource.id}`)
+                                      logCurrentScreen("Edytowanie zasobu");
                                   }}>
                         <ActionsMenu>
                             <ActionItem
                                 onSelect={() => {
                                     history.push(`/creator/resource/${resourceName}/${resource.id}`)
+                                    logCurrentScreen("Edytowanie zasobu");
                                 }}>
                                 <Icon name="create"/>
                             </ActionItem>

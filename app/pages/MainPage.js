@@ -1,34 +1,18 @@
 import React from "react"
 
-import {
-    Container,
-    Content,
-    Header,
-    Body,
-    Title,
-    Button as NativeBaseButton,
-    Text,
-    Tab,
-    Tabs,
-    TabHeading,
-    Icon,
-    Left,
-    Right,
-    Footer,
-    FooterTab, View
-} from 'native-base'
+import {Body, Button as NativeBaseButton, Container, Header, Text, Title, View} from 'native-base'
 
 import {connect} from "react-redux"
-import ToastExt from "../libs/ToastExt"
-import {Modal} from "../components/modal/Modal"
 import {ModeTypes} from "../db/format"
 import {WordModel} from "../config/model"
 import * as R from "ramda"
 import styles from "./mainPageStyles"
 import {withStyle} from "../libs/withStyle"
-import {StyleSheet, Linking} from "react-native"
+
 import * as constants from "../../android/app/src/main/res/constantStrings";
 import {fontStyles} from "../../android/app/src/main/res/fontStyle";
+import {logCurrentScreen} from "../events"
+
 
 const buttonStyles = {
     height: 60,
@@ -42,6 +26,7 @@ const StatusContainer = withStyle({
 })(View)
 
 const MainPage = ({history, location, activeConfig, hasAnyConfig}) => {
+    logCurrentScreen("Glowne menu")
     return (<Container>
         <Header>
             <Body>
@@ -79,7 +64,7 @@ const MainPage = ({history, location, activeConfig, hasAnyConfig}) => {
                 {/*</Button>*/}
             </View>
         </View>
-    </Container>);
+    </Container>)
 }
 
 const stateToProps = ({configurations}) => ({

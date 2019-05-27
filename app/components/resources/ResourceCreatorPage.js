@@ -1,5 +1,4 @@
 import React from "react"
-import {Container, Content, Header, Body, Title, Button, Text, Tab, Tabs, TabHeading, Icon, Left} from 'native-base'
 
 import * as R from "ramda"
 import {connect} from "react-redux"
@@ -8,14 +7,17 @@ import {Modal, onConfirm} from "../modal/Modal"
 import {addResource} from "../../redux/resources/actions"
 import * as constants from "../../../android/app/src/main/res/constantStrings";
 
+import {events, logCurrentScreen, logEvent} from "../../events"
+
 
 const ResourceCreatorPage = (ResourceView, resourceName) => ({history, saveResource, allNames}) => {
     const WizardPage = createWizardPage(ResourceView)
 
-    const goBack = () => history.goBack();
+    const goBack = () => history.goBack()
 
     const createSave = (name, data) => {
         saveResource({...data, name})
+        logEvent(events.save_word)
         goBack()
     }
     const onCreateSave = R.curry((data, name) => R.ifElse(
@@ -23,7 +25,8 @@ const ResourceCreatorPage = (ResourceView, resourceName) => ({history, saveResou
         () => Modal.ask(constants.ResourceNamed + name + constants.AlreadyExists + constants.DoYouWantToOverwriteIt, false).then(onConfirm(() => createSave(name, data))),
         () => createSave(name, data)
     )(allNames))
-    return <WizardPage name={constants.NewResource} onBack={goBack}
+    logCurrentScreen("Tworzenie zasobu")
+    return <WizardPage name={constants.NewResource}  onBack={goBack}
                        onSave={onCreateSave}/>
 }
 

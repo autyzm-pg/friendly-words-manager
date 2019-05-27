@@ -4,7 +4,14 @@ import {Form, Item, Picker, Text, View} from "native-base"
 import type {OptionField} from "./optionField"
 
 const styles = {
-    "wrapper": {flex: 1, flexDirection: "row", justifyContent: "space-between"}
+    "wrapper": {flex: 1, flexDirection: "row", justifyContent: "space-between"},
+    picker: {
+        width: 300,
+        transform: [
+            {scaleX: 1.2},
+            {scaleY: 1.2},
+        ]
+    }
 }
 
 type PickerInputProps = {
@@ -17,6 +24,7 @@ const PickerInput = ({verbose, options, value, onChange}: PickerInputProps) => (
         <View>
             <Picker selectedValue={value}
                     mode="dialog"
+                    style={styles.picker}
                     supportedOrientations={['portrait', 'landscape']}
                     onValueChange={onChange}
             >
