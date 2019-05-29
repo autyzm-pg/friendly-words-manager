@@ -4,6 +4,7 @@ import Mutex from "../libs/mutex"
 import {readFileAsync, writeFileAsync} from "../fileSystem/file"
 import {appDataPath, appDirectory, configsDatabase, uploadAssetsDirectory} from "../fileSystem/paths";
 import {injectIfDoesntExist, replaceVariables} from "../libs/asset-injector"
+import * as constants from "../../android/app/src/main/res/constantStrings";
 
 const readFile = fileName => readFileAsync(fileName)
 const writeToFile = (fileName, data) => writeFileAsync(fileName, data)
@@ -12,7 +13,19 @@ const readDbFile = (fileName, defaultDb = {}) => () => readFile(fileName)
     .catch(async () => {
         await injectIfDoesntExist(appDirectory, appDataPath)
         await replaceVariables(configsDatabase, [
-            ['assetsPath', `file://${uploadAssetsDirectory}`]
+            ['assetsPath', `file://${uploadAssetsDirectory}`],
+            ['book', constants.SampleResourceBook],
+            ['pencil', constants.SampleResourcePencil],
+            ['shoe', constants.SampleResourceShoe],
+            ['tablet', constants.SampleResourceTablet],
+            ['teddybear', constants.SampleResourceTeddybear],
+            ['umbrella', constants.SampleResourceUmbrella],
+            ['sample', constants.SampleConfiguration],
+            ['grayedOut', constants.GrayedOut],
+            ['good', constants.Good],
+            ['great', constants.Great],
+            ['great3', constants.ShowWhereIs + "{" + constants.Word + "}"],
+            ['commandText', `${constants.ShowWhereIs}{${constants.Word}}`],
         ])
         return readFile(fileName)
     })

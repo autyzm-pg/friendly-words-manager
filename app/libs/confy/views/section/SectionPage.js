@@ -27,8 +27,6 @@ const sectionPageStyle = {
 }
 
 const Section = ({children}) => {
-<<<<<<< HEAD
-=======
 
     switch (children.length) {
         case 4:
@@ -41,7 +39,6 @@ const Section = ({children}) => {
             logEvent(events.change_tab_tip_option)
             break
     }
->>>>>>> pr/3
     return (
         <Content contentContainerStyle={sectionPageStyle.section}>
             {children}
@@ -57,11 +54,7 @@ const _SectionPage =
                     return <View
                         style={[sectionPageStyle.sectionListItem, isActive && sectionPageStyle.activeSectionListItem]}
                         key={section.name}>
-<<<<<<< HEAD
-                        <Text style={{fontSize: moderateScale(12)}} onPress={() =>activeSectionIdxChange(idx)}>
-=======
                         <Text style={{fontSize: moderateScale(12)}} onPress={() => activeSectionIdxChange(idx)}>
->>>>>>> pr/3
                             {section.name}
                         </Text>
                     </View>
@@ -75,10 +68,6 @@ const _SectionPage =
             </Col>
         </Grid>
 
-
-<<<<<<< HEAD
-export const SectionPage = withLink("activeSectionIdx", 0)(_SectionPage);
-=======
 export const SectionPage = withLink("activeSectionIdx", 0)(_SectionPage)
->>>>>>> pr/3
+
 
